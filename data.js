@@ -1,44 +1,44 @@
 window.TACTICAL_FEED_DATA = {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-27T03:26:19.695534Z",
-  "lastAttemptAt": "2026-10-27T03:26:19.695534Z",
-  "lastSuccessfulScanAt": "2026-10-27T03:26:19.695534Z",
+  "updatedAt": "2026-10-27T03:28:36.922059Z",
+  "lastAttemptAt": "2026-10-27T03:28:36.922059Z",
+  "lastSuccessfulScanAt": "2026-10-27T03:28:36.922059Z",
   "scanStatus": "ok",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
       "ok": true,
-      "checkedAt": "2026-10-27T03:26:19.695534Z",
+      "checkedAt": "2026-10-27T03:28:36.922059Z",
       "count": 0
     },
     {
       "source": "news:Premier League",
       "ok": true,
-      "checkedAt": "2026-10-27T03:26:19.695534Z",
+      "checkedAt": "2026-10-27T03:28:36.922059Z",
       "count": 0
     },
     {
       "source": "news:MLS",
       "ok": true,
-      "checkedAt": "2026-10-27T03:26:19.695534Z",
+      "checkedAt": "2026-10-27T03:28:36.922059Z",
       "count": 0
     },
     {
       "source": "news:Bundesliga",
       "ok": true,
-      "checkedAt": "2026-10-27T03:26:19.695534Z",
+      "checkedAt": "2026-10-27T03:28:36.922059Z",
       "count": 0
     },
     {
       "source": "news:Serie A",
       "ok": true,
-      "checkedAt": "2026-10-27T03:26:19.695534Z",
+      "checkedAt": "2026-10-27T03:28:36.922059Z",
       "count": 0
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-10-27T03:26:19.695534Z"
+      "checkedAt": "2026-10-27T03:28:36.922059Z"
     }
   ],
   "feeds": [
