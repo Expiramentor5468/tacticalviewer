@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1220" />
+  <title>Tactical Feed Finder</title>
+  <meta name="description" content="Find confirmed live soccer tactical cams, wide-angle feeds, coach views, ref cams, and alternate broadcasts." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow">LIVE SOCCER BROADCAST GUIDE</div>
+        <h1>Tactical Feed Finder</h1>
+        <p class="lede">Find the feeds that actually let you see the game: full-pitch tactical cams, wide views, coach cams, ref cams, and useful alternate broadcasts.</p>
+      </div>
+      <div class="update-box">
+        <span class="pulse"></span>
+        <div>
+          <strong>Auto-updating</strong>
+          <div id="lastUpdated">Checking data…</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="featuredSection" class="featured-wrap hidden">
+      <div class="section-kicker">NEXT CONFIRMED TACTICAL FEED</div>
+      <div id="featured"></div>
+    </section>
+
+    <section class="control-panel">
+      <div class="search-wrap">
+        <label for="search">Search</label>
+        <input id="search" type="search" placeholder="Team, league, broadcaster…" autocomplete="off" />
+      </div>
+      <div class="filters">
+        <label>Competition
+          <select id="competition"><option value="all">All competitions</option></select>
+        </label>
+        <label>Feed type
+          <select id="type">
+            <option value="all">All useful feeds</option>
+            <option value="tactical">True tactical / wide</option>
+            <option value="coach">Coach cam</option>
+            <option value="ref">Ref cam</option>
+            <option value="alternate">Alternate broadcast</option>
+          </select>
+        </label>
+        <label>Availability
+          <select id="availability">
+            <option value="all">Any availability</option>
+            <option value="us">Watchable in U.S.</option>
+            <option value="free">Free</option>
+            <option value="subscription">Subscription</option>
+          </select>
+        </label>
+        <label>Status
+          <select id="status">
+            <option value="confirmed">Confirmed only</option>
+            <option value="all">Confirmed + candidates</option>
+            <option value="candidate">Candidates only</option>
+          </select>
+        </label>
+        <label>Date
+          <select id="dateRange">
+            <option value="30">Next 30 days</option>
+            <option value="7">Next 7 days</option>
+            <option value="1">Today / next 24h</option>
+            <option value="all">All listed</option>
+          </select>
+        </label>
+        <label>Sort
+          <select id="sort">
+            <option value="soonest">Soonest first</option>
+            <option value="league">Competition</option>
+            <option value="confidence">Confidence</option>
+          </select>
+        </label>
+      </div>
+      <div class="quick-row">
+        <button class="chip active" data-preset="primary">Primary leagues</button>
+        <button class="chip" data-preset="tactical">True tactical only</button>
+        <button class="chip" data-preset="us">U.S. watchable</button>
+        <button class="chip" data-preset="reset">Reset</button>
+        <span id="resultCount" class="result-count"></span>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">WATCHLIST</div>
+          <h2>Upcoming feeds</h2>
+        </div>
+        <p class="small-note">Times automatically display in your device timezone.</p>
+      </div>
+      <div id="feedGrid" class="feed-grid"></div>
+      <div id="emptyState" class="empty hidden">
+        <h3>No matching feeds</h3>
+        <p>That usually means no broadcaster has publicly confirmed one yet. Switch Status to “Confirmed + candidates” to see leads still being verified.</p>
+      </div>
+    </section>
+
+    <section class="guide-grid">
+      <article class="guide-card">
+        <div class="icon">22</div>
+        <h3>True tactical / wide</h3>
+        <p>The target. A high, wide view that keeps most or all outfield players visible so you can read shape, pressing, buildup and off-ball movement.</p>
+      </article>
+      <article class="guide-card">
+        <div class="icon">HC</div>
+        <h3>Coach cam</h3>
+        <p>Useful secondary feed focused on managers and benches. Interesting for adjustments and reactions, but not a replacement for a tactical view.</p>
+      </article>
+      <article class="guide-card">
+        <div class="icon">RC</div>
+        <h3>Ref cam</h3>
+        <p>First-person or referee-focused coverage. Great novelty and perspective; poor for studying team structure.</p>
+      </article>
+      <article class="guide-card">
+        <div class="icon">ALT</div>
+        <h3>Alternate broadcast</h3>
+        <p>Only included when it adds useful angles or analysis. Celebrity commentary and other gimmicks are intentionally de-emphasized.</p>
+      </article>
+    </section>
+
+    <section class="methodology">
+      <div>
+        <div class="section-kicker">HOW IT DECIDES WHAT TO SHOW</div>
+        <h2>Conservative by design</h2>
+      </div>
+      <div class="method-grid">
+        <div><strong>Confirmed</strong><span>Exact match + feed type + broadcaster/platform supported by an official league, broadcaster or rights-holder source.</span></div>
+        <div><strong>Candidate</strong><span>A current source mentions tactical/wide coverage but the exact consumer feed, match, or availability still needs verification.</span></div>
+        <div><strong>Priority</strong><span>Champions League, Premier League and MLS first; Bundesliga, Serie A and Ligue 1/PSG second.</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Tactical Feed Finder</span>
+    <span>Built to find the camera angle normal broadcasts hide.</span>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
