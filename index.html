@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0b1220" />
   <title>Tactical Feed Finder</title>
-  <meta name="description" content="Find confirmed live soccer tactical cams, wide-angle feeds, coach views, ref cams, and alternate broadcasts." />
+  <meta name="description" content="Track soccer tactical-camera feeds with clear evidence, public-access verification and broadcaster production leads." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -19,7 +19,7 @@
       <div class="update-box">
         <span class="pulse"></span>
         <div>
-          <strong>Auto-updating</strong>
+          <strong id="updateLabel">Checking freshness</strong>
           <div id="lastUpdated">Checking data…</div>
         </div>
       </div>
@@ -27,8 +27,14 @@
   </header>
 
   <main>
+    <div class="summary-grid" aria-label="Evidence summary">
+      <button data-preset="reset" class="summary-card"><strong id="confirmedCount">0</strong><span>Upcoming public feeds verified</span></button>
+      <button data-preset="leads" class="summary-card"><strong id="productionCount">0</strong><span>Production listings · carriage unverified</span></button>
+      <button data-preset="leads" class="summary-card"><strong id="candidateCount">0</strong><span>News leads to investigate</span></button>
+    </div>
+    <p id="dataNotice" class="data-notice" role="status"></p>
     <section id="featuredSection" class="featured-wrap hidden">
-      <div class="section-kicker">NEXT CONFIRMED TACTICAL FEED</div>
+      <div class="section-kicker">NEXT TACTICAL FEED WITH VERIFIED PUBLIC ACCESS</div>
       <div id="featured"></div>
     </section>
 
@@ -60,24 +66,25 @@
         </label>
         <label>Status
           <select id="status">
-            <option value="confirmed">Confirmed only</option>
-            <option value="all">Confirmed + candidates</option>
-            <option value="candidate">Candidates only</option>
+            <option value="confirmed">Public access verified</option>
+            <option value="all">All evidence levels</option>
+            <option value="production">Production only</option>
+            <option value="candidate">Unverified leads</option>
           </select>
         </label>
         <label>Date
           <select id="dateRange">
             <option value="30">Next 30 days</option>
             <option value="7">Next 7 days</option>
-            <option value="1">Today / next 24h</option>
-            <option value="all">All listed</option>
+            <option value="1">Next 24 hours</option>
+            <option value="all">All dates + undated leads</option>
           </select>
         </label>
         <label>Sort
           <select id="sort">
             <option value="soonest">Soonest first</option>
             <option value="league">Competition</option>
-            <option value="confidence">Confidence</option>
+            <option value="evidence">Evidence level</option>
           </select>
         </label>
       </div>
@@ -85,8 +92,9 @@
         <button class="chip active" data-preset="primary">Primary leagues</button>
         <button class="chip" data-preset="tactical">True tactical only</button>
         <button class="chip" data-preset="us">U.S. watchable</button>
-        <button class="chip" data-preset="reset">Reset</button>
-        <span id="resultCount" class="result-count"></span>
+        <button class="chip" data-preset="leads">Explore evidence &amp; leads</button>
+        <button class="chip" data-preset="reset">All verified feeds</button>
+        <span id="resultCount" class="result-count" role="status" aria-live="polite"></span>
       </div>
     </section>
 
@@ -94,17 +102,22 @@
       <div class="section-head">
         <div>
           <div class="section-kicker">WATCHLIST</div>
-          <h2>Upcoming feeds</h2>
+          <h2 id="listHeading">Verified public feeds</h2>
         </div>
         <p class="small-note">Times automatically display in your device timezone.</p>
       </div>
       <div id="feedGrid" class="feed-grid"></div>
       <div id="emptyState" class="empty hidden">
-        <h3>No matching feeds</h3>
-        <p>That usually means no broadcaster has publicly confirmed one yet. Switch Status to “Confirmed + candidates” to see leads still being verified.</p>
+        <h3>No verified feeds match this view</h3>
+        <p>This guide has not verified a public viewing route for these filters. It is not proof that no feed exists. Explore production evidence and news leads, or adjust your filters.</p>
+        <button class="chip" data-preset="leads">Explore evidence &amp; leads</button>
       </div>
     </section>
 
+    <nav class="where-to-check" aria-label="Official sources to investigate">
+      <strong>Where to check</strong><span>Look for the exact fixture and camera feed on the service before subscribing.</span>
+      <div><a href="https://www.cbssports.com/soccer/" target="_blank" rel="noopener noreferrer">CBS Sports · UCL / Serie A ↗</a><a href="https://www.nbcsports.com/soccer" target="_blank" rel="noopener noreferrer">NBC Sports · Premier League ↗</a><a href="https://www.mlssoccer.com/" target="_blank" rel="noopener noreferrer">MLS ↗</a><a href="https://products.bundesliga.com/fixtures" target="_blank" rel="noopener noreferrer">Bundesliga production ↗</a></div>
+    </nav>
     <section class="guide-grid">
       <article class="guide-card">
         <div class="icon">22</div>
@@ -134,11 +147,12 @@
         <h2>Conservative by design</h2>
       </div>
       <div class="method-grid">
-        <div><strong>Confirmed</strong><span>Exact match + feed type + broadcaster/platform supported by an official league, broadcaster or rights-holder source.</span></div>
-        <div><strong>Candidate</strong><span>A current source mentions tactical/wide coverage but the exact consumer feed, match, or availability still needs verification.</span></div>
-        <div><strong>Priority</strong><span>Champions League, Premier League and MLS first; Bundesliga, Serie A and Ligue 1/PSG second.</span></div>
+        <div><strong>Public access verified</strong><span>An exact fixture, camera type and consumer viewing route, with regions and evidence reviewed within seven days. A league producing a feed does not mean viewers can watch it.</span></div>
+        <div><strong>Production or lead</strong><span>Production listings describe feeds supplied to broadcasters. News leads may describe past coverage. Neither proves a current public stream; unknown kickoff times stay out of upcoming-date filters.</span></div>
+        <div><strong>Priority</strong><span>Champions League, Premier League and MLS first; Bundesliga and Serie A as fallback. Primary leagues uses the fallback only when no preferred-league result matches.</span></div>
       </div>
     </section>
+  <details class="source-health"><summary>Discovery source health</summary><p>Fetched means a source responded, not that a viewing route was verified.</p><ul id="sourceHealth"></ul></details>
   </main>
 
   <footer>
@@ -146,6 +160,7 @@
     <span>Built to find the camera angle normal broadcasts hide.</span>
   </footer>
 
+  <!-- Optional mirror: set window.TACTICAL_FEED_DATA_URL to an HTTPS feeds.json URL before app.js. -->
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>

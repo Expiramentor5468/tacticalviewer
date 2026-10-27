@@ -1,51 +1,52 @@
 # Tactical Feed Finder
 
-A static, mobile-friendly guide for finding live soccer tactical cams, full-pitch/wide feeds, coach cams, ref cams and worthwhile alternate broadcasts.
+A zero-build soccer camera-feed watchlist. Champions League, Premier League and MLS come first, with Bundesliga and Serie A as fallback.
 
-## What it does
+## Evidence, not promises
 
-- Defaults to **confirmed** feeds only.
-- Prioritizes **UEFA Champions League, Premier League and MLS**.
-- Also tracks **Bundesliga, Serie A and Ligue 1 / PSG**.
-- Filters by competition, feed type, U.S. availability, access type, date and confidence.
-- Uses local device time automatically.
-- Keeps **candidate discoveries** separate from confirmed feeds to avoid false positives.
-- Includes a no-key automatic discovery pipeline using official pages plus Google News RSS.
+- **Public access verified** means an exact fixture and public viewing route have been manually verified, with regions and evidence reviewed within seven days. A source and a viewing-service URL are both required.
+- **Production only** means a league lists a camera feed for broadcasters. It does **not** mean a consumer service carries it. U.S. availability, cost and the watch link remain unknown.
+- **Unverified lead** means a recent article mentions a potentially useful camera feed. It does not confirm a current fixture.
 
-## Run locally
+The initial Bayern–Dortmund listing is production only. Its official fixture-row tooltip lists Tactical Feed, but a public viewing route has not been verified. Zero publicly verified results is an honest outcome.
 
-You can open `index.html` directly. No web server or build step is required.
+## Open or deploy
 
-## Automatic updates
+Open `index.html` directly, or serve these static files from GitHub Pages / any static host. No build step, API key or third-party Python package is needed.
 
-The included GitHub Actions workflow runs every 3 hours and updates `data.js` / `data/feeds.json`.
+Hosted pages fetch `https://raw.githubusercontent.com/Expiramentor5468/tacticalviewer/main/data/feeds.json` on load and every five minutes while visible. This lets mirrors and GitHub Pages pick up scheduled data commits without a site rebuild. The bundled `data.js` works offline and is retained if the fetch fails, with a visible warning. Never replace a newer snapshot with an older remote response.
 
-The updater is intentionally conservative:
+To use another repository or a same-origin data file, set this before `app.js`:
 
-- `data/manual_overrides.json` contains exact confirmed feeds.
-- Automatic news discovery creates **Candidate** items, not Confirmed items.
-- Bundesliga's official production page is watched directly because it explicitly publishes Tactical Feed production metadata.
+```html
+<script>window.TACTICAL_FEED_DATA_URL = 'data/feeds.json';</script>
+```
 
-This prevents a headline mentioning an “alternate broadcast” from being incorrectly presented as a true full-pitch tactical feed.
+## Update and test
 
-## Deploy free with GitHub Pages
+```sh
+python scripts/update_feeds.py
+python -m unittest discover -s tests -v
+node --test tests/app.test.js
+```
 
-For this repository (`Expiramentor5468/tacticalviewer`):
+Python 3.11+ and Node 18+ are sufficient. The updater searches Google News RSS for recent leads and parses the official Bundesliga fixture table (including Extra Feeds tooltip templates) into production-only entries. It uses the UTC column, never the CET display column. If the table layout changes, it falls back to a clearly undated catalogue lead instead of guessing fixtures.
 
-1. In GitHub: **Settings → Pages**.
-2. Set **Deploy from a branch** → `main` → `/ (root)`.
-3. GitHub Actions will refresh the feed data every 3 hours.
+The updater publishes per-source health. Failed sources retain prior evidence with its original timestamp; retained news still expires after 21 days. A complete successful scan timestamp advances only when all sources respond. Partial and failed scans write honest metadata and then exit 2 so scheduled failures are visible. The workflow should commit the metadata before reporting the failure. A scan checks discovery sources; it does not renew manual evidence or prove public access.
 
-No API keys are required for the included updater.
+## Manual verification
 
-## Improving verification
+Edit `data/manual_overrides.json`. A confirmed row requires all of:
 
-The strongest next step is a source-specific parser for each rights holder:
+- `status: "confirmed"`, `exactFixtureVerified: true`, `publicAccessConfirmed: true`
+- a timezone-aware ISO `kickoff` and `verifiedAt` (within seven days, not in the future)
+- HTTP(S) `sourceUrl` and `watchUrl`, a named `platform`, and non-empty `territories` such as `["US"]`
+- evidence for the stated feed, fixture and territory; set `usAvailability`, `access` and `commentary` only when supported
 
-- CBS Sports / Paramount press schedules for UCL and Serie A
-- NBC Sports / Peacock press schedules for Premier League
-- MLS / Apple announcements for MLS
-- Bundesliga Global Product Portfolio
-- Ligue 1 / rights-holder announcements
+The updater and client downgrade incomplete or stale confirmed rows to leads. Expired fixtures leave the generated data six hours after kickoff. Upcoming filters exclude past, invalid and unknown kickoff times. “Explore evidence & leads” deliberately includes undated records; article publication and source-fetch dates are displayed separately from kickoff.
 
-Once a source has a stable exact-match format, promote it from discovery-only to automatic confirmation in `scripts/update_feeds.py`.
+Production-only manual rows use `status: "production"`, `publicAccessConfirmed: false`, and `usAvailability: null` / `access: "unknown"`. Never infer carriage from a league supplying a feed or an old article describing past availability.
+
+## Limits
+
+This is a discovery watchlist, not a full fixture database or a live-stream provider. UCL, Premier League and MLS discovery does not yet have source-specific automatic fixture/access confirmation. News indexing can miss announcements; broadcaster sign-in, regional restrictions and last-minute schedule changes still need checking. Source health is visible in the page footer. The workflow's schedule is best effort, not a freshness guarantee.
