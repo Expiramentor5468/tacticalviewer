@@ -11,9 +11,9 @@
   function normalizeFeed(row, now = Date.now()) {
     const f = { ...row };
     f.territories = Array.isArray(f.territories) ? f.territories.filter(x => typeof x === 'string' && x.trim()) : [];
-    f.language = f.language || (/\bEnglish\b/i.test(f.commentary || '') ? 'English' : 'Unknown');
+    f.language = f.language || (/\bEnglish\b/i.test(f.commentary || '') ? 'English' : 'Unknown / not verified');
     const verified = dateValue(f.verifiedAt);
-    const confirmed = f.status === 'confirmed' && f.exactFixtureVerified === true && f.publicAccessConfirmed === true && dateValue(f.kickoff) !== null && verified !== null && verified <= now && verified >= now - 7 * 86400000 && safeUrl(f.sourceUrl) && safeUrl(f.watchUrl) && f.platform && f.territories.length && f.language === 'English';
+    const confirmed = f.status === 'confirmed' && f.exactFixtureVerified === true && f.publicAccessConfirmed === true && dateValue(f.kickoff) !== null && verified !== null && verified <= now && verified >= now - 7 * 86400000 && safeUrl(f.sourceUrl) && safeUrl(f.watchUrl) && f.platform && f.territories.length;
     if (f.status === 'confirmed' && !confirmed) f.status = 'candidate';
     if (!['confirmed', 'candidate', 'production'].includes(f.status)) f.status = 'candidate';
     if (f.status !== 'confirmed') { f.usAvailability = null; f.access = 'unknown'; f.watchUrl = null; }
@@ -23,7 +23,7 @@
   function filterFeeds(feeds, filters, now = Date.now()) {
     return feeds.filter(f => {
       const kickoff = dateValue(f.kickoff);
-      const haystack = `${f.match || ''} ${f.competition || ''} ${f.platform || ''} ${f.notes || ''} ${(f.territories || []).join(' ')} ${f.language || ''}`.toLowerCase();
+      const haystack = `${f.match || ''} ${f.competition || ''} ${f.platform || ''} ${f.notes || ''} ${(f.territories || []).join(' ')} ${f.language || ''} ${f.commentary || ''}`.toLowerCase();
       if (filters.q && !haystack.includes(filters.q.toLowerCase())) return false;
       if (filters.competition !== 'all' && f.competition !== filters.competition) return false;
       if (filters.type !== 'all' && f.type !== filters.type) return false;
@@ -55,8 +55,8 @@
       <div class="feed-details"><div class="detail"><span>Platform</span><strong>${esc(f.platform || 'Not verified')}</strong></div>
       <div class="detail"><span>Available in</span><strong>${esc(regions)}</strong></div>
       <div class="detail"><span>Access</span><strong>${esc({ free: 'Free', subscription: 'Subscription' }[f.access] || 'Not verified')}</strong></div>
-      <div class="detail"><span>Language</span><strong>${esc(f.language || 'Unknown')}</strong></div>
-      <div class="detail"><span>Commentary / audio</span><strong>${esc(f.commentary || 'Unknown')}</strong></div></div>
+      <div class="detail"><span>Language</span><strong>${esc(f.language || 'Unknown / not verified')}</strong></div>
+      <div class="detail"><span>Commentary / audio</span><strong>${esc(f.commentary || 'Not verified; may be video-only')}</strong></div></div>
       ${f.status === 'production' ? '<p class="access-warning">Produced for broadcasters. Public carriage is not verified.</p>' : ''}
       ${f.notes ? `<p class="notes">${esc(f.notes)}</p>` : ''}
       <div class="evidence">${f.sourcePublishedAt ? `<span>Source published ${esc(formatDate(f.sourcePublishedAt))}</span>` : ''}<span>${f.verifiedAt ? 'Evidence reviewed' : 'Source fetched'}: ${checked === null ? 'not recorded' : esc(formatDate(f.verifiedAt || f.checkedAt))}${stale ? ' · recheck before watching' : ''}</span></div>
@@ -103,7 +103,7 @@
     el.updateLabel.textContent = degraded ? 'Check freshness' : 'Discovery scan current';
     document.querySelector('.update-box').classList.toggle('degraded', degraded);
     el.lastUpdated.textContent = checked === null ? 'No complete scan recorded' : `Complete scan: ${formatDate(data.lastSuccessfulScanAt)}`;
-    el.dataNotice.textContent = fetchFailed ? 'Could not refresh this page. Showing the bundled snapshot; check source dates before relying on a listing.' : data.scanStatus === 'partial' || data.scanStatus === 'failed' ? `Latest scan ${data.scanStatus === 'partial' ? 'could not reach every source' : 'failed'}. Retained evidence keeps its original date.${attempt ? ` Attempt: ${formatDate(data.lastAttemptAt)}.` : ''}` : stale ? 'This snapshot has no complete scan in the last 24 hours. Source links may help you verify availability.' : 'Worldwide discovery is enabled; confirmed results require an exact public territory and verified English audio/commentary.';
+    el.dataNotice.textContent = fetchFailed ? 'Could not refresh this page. Showing the bundled snapshot; check source dates before relying on a listing.' : data.scanStatus === 'partial' || data.scanStatus === 'failed' ? `Latest scan ${data.scanStatus === 'partial' ? 'could not reach every source' : 'failed'}. Retained evidence keeps its original date.${attempt ? ` Attempt: ${formatDate(data.lastAttemptAt)}.` : ''}` : stale ? 'This snapshot has no complete scan in the last 24 hours. Source links may help you verify availability.' : 'Worldwide discovery is enabled. Confirmed results require an exact public viewing route and territory; commentary language and audio are descriptive, not eligibility requirements.';
     el.dataNotice.classList.toggle('warning', degraded);
     const upcoming = feeds.filter(f => f.status === 'confirmed' && dateValue(f.kickoff) >= Date.now());
     el.confirmedCount.textContent = upcoming.length;
