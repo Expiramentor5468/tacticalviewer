@@ -23,11 +23,16 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
-UA = "TacticalFeedFinder/3.1 (+https://github.com/Expiramentor5468/tacticalviewer)"
+UA = "TacticalFeedFinder/3.2 (+https://github.com/Expiramentor5468/tacticalviewer)"
 LONDON = ZoneInfo("Europe/London")
 PRIME_POLICY = "https://www.aboutamazon.co.uk/news/entertainment/champions-league-prime-video-uk-renewal"
 PRIME_WATCH = "https://www.primevideo.com/"
 MONTHS = {name.lower(): i for i, name in enumerate(calendar.month_name) if name}
+END_MARKERS = (
+    "nba on prime video", "nba", "upcoming with rent", "upcoming to rent",
+    "premier league", "formula 1", "wta", "nfl", "movies", "tv shows",
+    "stories we think you’ll like", "page overview", "more from amazon",
+)
 
 
 class VisibleText(HTMLParser):
@@ -104,23 +109,11 @@ def parse_match_line(line: str) -> tuple[str, str] | None:
     return f"{home} vs {away}", m.group(3).replace(" ", "").lower()
 
 
-def parse_month_page(content: str, page_year: int, now: datetime) -> list[dict]:
-    lines = visible_text(content).splitlines()
-    # About Amazon pages can repeat section names in a contents/navigation block.
-    # The actual fixture section is the LAST exact "UEFA Champions League" heading.
-    headings = [i for i, line in enumerate(lines) if line.strip().lower() == "uefa champions league"]
-    if not headings:
-        return []
-    start = headings[-1] + 1
-
+def parse_section(lines: list[str], start: int, page_year: int, now: datetime) -> list[dict]:
     stop = len(lines)
-    end_markers = (
-        "nba on prime video", "nba", "upcoming with rent", "upcoming to rent",
-        "premier league", "formula 1", "wta", "nfl", "movies", "tv shows",
-    )
     for i in range(start, len(lines)):
         low = lines[i].lower()
-        if i > start and any(low == marker or low.startswith(marker + " ") for marker in end_markers):
+        if i > start and any(low == marker or low.startswith(marker + " ") for marker in END_MARKERS):
             stop = i
             break
 
@@ -147,6 +140,17 @@ def parse_month_page(content: str, page_year: int, now: datetime) -> list[dict]:
         if now - timedelta(hours=6) <= kickoff <= horizon:
             rows.append({"match": match_name, "kickoff": kickoff})
     return rows
+
+
+def parse_month_page(content: str, page_year: int, now: datetime) -> list[dict]:
+    lines = visible_text(content).splitlines()
+    headings = [i for i, line in enumerate(lines) if line.strip().lower() == "uefa champions league"]
+    if not headings:
+        return []
+    # Amazon repeats the section name in navigation/footer overviews. Evaluate every
+    # occurrence and keep the section that actually contains dated match rows.
+    candidates = [parse_section(lines, i + 1, page_year, now) for i in headings]
+    return max(candidates, key=len, default=[])
 
 
 def prime_vision_policy_available(content: str) -> bool:
@@ -224,7 +228,6 @@ def main() -> int:
                     "secondarySourceUrl": PRIME_POLICY,
                 })
         except urllib.error.HTTPError as exc:
-            # Future monthly schedule articles often are not published yet.
             if exc.code != 404:
                 page_errors.append(f"{calendar.month_name[month]}:{type(exc).__name__}")
         except Exception as exc:
