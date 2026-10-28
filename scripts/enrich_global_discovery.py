@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """Worldwide discovery net for soccer camera-feed products not yet covered by a verifier.
 
-Leads only. Exact fixture, English audio, public territory and watch route are required
-before anything can be confirmed.
+Leads only. Exact fixture, public territory and watch route are required before anything
+can be confirmed. Commentary language and audio presence are metadata only.
 """
 from __future__ import annotations
 import hashlib, html, json, re, urllib.parse, urllib.request, xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/"data"; UA="TacticalFeedFinder/3.3 (+https://github.com/Expiramentor5468/tacticalviewer)"; SOURCE="global:camera-feed-discovery"
+ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/"data"; UA="TacticalFeedFinder/3.4 (+https://github.com/Expiramentor5468/tacticalviewer)"; SOURCE="global:camera-feed-discovery"
 QUERIES=[
  '("tactical cam" OR "tactical feed" OR "tactical view") (soccer OR football) (live OR stream OR broadcast)',
  '("wide angle camera" OR "wide-angle camera" OR "wide tactical view" OR "coach cam" OR "manager mode") (soccer OR football) (live OR broadcast)',
@@ -36,7 +36,7 @@ def parse(xml,now):
   if not link.startswith(('https://','http://')):continue
   low=body.lower();kind='tactical' if 'tactical' in low or re.search(r'wide[- ]angle\s+(?:cam|camera|view|feed)',low) else 'coach' if 'coach cam' in low or 'manager mode' in low else 'ref' if 'ref cam' in low or 'referee cam' in low else 'alternate'
   ident=hashlib.sha256(link.encode()).hexdigest()[:16]
-  out.append({'id':'global-lead-'+ident,'match':title,'competition':'Other / global','kickoff':None,'type':kind,'status':'candidate','platform':'Global discovery — carrier unverified','language':'Unknown','commentary':'English audio not yet verified','usAvailability':None,'access':'unknown','territories':[],'notes':'Worldwide discovery lead. Exact fixture, English audio/commentary, public territory and viewing route must be verified before confirmation.','sourceUrl':link,'sourcePublishedAt':stamp(published),'checkedAt':stamp(now),'sourceKey':SOURCE,'exactFixtureVerified':False,'publicAccessConfirmed':False})
+  out.append({'id':'global-lead-'+ident,'match':title,'competition':'Other / global','kickoff':None,'type':kind,'status':'candidate','platform':'Global discovery — carrier unverified','language':'Unknown','commentary':'Audio/commentary not yet verified','usAvailability':None,'access':'unknown','territories':[],'notes':'Worldwide discovery lead. Exact fixture, public territory and viewing route must be verified before confirmation. Any language or video-only feed is eligible.','sourceUrl':link,'sourcePublishedAt':stamp(published),'checkedAt':stamp(now),'sourceKey':SOURCE,'exactFixtureVerified':False,'publicAccessConfirmed':False})
  return out
 def load():return json.loads((DATA/'feeds.json').read_text(encoding='utf-8'))
 def write(p):
