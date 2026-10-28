@@ -1,49 +1,49 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-28T18:32:20.013377Z",
-  "lastAttemptAt": "2026-10-28T18:30:54.751299Z",
-  "lastSuccessfulScanAt": "2026-10-28T18:29:42.878999Z",
-  "scanStatus": "partial",
+  "updatedAt": "2026-10-28T18:44:41.854365Z",
+  "lastAttemptAt": "2026-10-28T18:44:25.963940Z",
+  "lastSuccessfulScanAt": "2026-10-28T18:44:25.963940Z",
+  "scanStatus": "ok",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
-      "ok": false,
-      "attemptedAt": "2026-10-28T18:30:54.751299Z",
-      "error": "HTTPError"
+      "ok": true,
+      "checkedAt": "2026-10-28T18:44:25.963940Z",
+      "count": 0
     },
     {
       "source": "news:Premier League",
-      "ok": false,
-      "attemptedAt": "2026-10-28T18:30:54.751299Z",
-      "error": "HTTPError"
+      "ok": true,
+      "checkedAt": "2026-10-28T18:44:25.963940Z",
+      "count": 0
     },
     {
       "source": "news:MLS",
-      "ok": false,
-      "attemptedAt": "2026-10-28T18:30:54.751299Z",
-      "error": "HTTPError"
+      "ok": true,
+      "checkedAt": "2026-10-28T18:44:25.963940Z",
+      "count": 0
     },
     {
       "source": "news:Bundesliga",
-      "ok": false,
-      "attemptedAt": "2026-10-28T18:30:54.751299Z",
-      "error": "HTTPError"
+      "ok": true,
+      "checkedAt": "2026-10-28T18:44:25.963940Z",
+      "count": 0
     },
     {
       "source": "news:Serie A",
-      "ok": false,
-      "attemptedAt": "2026-10-28T18:30:54.751299Z",
-      "error": "HTTPError"
+      "ok": true,
+      "checkedAt": "2026-10-28T18:44:25.963940Z",
+      "count": 0
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-10-28T18:30:54.751299Z"
+      "checkedAt": "2026-10-28T18:44:25.963940Z"
     },
     {
       "source": "amazon:prime-vision",
       "ok": true,
-      "checkedAt": "2026-10-28T18:31:38.875561Z",
+      "checkedAt": "2026-10-28T18:44:28.948644Z",
       "count": 2,
       "pagesChecked": 2,
       "evidenceMode": "official-help-reviewed/client-rendered"
@@ -51,46 +51,44 @@
     {
       "source": "sky:bundesliga-tactical",
       "ok": true,
-      "checkedAt": "2026-10-28T18:31:40.173959Z",
+      "checkedAt": "2026-10-28T18:44:30.179275Z",
       "count": 0,
-      "exportsChecked": 11,
-      "englishAudioVerified": false
+      "exportsChecked": 11
     },
     {
       "source": "cbs:golazo-tactical",
-      "ok": false,
-      "checkedAt": "2026-10-28T18:31:50.158569Z",
-      "error": "HTTPError"
+      "ok": true,
+      "checkedAt": "2026-10-28T18:44:40.850506Z",
+      "count": 0,
+      "duplicatesSuppressed": 0
     },
     {
       "source": "mls:alternate-cameras",
-      "ok": false,
-      "checkedAt": "2026-10-28T18:31:50.158569Z",
-      "error": "HTTPError"
+      "ok": true,
+      "checkedAt": "2026-10-28T18:44:40.850506Z",
+      "count": 0,
+      "duplicatesSuppressed": 1
     },
     {
       "source": "premierleague:alternate-cameras",
-      "ok": false,
-      "checkedAt": "2026-10-28T18:31:50.158569Z",
-      "error": "HTTPError"
+      "ok": true,
+      "checkedAt": "2026-10-28T18:44:40.850506Z",
+      "count": 0,
+      "duplicatesSuppressed": 0
     },
     {
       "source": "ligue1:expert-mode",
-      "ok": false,
-      "checkedAt": "2026-10-28T18:31:50.158569Z",
-      "error": "HTTPError"
+      "ok": true,
+      "checkedAt": "2026-10-28T18:44:40.850506Z",
+      "count": 1,
+      "duplicatesSuppressed": 0
     },
     {
       "source": "global:camera-feed-discovery",
-      "ok": false,
-      "checkedAt": "2026-10-28T18:32:20.013377Z",
+      "ok": true,
+      "checkedAt": "2026-10-28T18:44:41.854365Z",
       "count": 0,
-      "queriesChecked": 0,
-      "errors": [
-        "HTTPError",
-        "HTTPError",
-        "HTTPError"
-      ]
+      "queriesChecked": 3
     }
   ],
   "feeds": [
@@ -160,8 +158,8 @@
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": "https://www.primevideo.com/",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-10-28T18:31:38.875561Z",
-      "verifiedAt": "2026-10-28T18:31:38.875561Z",
+      "checkedAt": "2026-10-28T18:44:28.948644Z",
+      "verifiedAt": "2026-10-28T18:44:28.948644Z",
       "exactFixtureVerified": true,
       "publicAccessConfirmed": true,
       "secondarySourceUrl": "https://www.primevideo.com/salp/ucl-help/?content-id=amzn1.sym.dd781929-775e-45af-be91-40c39fedce52",
@@ -189,12 +187,33 @@
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": "https://www.primevideo.com/",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-10-28T18:31:38.875561Z",
-      "verifiedAt": "2026-10-28T18:31:38.875561Z",
+      "checkedAt": "2026-10-28T18:44:28.948644Z",
+      "verifiedAt": "2026-10-28T18:44:28.948644Z",
       "exactFixtureVerified": true,
       "publicAccessConfirmed": true,
       "secondarySourceUrl": "https://www.primevideo.com/salp/ucl-help/?content-id=amzn1.sym.dd781929-775e-45af-be91-40c39fedce52",
       "policySourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/champions-league-prime-video-uk-renewal"
+    },
+    {
+      "id": "brand-monitor-263fc464a21d3d4d",
+      "match": "LFP brings automated data ‘Moments’ to Ligue 1+ Expert Mode - SVG Europe",
+      "competition": "Ligue 1",
+      "kickoff": null,
+      "type": "alternate",
+      "status": "candidate",
+      "platform": "Ligue 1+ — Expert Mode",
+      "language": "Unknown",
+      "commentary": "Audio/commentary not yet verified",
+      "usAvailability": null,
+      "access": "unknown",
+      "territories": [],
+      "notes": "Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation. Audio language is recorded when known but does not determine eligibility.",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOcFlad29wOHpMQzhNMFlUaGMzd0dsMkRPcXU5YTdNMVptY3UwVVh0Mk1POXY3TUZIcXBObXNfY3ZPVjdReHZ3cDFfVHlJQ2FFdEJOaXhnel9GY1F5c0tWSXRUWnRMcHJqdFh3SklER0lCcDBMRTJYMXpTcm9MZjlkMV9rTnRYU2xId0ZNQ0dvY3d4b292YWE4ZDlkaUVqb2M?oc=5",
+      "sourcePublishedAt": "2026-09-08T07:00:00Z",
+      "checkedAt": "2026-10-28T18:44:40.850506Z",
+      "sourceKey": "ligue1:expert-mode",
+      "exactFixtureVerified": false,
+      "publicAccessConfirmed": false
     }
   ]
 }
