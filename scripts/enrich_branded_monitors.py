@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Monitor known branded alternate-feed products.
 
-Discovery only. Exact fixture, English audio, public viewing route and territory are
-required before a lead can become confirmed. Leads that clearly duplicate an already
-confirmed event are suppressed.
+Discovery only. Exact fixture, public viewing route and territory are required before a
+lead can become confirmed. Audio language is metadata, not an eligibility requirement.
+Leads that clearly duplicate an already confirmed event are suppressed.
 """
 from __future__ import annotations
 import hashlib, html, json, re, urllib.parse, urllib.request, xml.etree.ElementTree as ET
@@ -11,7 +11,7 @@ from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 
-ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/"data"; UA="TacticalFeedFinder/3.4 (+https://github.com/Expiramentor5468/tacticalviewer)"
+ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/"data"; UA="TacticalFeedFinder/3.5 (+https://github.com/Expiramentor5468/tacticalviewer)"
 MONITORS=[
  {"key":"cbs:golazo-tactical","competition":"UEFA Champions League / Serie A","query":'("Tactical Cam" OR "tactical cam") "CBS Sports Golazo" (site:cbssports.com OR site:paramountpressexpress.com)',"brand":"CBS Sports Golazo Network — Tactical Cam","language":"English","pattern":r"\bTactical\s+Cam\b"},
  {"key":"mls:alternate-cameras","competition":"MLS","query":'MLS ("Ref Cam" OR "alternate broadcast" OR "TikTok Player Spotlight") site:mlssoccer.com',"brand":"MLS / Apple TV alternate cameras","language":"English","pattern":r"\bRef\s+Cam\b|\balternate\s+broadcast\b|TikTok\s+Player\s+Spotlight|Player\s+Spotlight.{0,50}(?:stream|live)"},
@@ -44,7 +44,7 @@ def parse(xml,monitor,now):
   link=item.findtext("link","")
   if not link.startswith(("https://","http://")):continue
   ident=hashlib.sha256((monitor["key"]+link).encode()).hexdigest()[:16]
-  out.append({"id":"brand-monitor-"+ident,"match":title,"competition":monitor["competition"],"kickoff":None,"type":"alternate","status":"candidate","platform":monitor["brand"],"language":monitor["language"],"commentary":"English" if monitor["language"]=="English" else "English audio not yet verified","usAvailability":None,"access":"unknown","territories":[],"notes":"Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation.","sourceUrl":link,"sourcePublishedAt":stamp(published),"checkedAt":stamp(now),"sourceKey":monitor["key"],"exactFixtureVerified":False,"publicAccessConfirmed":False})
+  out.append({"id":"brand-monitor-"+ident,"match":title,"competition":monitor["competition"],"kickoff":None,"type":"alternate","status":"candidate","platform":monitor["brand"],"language":monitor["language"],"commentary":"English" if monitor["language"]=="English" else "Audio/commentary not yet verified","usAvailability":None,"access":"unknown","territories":[],"notes":"Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation. Audio language is recorded when known but does not determine eligibility.","sourceUrl":link,"sourcePublishedAt":stamp(published),"checkedAt":stamp(now),"sourceKey":monitor["key"],"exactFixtureVerified":False,"publicAccessConfirmed":False})
  return out
 def load():return json.loads((DATA/"feeds.json").read_text(encoding="utf-8"))
 def write(payload):
