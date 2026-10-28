@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-"""Monitor Sky/WOW's Bundesliga Tactical Feed without inferring English consumer audio.
+"""Monitor Sky/WOW's public Bundesliga Tactical Feed.
 
 Sky publicly confirms the Saturday Topspiel Tactical Feed and Germany viewing route.
-DFL separately confirms its Tactical Feed production product contains English analysis.
-Until Sky explicitly confirms that its consumer carriage preserves English audio, exact
-Sky fixtures stay candidates under TacticalViewer's English-only policy.
+DFL separately documents the production Tactical Feed. Consumer audio language is kept
+as metadata and does not determine whether a publicly watchable feed is confirmed.
 """
 from __future__ import annotations
 import hashlib, html, io, json, re, urllib.parse, urllib.request, zipfile, xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
-ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/"data"; UA="TacticalFeedFinder/3.5 (+https://github.com/Expiramentor5468/tacticalviewer)"
+ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/"data"; UA="TacticalFeedFinder/3.6 (+https://github.com/Expiramentor5468/tacticalviewer)"
 BERLIN=ZoneInfo("Europe/Berlin"); FIXTURES="https://products.bundesliga.com/fixtures"; DFL_PRODUCT="https://products.bundesliga.com/matchdays"; SKY_POLICY="https://videos.sport.sky.de/fussball/artikel/patrick-ittrich-neuer-schiedsrichter-experte-bei-sky-sport-ex-bundesliga-referee-verstaerkt-bundesliga-team/13574269/35311"; SKY_WATCH="https://www.wowtv.de/"; EXCEPTIONS={("FC Bayern München","Borussia Dortmund","2026-10-31")}
 def get_text(url):
     req=urllib.request.Request(url,headers={"User-Agent":UA});
@@ -21,7 +20,7 @@ def get_bytes(url):
     with urllib.request.urlopen(req,timeout=20) as r:return r.read(5_000_000)
 def plain(s):return re.sub(r"\s+"," ",html.unescape(re.sub(r"<[^>]+>"," ",s)))
 def policy_ok(sky,dfl):
-    s,d=plain(sky),plain(dfl);return bool(re.search(r"Tactical Feed",s,re.I) and re.search(r"Sky Sport Bundesliga 3",s,re.I) and re.search(r"Topspiel",s,re.I) and re.search(r"Tactical Feed",d,re.I) and re.search(r"English-language analysis",d,re.I))
+    s,d=plain(sky),plain(dfl);return bool(re.search(r"Tactical Feed",s,re.I) and re.search(r"Sky Sport Bundesliga 3",s,re.I) and re.search(r"Topspiel",s,re.I) and re.search(r"Tactical Feed",d,re.I))
 def export_context(text):
     text=html.unescape(text);league=re.search(r"league(?:%5B0%5D|\[0\])=([^&\"']+)",text,re.I);md=re.search(r"matchday(?:%5B0%5D|\[0\])=(\d+)",text,re.I);season=re.search(r"season=([^&\"']+)",text,re.I)
     if not(league and md and season):raise ValueError("DFL export context not found")
@@ -108,8 +107,8 @@ def main():
         unique=list({(r["home"],r["away"],r["kickoff"]):r for r in found}.values())
         for r in sorted(unique,key=lambda x:x["kickoff"]):
             match=f"{r['home']} vs {r['away']}";kick=r["kickoff"].isoformat().replace("+00:00","Z");ident=hashlib.sha256((match+kick).encode()).hexdigest()[:16]
-            feeds.append({"id":"sky-bundesliga-tactical-"+ident,"match":match,"competition":"Bundesliga","kickoff":kick,"type":"tactical","status":"candidate","platform":"Sky Sport Bundesliga 3 / WOW","language":"Unknown","commentary":"Consumer audio language not verified; DFL's production product itself includes English analysis","usAvailability":None,"access":"subscription","territories":["Germany"],"notes":"Sky confirms public Tactical Feed carriage in Germany for the Saturday Topspiel. DFL confirms the underlying Tactical Feed product includes English analysis, but Sky has not been verified to preserve English consumer audio, so this stays a lead under the English-only policy.","sourceUrl":SKY_POLICY,"secondarySourceUrl":DFL_PRODUCT,"fixtureSourceUrl":FIXTURES,"watchUrl":SKY_WATCH,"sourceKey":"sky:bundesliga-tactical","checkedAt":now.isoformat().replace("+00:00","Z"),"verifiedAt":None,"exactFixtureVerified":True,"publicAccessConfirmed":True})
-        health.append({"source":"sky:bundesliga-tactical","ok":checked>0,"checkedAt":now.isoformat().replace("+00:00","Z"),"count":len(unique),"exportsChecked":checked,"englishAudioVerified":False})
+            feeds.append({"id":"sky-bundesliga-tactical-"+ident,"match":match,"competition":"Bundesliga","kickoff":kick,"type":"tactical","status":"confirmed","platform":"Sky Sport Bundesliga 3 / WOW","language":"Unknown / not verified","commentary":"Consumer audio language not verified; feed remains listed because public video access is confirmed","usAvailability":False,"access":"subscription","territories":["Germany"],"notes":"Sky confirms public Tactical Feed carriage in Germany for the Saturday Topspiel. Audio language is not required for TacticalViewer confirmation; DFL separately documents the Tactical Feed production product.","sourceUrl":SKY_POLICY,"secondarySourceUrl":DFL_PRODUCT,"fixtureSourceUrl":FIXTURES,"watchUrl":SKY_WATCH,"sourceKey":"sky:bundesliga-tactical","checkedAt":now.isoformat().replace("+00:00","Z"),"verifiedAt":now.isoformat().replace("+00:00","Z"),"exactFixtureVerified":True,"publicAccessConfirmed":True})
+        health.append({"source":"sky:bundesliga-tactical","ok":checked>0,"checkedAt":now.isoformat().replace("+00:00","Z"),"count":len(unique),"exportsChecked":checked})
     except Exception as exc:health.append({"source":"sky:bundesliga-tactical","ok":False,"checkedAt":now.isoformat().replace("+00:00","Z"),"error":type(exc).__name__})
     p["feeds"],p["sourceHealth"],p["updatedAt"]=feeds,health,now.isoformat().replace("+00:00","Z");write(p);return 0
 if __name__=="__main__":raise SystemExit(main())
