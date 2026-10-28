@@ -1,49 +1,49 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-28T18:25:44.014887Z",
-  "lastAttemptAt": "2026-10-28T18:25:28.735344Z",
-  "lastSuccessfulScanAt": "2026-10-28T18:25:28.735344Z",
+  "updatedAt": "2026-10-28T18:26:14.777243Z",
+  "lastAttemptAt": "2026-10-28T18:25:58.142496Z",
+  "lastSuccessfulScanAt": "2026-10-28T18:25:58.142496Z",
   "scanStatus": "ok",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:28.735344Z",
+      "checkedAt": "2026-10-28T18:25:58.142496Z",
       "count": 0
     },
     {
       "source": "news:Premier League",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:28.735344Z",
+      "checkedAt": "2026-10-28T18:25:58.142496Z",
       "count": 0
     },
     {
       "source": "news:MLS",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:28.735344Z",
+      "checkedAt": "2026-10-28T18:25:58.142496Z",
       "count": 0
     },
     {
       "source": "news:Bundesliga",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:28.735344Z",
+      "checkedAt": "2026-10-28T18:25:58.142496Z",
       "count": 0
     },
     {
       "source": "news:Serie A",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:28.735344Z",
+      "checkedAt": "2026-10-28T18:25:58.142496Z",
       "count": 0
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:28.735344Z"
+      "checkedAt": "2026-10-28T18:25:58.142496Z"
     },
     {
       "source": "amazon:prime-vision",
       "ok": false,
-      "checkedAt": "2026-10-28T18:25:31.057033Z",
+      "checkedAt": "2026-10-28T18:26:00.952118Z",
       "count": 2,
       "pagesChecked": 2,
       "error": "ValueError"
@@ -51,38 +51,39 @@
     {
       "source": "sky:bundesliga-tactical",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:34.222777Z",
+      "checkedAt": "2026-10-28T18:26:02.811093Z",
       "count": 0,
-      "exportsChecked": 11
+      "exportsChecked": 11,
+      "englishAudioVerified": false
     },
     {
       "source": "cbs:golazo-tactical",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:42.376331Z",
+      "checkedAt": "2026-10-28T18:26:13.986827Z",
       "count": 0
     },
     {
       "source": "mls:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:42.376331Z",
+      "checkedAt": "2026-10-28T18:26:13.986827Z",
       "count": 1
     },
     {
       "source": "premierleague:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:42.376331Z",
+      "checkedAt": "2026-10-28T18:26:13.986827Z",
       "count": 0
     },
     {
       "source": "ligue1:expert-mode",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:42.376331Z",
+      "checkedAt": "2026-10-28T18:26:13.986827Z",
       "count": 1
     },
     {
       "source": "global:camera-feed-discovery",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:44.014887Z",
+      "checkedAt": "2026-10-28T18:26:14.777243Z",
       "count": 1,
       "queriesChecked": 3
     }
@@ -149,7 +150,7 @@
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": null,
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-10-28T18:25:31.057033Z",
+      "checkedAt": "2026-10-28T18:26:00.952118Z",
       "verifiedAt": null,
       "exactFixtureVerified": true,
       "publicAccessConfirmed": false,
@@ -173,7 +174,7 @@
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": null,
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-10-28T18:25:31.057033Z",
+      "checkedAt": "2026-10-28T18:26:00.952118Z",
       "verifiedAt": null,
       "exactFixtureVerified": true,
       "publicAccessConfirmed": false,
@@ -196,7 +197,7 @@
       "notes": "Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNdVBEcVRKREY1cGhNRGRUSWVraEc2cjNmblAxSHJtZFBoSkxHOHZGRzN6Q2g4XzdkSzlyUm96T2VYVWxHS0trU1o3MWUyLUwzVF8zY0tQM3NDcEc3eUt6Y0loRU9YNmFCNlg3NzJGdWppNlhQYnZQQVhYbmh3eE5fVUZnLVVnRl9Pci0yV0VjM3dwX3RWRXZtZUNXV0tMYlU5U1l6Ykg4Rktic0VLekJYSUJmTlNvWkphMmJUM3Nn?oc=5",
       "sourcePublishedAt": "2026-09-02T07:00:00Z",
-      "checkedAt": "2026-10-28T18:25:42.376331Z",
+      "checkedAt": "2026-10-28T18:26:13.986827Z",
       "sourceKey": "mls:alternate-cameras",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
@@ -217,7 +218,7 @@
       "notes": "Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOcFlad29wOHpMQzhNMFlUaGMzd0dsMkRPcXU5YTdNMVptY3UwVVh0Mk1POXY3TUZIcXBObXNfY3ZPVjdReHZ3cDFfVHlJQ2FFdEJOaXhnel9GY1F5c0tWSXRUWnRMcHJqdFh3SklER0lCcDBMRTJYMXpTcm9MZjlkMV9rTnRYU2xId0ZNQ0dvY3d4b292YWE4ZDlkaUVqb2M?oc=5",
       "sourcePublishedAt": "2026-09-08T07:00:00Z",
-      "checkedAt": "2026-10-28T18:25:42.376331Z",
+      "checkedAt": "2026-10-28T18:26:13.986827Z",
       "sourceKey": "ligue1:expert-mode",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
@@ -238,7 +239,7 @@
       "notes": "Worldwide discovery lead. Exact fixture, English audio/commentary, public territory and viewing route must be verified before confirmation.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNNWxUNXZwMTR0VURaUms5WW1WcHNsTzNqWFAxV3dPMEFOYUV5T21pZDBJU0txNVgtZktCcUFmN1RqZ0VWdU9zSll5QXhfOVItUWhuX0hWdXhRNVJsZjcwMXBsSlZlaDEwaUdUUnJ0eFdXNElPc0tyZVJnZXlaNm9TajQ4V3d2RDl0NUdKaFZyWjZ5WEpTV1FBcTVvcFZxdENQWEpkbWkyeFY5aXVkMnV1N2k5Sm1xa00?oc=5",
       "sourcePublishedAt": "2026-09-28T07:00:00Z",
-      "checkedAt": "2026-10-28T18:25:44.014887Z",
+      "checkedAt": "2026-10-28T18:26:14.777243Z",
       "sourceKey": "global:camera-feed-discovery",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
