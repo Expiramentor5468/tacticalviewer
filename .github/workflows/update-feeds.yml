@@ -25,6 +25,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -61,7 +63,11 @@ jobs:
             echo "No changes"
           else
             git commit -m "data: refresh tactical feed watchlist"
-            git push
+            # Main may advance while this run is scanning (for example, a documentation
+            # or parser edit). Replay the generated data commit on the latest main before
+            # pushing instead of failing with a non-fast-forward error.
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
       - name: Surface incomplete scans
         if: steps.refresh.outcome == 'failure' || steps.primevision.outcome == 'failure' || steps.skybundesliga.outcome == 'failure' || steps.brands.outcome == 'failure' || steps.global.outcome == 'failure'
