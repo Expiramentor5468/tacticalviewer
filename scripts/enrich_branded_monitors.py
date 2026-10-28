@@ -11,7 +11,7 @@ from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 
-ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/"data"; UA="TacticalFeedFinder/3.3 (+https://github.com/Expiramentor5468/tacticalviewer)"
+ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/"data"; UA="TacticalFeedFinder/3.4 (+https://github.com/Expiramentor5468/tacticalviewer)"
 MONITORS=[
  {"key":"cbs:golazo-tactical","competition":"UEFA Champions League / Serie A","query":'("Tactical Cam" OR "tactical cam") "CBS Sports Golazo" (site:cbssports.com OR site:paramountpressexpress.com)',"brand":"CBS Sports Golazo Network — Tactical Cam","language":"English","pattern":r"\bTactical\s+Cam\b"},
  {"key":"mls:alternate-cameras","competition":"MLS","query":'MLS ("Ref Cam" OR "alternate broadcast" OR "TikTok Player Spotlight") site:mlssoccer.com',"brand":"MLS / Apple TV alternate cameras","language":"English","pattern":r"\bRef\s+Cam\b|\balternate\s+broadcast\b|TikTok\s+Player\s+Spotlight|Player\s+Spotlight.{0,50}(?:stream|live)"},
@@ -30,9 +30,7 @@ def duplicate_of_confirmed(candidate,confirmed):
  for f in confirmed:
   if f.get("competition")!=candidate.get("competition"):continue
   ft=tokens(" ".join(str(f.get(k,"")) for k in("match","platform","commentary","notes")))
-  # Five meaningful shared terms is deliberately conservative; it catches a headline
-  # about an event already in the exact watchlist without hiding unrelated future feeds.
-  if len(ct & ft)>=5:return True
+  if len(ct & ft)>=4:return True
  return False
 def parse(xml,monitor,now):
  root=ET.fromstring(xml);out=[];pattern=re.compile(monitor["pattern"],re.I|re.S)
