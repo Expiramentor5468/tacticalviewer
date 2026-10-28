@@ -32,10 +32,14 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Test browser filtering and verification
         run: node --test tests/app.test.js
-      - name: Refresh sources
+      - name: Refresh generic sources
         id: refresh
         continue-on-error: true
         run: python scripts/update_feeds.py
+      - name: Enrich Amazon Prime Vision fixtures
+        id: primevision
+        continue-on-error: true
+        run: python scripts/enrich_prime_vision.py
       - name: Commit changed feed data
         run: |
           git config user.name "tactical-feed-bot"
@@ -48,7 +52,7 @@ jobs:
             git push
           fi
       - name: Surface incomplete scans
-        if: steps.refresh.outcome == 'failure'
+        if: steps.refresh.outcome == 'failure' || steps.primevision.outcome == 'failure'
         run: |
           echo 'One or more sources could not be checked. Failure details were published to the site; retained listings were not re-verified.'
           exit 1
