@@ -24,16 +24,17 @@ test('safe URL and date handling', () => {
   assert.equal(dateValue('2026-10-27T12:00:00'), null);
 });
 
-test('confirmed feeds require verified English audio and a public territory', () => {
+test('confirmed feeds require public territory but not a particular audio language', () => {
   const base = {
     status: 'confirmed', exactFixtureVerified: true, publicAccessConfirmed: true,
     kickoff: '2026-10-28T12:00:00Z', verifiedAt: '2026-10-27T10:00:00Z',
     sourceUrl: 'https://example.com/source', watchUrl: 'https://example.com/watch',
-    platform: 'Example', territories: ['United Kingdom'], access: 'subscription'
+    platform: 'Example', territories: ['Germany'], access: 'subscription'
   };
   assert.equal(normalizeFeed({ ...base, language: 'English' }, now).status, 'confirmed');
-  assert.equal(normalizeFeed({ ...base, language: 'Italian' }, now).status, 'candidate');
-  assert.equal(normalizeFeed({ ...base, language: 'English', territories: [] }, now).status, 'candidate');
+  assert.equal(normalizeFeed({ ...base, language: 'Italian' }, now).status, 'confirmed');
+  assert.equal(normalizeFeed({ ...base, language: 'Unknown', commentary: 'No commentary / raw video' }, now).status, 'confirmed');
+  assert.equal(normalizeFeed({ ...base, territories: [] }, now).status, 'candidate');
 });
 
 test('territory filter is exact and global', () => {
