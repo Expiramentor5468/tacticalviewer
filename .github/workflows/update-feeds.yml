@@ -40,6 +40,10 @@ jobs:
         id: primevision
         continue-on-error: true
         run: python scripts/enrich_prime_vision.py
+      - name: Enrich Sky Bundesliga Tactical Feed fixtures
+        id: skybundesliga
+        continue-on-error: true
+        run: python scripts/enrich_sky_bundesliga.py
       - name: Commit changed feed data
         run: |
           git config user.name "tactical-feed-bot"
@@ -52,7 +56,7 @@ jobs:
             git push
           fi
       - name: Surface incomplete scans
-        if: steps.refresh.outcome == 'failure' || steps.primevision.outcome == 'failure'
+        if: steps.refresh.outcome == 'failure' || steps.primevision.outcome == 'failure' || steps.skybundesliga.outcome == 'failure'
         run: |
           echo 'One or more sources could not be checked. Failure details were published to the site; retained listings were not re-verified.'
           exit 1
