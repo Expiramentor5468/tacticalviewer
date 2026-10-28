@@ -1,52 +1,91 @@
 # Tactical Feed Finder
 
-A zero-build soccer camera-feed watchlist. Champions League, Premier League and MLS come first, with Bundesliga and Serie A as fallback.
+A zero-build, auto-updating watchlist for useful live soccer camera feeds around the world. UEFA Champions League, Premier League and MLS are prioritized, but any competition is eligible when an English-language public stream can be verified.
 
-## Evidence, not promises
+## What counts as confirmed
 
-- **Public access verified** means an exact fixture and public viewing route have been manually verified, with regions and evidence reviewed within seven days. A source and a viewing-service URL are both required.
-- **Production only** means a league lists a camera feed for broadcasters. It does **not** mean a consumer service carries it. U.S. availability, cost and the watch link remain unknown.
-- **Unverified lead** means a recent article mentions a potentially useful camera feed. It does not confirm a current fixture.
+**Public access verified** is intentionally strict. A listing needs all of the following:
 
-The initial Bayern–Dortmund listing is production only. Its official fixture-row tooltip lists Tactical Feed, but a public viewing route has not been verified. Zero publicly verified results is an honest outcome.
+- an exact fixture and kickoff time;
+- a public consumer viewing route;
+- the exact countries/territories where that route is available;
+- verified **English commentary/audio**;
+- a watch URL and supporting source URL;
+- evidence reviewed within the last seven days.
+
+A feed can be public in Germany, the UK, Australia, Japan, the U.S., or anywhere else. U.S. availability is only a filter — it is not an assumption.
+
+**Production only** means a league or production supplier confirms the camera/feed exists for broadcasters, but no qualifying consumer route has been proven.
+
+**Unverified lead** means a source or branded product looks relevant but is still missing one or more of: exact fixture, English audio, public territory, watch route, or access terms.
+
+## Feed types
+
+- **Tactical / wide** — the main target: a high/wide view that keeps most or all players visible.
+- **Coach cam** — manager/bench view.
+- **Ref cam** — referee POV.
+- **Alternate broadcast** — included when it provides useful angles, live tactical data, or analysis even when it is not a persistent full-pitch view.
+
+## Automated sources
+
+The GitHub Actions updater currently combines several layers:
+
+1. **Amazon Prime Vision** — reads Amazon's official monthly Champions League schedule and joins it to Prime Vision's official product/territory/language evidence.
+2. **Bundesliga production** — parses DFL fixture/product data for Tactical Feed and extra-camera production metadata.
+3. **Sky/WOW Bundesliga monitor** — tracks the Saturday Topspiel Tactical Feed, but does not mark it English-confirmed unless consumer audio is independently verified.
+4. **Branded-product monitors** — watches for CBS Golazo Tactical Cam, MLS/Apple Ref Cam and altcasts, Premier League Game Mode/tactical variants, and Ligue 1+ Expert Mode.
+5. **Worldwide discovery net** — searches for tactical cams, tactical feeds, wide-angle cameras, coach cams, manager modes and referee cams outside the known services.
+
+Known branded products are preferred over generic keyword discovery. Generic discoveries remain leads until the full confirmation standard is met.
+
+## Current territory handling
+
+Every confirmed row carries a `territories` array. The site builds the Territory filter from the data automatically and displays the verified regions directly on each card.
+
+English is currently required for confirmed status. A public stream with only Italian, German, French, Spanish, etc. audio can still be discovered internally, but it will not enter the confirmed English watchlist until English audio is proven.
 
 ## Open or deploy
 
-Open `index.html` directly, or serve these static files from GitHub Pages / any static host. No build step, API key or third-party Python package is needed.
+Open `index.html` directly, or serve the repository from GitHub Pages / any static host. No build step or API key is required.
 
-Hosted pages fetch `https://raw.githubusercontent.com/Expiramentor5468/tacticalviewer/main/data/feeds.json` on load and every five minutes while visible. This lets mirrors and GitHub Pages pick up scheduled data commits without a site rebuild. The bundled `data.js` works offline and is retained if the fetch fails, with a visible warning. Never replace a newer snapshot with an older remote response.
+Hosted pages fetch `https://raw.githubusercontent.com/Expiramentor5468/tacticalviewer/main/data/feeds.json` on load and every five minutes while visible. The bundled `data.js` remains as an offline/failure fallback.
 
-To use another repository or a same-origin data file, set this before `app.js`:
+## Automatic updates
 
-```html
-<script>window.TACTICAL_FEED_DATA_URL = 'data/feeds.json';</script>
-```
-
-## Update and test
+The GitHub Actions workflow runs every three hours and can also be started manually. It runs tests, refreshes all discovery/enrichment stages, commits changed `data.js` / `data/feeds.json`, and lets GitHub Pages republish the result.
 
 ```sh
 python scripts/update_feeds.py
+python scripts/enrich_prime_vision.py
+python scripts/enrich_sky_bundesliga.py
+python scripts/enrich_branded_monitors.py
+python scripts/enrich_global_discovery.py
 python -m unittest discover -s tests -v
 node --test tests/app.test.js
 ```
 
-Python 3.11+ and Node 18+ are sufficient. The updater searches Google News RSS for recent leads and parses the official Bundesliga fixture table (including Extra Feeds tooltip templates) into production-only entries. It uses the UTC column, never the CET display column. If the table layout changes, it falls back to a clearly undated catalogue lead instead of guessing fixtures.
-
-The updater publishes per-source health. Failed sources retain prior evidence with its original timestamp; retained news still expires after 21 days. A complete successful scan timestamp advances only when all sources respond. Partial and failed scans write honest metadata and then exit 2 so scheduled failures are visible. The workflow should commit the metadata before reporting the failure. A scan checks discovery sources; it does not renew manual evidence or prove public access.
+Python 3.11+ and Node 18+ are sufficient.
 
 ## Manual verification
 
-Edit `data/manual_overrides.json`. A confirmed row requires all of:
+`data/manual_overrides.json` is reserved for exact feeds that have been manually verified but do not yet have a reliable source-specific parser.
 
-- `status: "confirmed"`, `exactFixtureVerified: true`, `publicAccessConfirmed: true`
-- a timezone-aware ISO `kickoff` and `verifiedAt` (within seven days, not in the future)
-- HTTP(S) `sourceUrl` and `watchUrl`, a named `platform`, and non-empty `territories` such as `["US"]`
-- evidence for the stated feed, fixture and territory; set `usAvailability`, `access` and `commentary` only when supported
+A confirmed row requires:
 
-The updater and client downgrade incomplete or stale confirmed rows to leads. Expired fixtures leave the generated data six hours after kickoff. Upcoming filters exclude past, invalid and unknown kickoff times. “Explore evidence & leads” deliberately includes undated records; article publication and source-fetch dates are displayed separately from kickoff.
+- `status: "confirmed"`
+- `exactFixtureVerified: true`
+- `publicAccessConfirmed: true`
+- timezone-aware `kickoff` and fresh `verifiedAt`
+- HTTP(S) `sourceUrl` and `watchUrl`
+- named `platform`
+- non-empty `territories`
+- `language: "English"`
+- supported access terms (`free` or `subscription`) when known
 
-Production-only manual rows use `status: "production"`, `publicAccessConfirmed: false`, and `usAvailability: null` / `access: "unknown"`. Never infer carriage from a league supplying a feed or an old article describing past availability.
+Both the updater and browser client downgrade stale/incomplete confirmation claims rather than guessing.
 
-## Limits
+## Philosophy
 
-This is a discovery watchlist, not a full fixture database or a live-stream provider. UCL, Premier League and MLS discovery does not yet have source-specific automatic fixture/access confirmation. News indexing can miss announcements; broadcaster sign-in, regional restrictions and last-minute schedule changes still need checking. Source health is visible in the page footer. The workflow's schedule is best effort, not a freshness guarantee.
+The goal is not to maximize the number of cards. It is to maximize the number of cards you can actually use.
+
+A broadcaster producing a tactical feed is not the same thing as fans being able to watch it. A stream existing in one country is not evidence it exists elsewhere. A broadcaster offering English on its normal feed is not proof that an alternate feed has English. TacticalViewer keeps those distinctions explicit.
