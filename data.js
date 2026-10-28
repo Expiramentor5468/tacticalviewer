@@ -1,50 +1,50 @@
 window.TACTICAL_FEED_DATA = {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-28T17:24:43.501473Z",
-  "lastAttemptAt": "2026-10-28T17:24:40.872077Z",
-  "lastSuccessfulScanAt": "2026-10-28T17:24:40.872077Z",
+  "updatedAt": "2026-10-28T17:25:47.956100Z",
+  "lastAttemptAt": "2026-10-28T17:25:45.467371Z",
+  "lastSuccessfulScanAt": "2026-10-28T17:25:45.467371Z",
   "scanStatus": "ok",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
       "ok": true,
-      "checkedAt": "2026-10-28T17:24:40.872077Z",
+      "checkedAt": "2026-10-28T17:25:45.467371Z",
       "count": 0
     },
     {
       "source": "news:Premier League",
       "ok": true,
-      "checkedAt": "2026-10-28T17:24:40.872077Z",
+      "checkedAt": "2026-10-28T17:25:45.467371Z",
       "count": 0
     },
     {
       "source": "news:MLS",
       "ok": true,
-      "checkedAt": "2026-10-28T17:24:40.872077Z",
+      "checkedAt": "2026-10-28T17:25:45.467371Z",
       "count": 0
     },
     {
       "source": "news:Bundesliga",
       "ok": true,
-      "checkedAt": "2026-10-28T17:24:40.872077Z",
+      "checkedAt": "2026-10-28T17:25:45.467371Z",
       "count": 0
     },
     {
       "source": "news:Serie A",
       "ok": true,
-      "checkedAt": "2026-10-28T17:24:40.872077Z",
+      "checkedAt": "2026-10-28T17:25:45.467371Z",
       "count": 0
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-10-28T17:24:40.872077Z"
+      "checkedAt": "2026-10-28T17:25:45.467371Z"
     },
     {
       "source": "amazon:prime-vision",
       "ok": true,
-      "checkedAt": "2026-10-28T17:24:43.501473Z",
-      "count": 0,
+      "checkedAt": "2026-10-28T17:25:47.956100Z",
+      "count": 2,
       "pagesChecked": 2
     }
   ],
@@ -66,6 +66,54 @@ window.TACTICAL_FEED_DATA = {
       "verifiedAt": "2026-10-27T03:25:13.378631Z",
       "exactFixtureVerified": true,
       "publicAccessConfirmed": false
+    },
+    {
+      "id": "prime-vision-5d9fbd950af80a60",
+      "match": "Manchester United vs Roma",
+      "competition": "UEFA Champions League",
+      "kickoff": "2026-11-03T20:00:00Z",
+      "type": "alternate",
+      "status": "confirmed",
+      "platform": "Prime Video — Prime Vision",
+      "commentary": "English; Prime Vision adds live tactical/data overlays",
+      "usAvailability": false,
+      "access": "subscription",
+      "territories": [
+        "United Kingdom"
+      ],
+      "notes": "Amazon's official monthly schedule confirms this as Prime Video's UCL top-pick fixture. Amazon's official UCL policy confirms Prime Vision is part of its Champions League coverage this season. Prime Vision adds live statistics, passing options and tactical analytics; it is not a persistent full-pitch wide camera.",
+      "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
+      "watchUrl": "https://www.primevideo.com/",
+      "sourceKey": "amazon:prime-vision",
+      "checkedAt": "2026-10-28T17:25:47.956100Z",
+      "verifiedAt": "2026-10-28T17:25:47.956100Z",
+      "exactFixtureVerified": true,
+      "publicAccessConfirmed": true,
+      "secondarySourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/champions-league-prime-video-uk-renewal"
+    },
+    {
+      "id": "prime-vision-ba82a33d35939a68",
+      "match": "Arsenal vs Dortmund",
+      "competition": "UEFA Champions League",
+      "kickoff": "2026-11-24T20:00:00Z",
+      "type": "alternate",
+      "status": "confirmed",
+      "platform": "Prime Video — Prime Vision",
+      "commentary": "English; Prime Vision adds live tactical/data overlays",
+      "usAvailability": false,
+      "access": "subscription",
+      "territories": [
+        "United Kingdom"
+      ],
+      "notes": "Amazon's official monthly schedule confirms this as Prime Video's UCL top-pick fixture. Amazon's official UCL policy confirms Prime Vision is part of its Champions League coverage this season. Prime Vision adds live statistics, passing options and tactical analytics; it is not a persistent full-pitch wide camera.",
+      "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
+      "watchUrl": "https://www.primevideo.com/",
+      "sourceKey": "amazon:prime-vision",
+      "checkedAt": "2026-10-28T17:25:47.956100Z",
+      "verifiedAt": "2026-10-28T17:25:47.956100Z",
+      "exactFixtureVerified": true,
+      "publicAccessConfirmed": true,
+      "secondarySourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/champions-league-prime-video-uk-renewal"
     }
   ]
 };
