@@ -1,49 +1,49 @@
 window.TACTICAL_FEED_DATA = {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-28T18:26:14.777243Z",
-  "lastAttemptAt": "2026-10-28T18:25:58.142496Z",
-  "lastSuccessfulScanAt": "2026-10-28T18:25:58.142496Z",
+  "updatedAt": "2026-10-28T18:28:29.972122Z",
+  "lastAttemptAt": "2026-10-28T18:28:13.553505Z",
+  "lastSuccessfulScanAt": "2026-10-28T18:28:13.553505Z",
   "scanStatus": "ok",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:58.142496Z",
+      "checkedAt": "2026-10-28T18:28:13.553505Z",
       "count": 0
     },
     {
       "source": "news:Premier League",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:58.142496Z",
+      "checkedAt": "2026-10-28T18:28:13.553505Z",
       "count": 0
     },
     {
       "source": "news:MLS",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:58.142496Z",
+      "checkedAt": "2026-10-28T18:28:13.553505Z",
       "count": 0
     },
     {
       "source": "news:Bundesliga",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:58.142496Z",
+      "checkedAt": "2026-10-28T18:28:13.553505Z",
       "count": 0
     },
     {
       "source": "news:Serie A",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:58.142496Z",
+      "checkedAt": "2026-10-28T18:28:13.553505Z",
       "count": 0
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-10-28T18:25:58.142496Z"
+      "checkedAt": "2026-10-28T18:28:13.553505Z"
     },
     {
       "source": "amazon:prime-vision",
       "ok": false,
-      "checkedAt": "2026-10-28T18:26:00.952118Z",
+      "checkedAt": "2026-10-28T18:28:16.330375Z",
       "count": 2,
       "pagesChecked": 2,
       "error": "ValueError"
@@ -51,7 +51,7 @@ window.TACTICAL_FEED_DATA = {
     {
       "source": "sky:bundesliga-tactical",
       "ok": true,
-      "checkedAt": "2026-10-28T18:26:02.811093Z",
+      "checkedAt": "2026-10-28T18:28:18.023238Z",
       "count": 0,
       "exportsChecked": 11,
       "englishAudioVerified": false
@@ -59,32 +59,32 @@ window.TACTICAL_FEED_DATA = {
     {
       "source": "cbs:golazo-tactical",
       "ok": true,
-      "checkedAt": "2026-10-28T18:26:13.986827Z",
+      "checkedAt": "2026-10-28T18:28:28.965185Z",
       "count": 0
     },
     {
       "source": "mls:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-10-28T18:26:13.986827Z",
+      "checkedAt": "2026-10-28T18:28:28.965185Z",
       "count": 1
     },
     {
       "source": "premierleague:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-10-28T18:26:13.986827Z",
+      "checkedAt": "2026-10-28T18:28:28.965185Z",
       "count": 0
     },
     {
       "source": "ligue1:expert-mode",
       "ok": true,
-      "checkedAt": "2026-10-28T18:26:13.986827Z",
+      "checkedAt": "2026-10-28T18:28:28.965185Z",
       "count": 1
     },
     {
       "source": "global:camera-feed-discovery",
       "ok": true,
-      "checkedAt": "2026-10-28T18:26:14.777243Z",
-      "count": 1,
+      "checkedAt": "2026-10-28T18:28:29.972122Z",
+      "count": 0,
       "queriesChecked": 3
     }
   ],
@@ -150,7 +150,7 @@ window.TACTICAL_FEED_DATA = {
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": null,
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-10-28T18:26:00.952118Z",
+      "checkedAt": "2026-10-28T18:28:16.330375Z",
       "verifiedAt": null,
       "exactFixtureVerified": true,
       "publicAccessConfirmed": false,
@@ -174,7 +174,7 @@ window.TACTICAL_FEED_DATA = {
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": null,
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-10-28T18:26:00.952118Z",
+      "checkedAt": "2026-10-28T18:28:16.330375Z",
       "verifiedAt": null,
       "exactFixtureVerified": true,
       "publicAccessConfirmed": false,
@@ -197,7 +197,7 @@ window.TACTICAL_FEED_DATA = {
       "notes": "Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNdVBEcVRKREY1cGhNRGRUSWVraEc2cjNmblAxSHJtZFBoSkxHOHZGRzN6Q2g4XzdkSzlyUm96T2VYVWxHS0trU1o3MWUyLUwzVF8zY0tQM3NDcEc3eUt6Y0loRU9YNmFCNlg3NzJGdWppNlhQYnZQQVhYbmh3eE5fVUZnLVVnRl9Pci0yV0VjM3dwX3RWRXZtZUNXV0tMYlU5U1l6Ykg4Rktic0VLekJYSUJmTlNvWkphMmJUM3Nn?oc=5",
       "sourcePublishedAt": "2026-09-02T07:00:00Z",
-      "checkedAt": "2026-10-28T18:26:13.986827Z",
+      "checkedAt": "2026-10-28T18:28:28.965185Z",
       "sourceKey": "mls:alternate-cameras",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
@@ -218,29 +218,8 @@ window.TACTICAL_FEED_DATA = {
       "notes": "Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOcFlad29wOHpMQzhNMFlUaGMzd0dsMkRPcXU5YTdNMVptY3UwVVh0Mk1POXY3TUZIcXBObXNfY3ZPVjdReHZ3cDFfVHlJQ2FFdEJOaXhnel9GY1F5c0tWSXRUWnRMcHJqdFh3SklER0lCcDBMRTJYMXpTcm9MZjlkMV9rTnRYU2xId0ZNQ0dvY3d4b292YWE4ZDlkaUVqb2M?oc=5",
       "sourcePublishedAt": "2026-09-08T07:00:00Z",
-      "checkedAt": "2026-10-28T18:26:13.986827Z",
+      "checkedAt": "2026-10-28T18:28:28.965185Z",
       "sourceKey": "ligue1:expert-mode",
-      "exactFixtureVerified": false,
-      "publicAccessConfirmed": false
-    },
-    {
-      "id": "global-lead-3349180fd1b8fa62",
-      "match": "Underdog & Co. makes another move in adding Wide Angle Group - Sports Business Journal",
-      "competition": "Other / global",
-      "kickoff": null,
-      "type": "tactical",
-      "status": "candidate",
-      "platform": "Global discovery — carrier unverified",
-      "language": "Unknown",
-      "commentary": "English audio not yet verified",
-      "usAvailability": null,
-      "access": "unknown",
-      "territories": [],
-      "notes": "Worldwide discovery lead. Exact fixture, English audio/commentary, public territory and viewing route must be verified before confirmation.",
-      "sourceUrl": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNNWxUNXZwMTR0VURaUms5WW1WcHNsTzNqWFAxV3dPMEFOYUV5T21pZDBJU0txNVgtZktCcUFmN1RqZ0VWdU9zSll5QXhfOVItUWhuX0hWdXhRNVJsZjcwMXBsSlZlaDEwaUdUUnJ0eFdXNElPc0tyZVJnZXlaNm9TajQ4V3d2RDl0NUdKaFZyWjZ5WEpTV1FBcTVvcFZxdENQWEpkbWkyeFY5aXVkMnV1N2k5Sm1xa00?oc=5",
-      "sourcePublishedAt": "2026-09-28T07:00:00Z",
-      "checkedAt": "2026-10-28T18:26:14.777243Z",
-      "sourceKey": "global:camera-feed-discovery",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
     }
