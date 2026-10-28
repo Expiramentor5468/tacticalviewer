@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
-"""Add public Sky/WOW Bundesliga Saturday Topspiel Tactical Feeds."""
+"""Monitor Sky/WOW's Bundesliga Tactical Feed without inferring English consumer audio.
+
+Sky publicly confirms the Saturday Topspiel Tactical Feed and Germany viewing route.
+DFL separately confirms its Tactical Feed production product contains English analysis.
+Until Sky explicitly confirms that its consumer carriage preserves English audio, exact
+Sky fixtures stay candidates under TacticalViewer's English-only policy.
+"""
 from __future__ import annotations
 import hashlib, html, io, json, re, urllib.parse, urllib.request, zipfile, xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
-ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/"data"; UA="TacticalFeedFinder/3.4 (+https://github.com/Expiramentor5468/tacticalviewer)"
+ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/"data"; UA="TacticalFeedFinder/3.5 (+https://github.com/Expiramentor5468/tacticalviewer)"
 BERLIN=ZoneInfo("Europe/Berlin"); FIXTURES="https://products.bundesliga.com/fixtures"; DFL_PRODUCT="https://products.bundesliga.com/matchdays"; SKY_POLICY="https://videos.sport.sky.de/fussball/artikel/patrick-ittrich-neuer-schiedsrichter-experte-bei-sky-sport-ex-bundesliga-referee-verstaerkt-bundesliga-team/13574269/35311"; SKY_WATCH="https://www.wowtv.de/"; EXCEPTIONS={("FC Bayern München","Borussia Dortmund","2026-10-31")}
 def get_text(url):
     req=urllib.request.Request(url,headers={"User-Agent":UA});
@@ -17,12 +23,12 @@ def plain(s):return re.sub(r"\s+"," ",html.unescape(re.sub(r"<[^>]+>"," ",s)))
 def policy_ok(sky,dfl):
     s,d=plain(sky),plain(dfl);return bool(re.search(r"Tactical Feed",s,re.I) and re.search(r"Sky Sport Bundesliga 3",s,re.I) and re.search(r"Topspiel",s,re.I) and re.search(r"Tactical Feed",d,re.I) and re.search(r"English-language analysis",d,re.I))
 def export_context(text):
-    text=html.unescape(text); league=re.search(r"league(?:%5B0%5D|\[0\])=([^&\"']+)",text,re.I); md=re.search(r"matchday(?:%5B0%5D|\[0\])=(\d+)",text,re.I); season=re.search(r"season=([^&\"']+)",text,re.I)
+    text=html.unescape(text);league=re.search(r"league(?:%5B0%5D|\[0\])=([^&\"']+)",text,re.I);md=re.search(r"matchday(?:%5B0%5D|\[0\])=(\d+)",text,re.I);season=re.search(r"season=([^&\"']+)",text,re.I)
     if not(league and md and season):raise ValueError("DFL export context not found")
     return urllib.parse.unquote(league.group(1)),urllib.parse.unquote(season.group(1)),int(md.group(1))
 def export_url(league,season,md):return FIXTURES+"/export/excel?"+urllib.parse.urlencode({"league[0]":league,"matchday[0]":str(md),"season":season})
 def col_index(ref):
-    letters=re.match(r"[A-Z]+",ref or ""); n=0
+    letters=re.match(r"[A-Z]+",ref or "");n=0
     if not letters:return 0
     for ch in letters.group():n=n*26+ord(ch)-64
     return n-1
@@ -31,14 +37,14 @@ def xlsx_rows(blob):
     with zipfile.ZipFile(io.BytesIO(blob)) as z:
         shared=[]
         if "xl/sharedStrings.xml" in z.namelist():
-            root=ET.fromstring(z.read("xl/sharedStrings.xml")); shared=["".join(t.text or "" for t in si.iter(ns+"t")) for si in root.findall(ns+"si")]
-        sheets=sorted(n for n in z.namelist() if n.startswith("xl/worksheets/sheet") and n.endswith(".xml"));
+            root=ET.fromstring(z.read("xl/sharedStrings.xml"));shared=["".join(t.text or "" for t in si.iter(ns+"t")) for si in root.findall(ns+"si")]
+        sheets=sorted(n for n in z.namelist() if n.startswith("xl/worksheets/sheet") and n.endswith(".xml"))
         if not sheets:raise ValueError("No worksheet")
-        root=ET.fromstring(z.read(sheets[0])); rows=[]
+        root=ET.fromstring(z.read(sheets[0]));rows=[]
         for row in root.iter(ns+"row"):
             vals={}
             for c in row.findall(ns+"c"):
-                idx=col_index(c.attrib.get("r","A1")); t=c.attrib.get("t"); v=c.find(ns+"v")
+                idx=col_index(c.attrib.get("r","A1"));t=c.attrib.get("t");v=c.find(ns+"v")
                 if t=="inlineStr":val="".join(x.text or "" for x in c.iter(ns+"t"))
                 elif v is None:val=""
                 elif t=="s":
@@ -70,23 +76,21 @@ def excel_time(v):
             mins=round(n*1440)%1440;return f"{mins//60:02d}:{mins%60:02d}"
     except ValueError:pass
     return None
-def top_spiele_from_export(blob,now,debug=False):
+def top_spiele_from_export(blob,now):
     rows=xlsx_rows(blob)
-    if debug:print("DFL_EXPORT_SAMPLE",json.dumps(rows[:12],ensure_ascii=False))
-    if not rows:return []
     header_i=next((i for i,r in enumerate(rows) if any("home" in c.lower() for c in r) and any("away" in c.lower() for c in r)),None)
     if header_i is None:return []
     headers=[re.sub(r"\s+"," ",c).strip().lower() for c in rows[header_i]]
-    def col(*ns):return next((i for i,h in enumerate(headers) if all(n in h for n in ns)),None)
+    def col(*needles):return next((i for i,h in enumerate(headers) if all(n in h for n in needles)),None)
     i_day,i_date,i_cet,i_home,i_away=col("day"),col("date"),col("kick","cet"),col("home"),col("away")
     if None in(i_date,i_cet,i_home,i_away):return []
-    out=[]; horizon=now+timedelta(days=60)
+    out=[];horizon=now+timedelta(days=60)
     for row in rows[header_i+1:]:
-        at=lambda i:row[i].strip() if i is not None and i<len(row) else ""; day=at(i_day).lower(); date=excel_date(at(i_date)); clock=excel_time(at(i_cet))
+        at=lambda i:row[i].strip() if i is not None and i<len(row) else "";day=at(i_day).lower();date=excel_date(at(i_date));clock=excel_time(at(i_cet))
         if not date or clock!="18:30" or(day and day not in{"sat","saturday","sa"}):continue
         home,away=at(i_home),at(i_away)
         if not home or not away:continue
-        local=datetime.combine(date.date(),datetime.strptime(clock,"%H:%M").time(),tzinfo=BERLIN); kickoff=local.astimezone(timezone.utc)
+        local=datetime.combine(date.date(),datetime.strptime(clock,"%H:%M").time(),tzinfo=BERLIN);kickoff=local.astimezone(timezone.utc)
         if now-timedelta(hours=6)<=kickoff<=horizon and(home,away,local.date().isoformat()) not in EXCEPTIONS:out.append({"home":home,"away":away,"kickoff":kickoff})
     return out
 def load():return json.loads((DATA/"feeds.json").read_text(encoding="utf-8"))
@@ -99,14 +103,13 @@ def main():
         if not policy_ok(sky,dfl):raise ValueError("policy")
         league,season,current_md=export_context(fixture_html);found=[];checked=0
         for md in range(current_md,min(34,current_md+10)+1):
-            try:
-                rows=top_spiele_from_export(get_bytes(export_url(league,season,md)),now,debug=(md==current_md));checked+=1;found.extend(rows)
-            except Exception as exc:print("DFL_EXPORT_ERROR",md,type(exc).__name__)
+            try:found.extend(top_spiele_from_export(get_bytes(export_url(league,season,md)),now));checked+=1
+            except Exception:continue
         unique=list({(r["home"],r["away"],r["kickoff"]):r for r in found}.values())
         for r in sorted(unique,key=lambda x:x["kickoff"]):
             match=f"{r['home']} vs {r['away']}";kick=r["kickoff"].isoformat().replace("+00:00","Z");ident=hashlib.sha256((match+kick).encode()).hexdigest()[:16]
-            feeds.append({"id":"sky-bundesliga-tactical-"+ident,"match":match,"competition":"Bundesliga","kickoff":kick,"type":"tactical","status":"confirmed","platform":"Sky Sport Bundesliga 3 / WOW","language":"English","commentary":"English tactical analysis (DFL Tactical Feed)","usAvailability":False,"access":"subscription","territories":["Germany"],"notes":"Sky's current Bundesliga policy assigns a Tactical Feed to the Saturday Topspiel. DFL defines it as a full-pitch tactical product with expert English-language analysis.","sourceUrl":SKY_POLICY,"secondarySourceUrl":DFL_PRODUCT,"fixtureSourceUrl":FIXTURES,"watchUrl":SKY_WATCH,"sourceKey":"sky:bundesliga-tactical","checkedAt":now.isoformat().replace("+00:00","Z"),"verifiedAt":now.isoformat().replace("+00:00","Z"),"exactFixtureVerified":True,"publicAccessConfirmed":True})
-        health.append({"source":"sky:bundesliga-tactical","ok":checked>0,"checkedAt":now.isoformat().replace("+00:00","Z"),"count":len(unique),"exportsChecked":checked})
+            feeds.append({"id":"sky-bundesliga-tactical-"+ident,"match":match,"competition":"Bundesliga","kickoff":kick,"type":"tactical","status":"candidate","platform":"Sky Sport Bundesliga 3 / WOW","language":"Unknown","commentary":"Consumer audio language not verified; DFL's production product itself includes English analysis","usAvailability":None,"access":"subscription","territories":["Germany"],"notes":"Sky confirms public Tactical Feed carriage in Germany for the Saturday Topspiel. DFL confirms the underlying Tactical Feed product includes English analysis, but Sky has not been verified to preserve English consumer audio, so this stays a lead under the English-only policy.","sourceUrl":SKY_POLICY,"secondarySourceUrl":DFL_PRODUCT,"fixtureSourceUrl":FIXTURES,"watchUrl":SKY_WATCH,"sourceKey":"sky:bundesliga-tactical","checkedAt":now.isoformat().replace("+00:00","Z"),"verifiedAt":None,"exactFixtureVerified":True,"publicAccessConfirmed":True})
+        health.append({"source":"sky:bundesliga-tactical","ok":checked>0,"checkedAt":now.isoformat().replace("+00:00","Z"),"count":len(unique),"exportsChecked":checked,"englishAudioVerified":False})
     except Exception as exc:health.append({"source":"sky:bundesliga-tactical","ok":False,"checkedAt":now.isoformat().replace("+00:00","Z"),"error":type(exc).__name__})
     p["feeds"],p["sourceHealth"],p["updatedAt"]=feeds,health,now.isoformat().replace("+00:00","Z");write(p);return 0
 if __name__=="__main__":raise SystemExit(main())
