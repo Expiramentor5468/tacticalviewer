@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+"""Worldwide discovery net for soccer camera-feed products not yet covered by a dedicated verifier.
+
+Results are leads only. A lead cannot become confirmed until an exact fixture, English
+commentary/audio, public viewing route, territory and access terms are verified.
+"""
+from __future__ import annotations
+import hashlib, html, json, re, urllib.parse, urllib.request, xml.etree.ElementTree as ET
+from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
+from pathlib import Path
+
+ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/"data"
+UA="TacticalFeedFinder/3.2 (+https://github.com/Expiramentor5468/tacticalviewer)"
+SOURCE="global:camera-feed-discovery"
+QUERIES=[
+    '("tactical cam" OR "tactical feed" OR "tactical view") (soccer OR football) (live OR stream OR broadcast)',
+    '("wide angle" OR "wide-angle" OR "coach cam" OR "manager mode") (soccer OR football) (live OR broadcast)',
+    '("ref cam" OR "referee cam") (soccer OR football) (live OR broadcast)',
+]
+PATTERN=re.compile(r'\b(?:tactical\s*(?:cam|camera|feed|view)|wide[- ]angle|coach\s*cam|manager\s*mode|ref(?:eree)?\s*cam)\b',re.I)
+
+def stamp(dt):return dt.astimezone(timezone.utc).isoformat().replace('+00:00','Z')
+def get(url):
+    req=urllib.request.Request(url,headers={'User-Agent':UA})
+    with urllib.request.urlopen(req,timeout=20) as r:return r.read(2_000_000).decode('utf-8',errors='replace')
+def rss_url(q):return 'https://news.google.com/rss/search?q='+urllib.parse.quote(q+' when:45d')+'&hl=en&gl=US&ceid=US:en'
+def parse(xml,now):
+    root=ET.fromstring(xml);out=[]
+    for item in root.findall('./channel/item')[:50]:
+        title=html.unescape(item.findtext('title',''));desc=re.sub('<[^>]+>',' ',html.unescape(item.findtext('description','')));body=title+' '+desc
+        if not PATTERN.search(body):continue
+        try:
+            published=parsedate_to_datetime(item.findtext('pubDate',''))
+            if published.tzinfo is None or not now-timedelta(days=45)<=published<=now+timedelta(hours=1):continue
+        except (ValueError,TypeError):continue
+        link=item.findtext('link','')
+        if not link.startswith(('https://','http://')):continue
+        low=body.lower()
+        kind='tactical' if 'tactical' in low or 'wide-angle' in low or 'wide angle' in low else 'coach' if 'coach cam' in low or 'manager mode' in low else 'ref' if 'ref cam' in low or 'referee cam' in low else 'alternate'
+        ident=hashlib.sha256(link.encode()).hexdigest()[:16]
+        out.append({'id':'global-lead-'+ident,'match':title,'competition':'Other / global','kickoff':None,'type':kind,'status':'candidate','platform':'Global discovery — carrier unverified','language':'Unknown','commentary':'English audio not yet verified','usAvailability':None,'access':'unknown','territories':[],'notes':'Worldwide discovery lead. Exact fixture, English audio/commentary, public territory and viewing route must be verified before confirmation.','sourceUrl':link,'sourcePublishedAt':stamp(published),'checkedAt':stamp(now),'sourceKey':SOURCE,'exactFixtureVerified':False,'publicAccessConfirmed':False})
+    return out
+
+def load():return json.loads((DATA/'feeds.json').read_text(encoding='utf-8'))
+def write(p):
+    encoded=json.dumps(p,indent=2,ensure_ascii=False);(DATA/'feeds.json').write_text(encoded+'\n',encoding='utf-8');(ROOT/'data.js').write_text('window.TACTICAL_FEED_DATA = '+encoded+';\n',encoding='utf-8')
+def main():
+    now=datetime.now(timezone.utc);p=load();feeds=[f for f in p.get('feeds',[]) if f.get('sourceKey')!=SOURCE];health=[h for h in p.get('sourceHealth',[]) if h.get('source')!=SOURCE]
+    found=[];ok=0;errors=[]
+    for q in QUERIES:
+        try:found.extend(parse(get(rss_url(q)),now));ok+=1
+        except Exception as exc:errors.append(type(exc).__name__)
+    seen=set();unique=[]
+    for f in found:
+        if f['id'] in seen:continue
+        seen.add(f['id']);unique.append(f)
+    feeds.extend(unique);health.append({'source':SOURCE,'ok':ok>0,'checkedAt':stamp(now),'count':len(unique),'queriesChecked':ok,**({'errors':errors} if errors else {})})
+    p['feeds'],p['sourceHealth'],p['updatedAt']=feeds,health,stamp(now);write(p);return 0
+if __name__=='__main__':raise SystemExit(main())
