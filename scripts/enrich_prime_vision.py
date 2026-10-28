@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 """Add Amazon Prime Video UEFA Champions League Prime Vision fixtures.
 
-Uses only Amazon-owned public sources:
-- About Amazon UK monthly Prime Video schedule pages for the exact UCL fixture/date/time.
-- Prime Video's UCL help page as evidence that Prime Vision is a selectable alternate
-  broadcast for Prime's Champions League match.
+Uses Amazon-owned public sources only:
+- About Amazon UK monthly Prime Video schedule pages for exact UCL fixture/date/time.
+- About Amazon UK's UCL rights/Prime Vision policy page for the recurring product.
 
-This is intentionally separate from the generic discovery scan so a temporary Amazon
-page-format problem cannot erase the rest of the watchlist.
+Prime Vision is data-enhanced alternate coverage, not a persistent full-pitch wide cam.
 """
 from __future__ import annotations
 
@@ -25,9 +23,9 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
-UA = "TacticalFeedFinder/3.0 (+https://github.com/Expiramentor5468/tacticalviewer)"
+UA = "TacticalFeedFinder/3.1 (+https://github.com/Expiramentor5468/tacticalviewer)"
 LONDON = ZoneInfo("Europe/London")
-PRIME_HELP = "https://www.primevideo.com/salp/ucl-help/?content-id=amzn1.sym.dd781929-775e-45af-be91-40c39fedce52"
+PRIME_POLICY = "https://www.aboutamazon.co.uk/news/entertainment/champions-league-prime-video-uk-renewal"
 PRIME_WATCH = "https://www.primevideo.com/"
 MONTHS = {name.lower(): i for i, name in enumerate(calendar.month_name) if name}
 
@@ -56,7 +54,17 @@ class VisibleText(HTMLParser):
 
     def text(self) -> str:
         raw = html.unescape("".join(self.parts)).replace("\xa0", " ")
-        return "\n".join(re.sub(r"\s+", " ", line).strip(" -*•\t") for line in raw.splitlines() if line.strip())
+        return "\n".join(
+            re.sub(r"\s+", " ", line).strip(" -*•\t")
+            for line in raw.splitlines()
+            if line.strip()
+        )
+
+
+def visible_text(content: str) -> str:
+    parser = VisibleText()
+    parser.feed(content)
+    return parser.text()
 
 
 def get(url: str) -> str:
@@ -66,17 +74,15 @@ def get(url: str) -> str:
 
 
 def month_url(year: int, month: int) -> str:
-    name = calendar.month_name[month].lower()
-    return f"https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-{name}-{year}"
+    return f"https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-{calendar.month_name[month].lower()}-{year}"
 
 
 def add_months(year: int, month: int, offset: int) -> tuple[int, int]:
-    n = year * 12 + (month - 1) + offset
+    n = year * 12 + month - 1 + offset
     return n // 12, n % 12 + 1
 
 
 def parse_date_line(line: str, default_year: int) -> tuple[int, int, int] | None:
-    # Supports "3rd November", "Tuesday 13th October", and "3 November".
     m = re.search(
         r"(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)?\s*"
         r"(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]+)(?:\s+(\d{4}))?$",
@@ -86,13 +92,10 @@ def parse_date_line(line: str, default_year: int) -> tuple[int, int, int] | None
     if not m:
         return None
     month = MONTHS.get(m.group(2).lower())
-    if not month:
-        return None
-    return int(m.group(3) or default_year), month, int(m.group(1))
+    return (int(m.group(3) or default_year), month, int(m.group(1))) if month else None
 
 
 def parse_match_line(line: str) -> tuple[str, str] | None:
-    # Amazon currently publishes: "Manchester United vs. Roma (8:00pm)".
     m = re.match(r"(.+?)\s+vs\.?\s+(.+?)\s*\((\d{1,2}:\d{2}\s*(?:am|pm))\)\s*$", line, re.I)
     if not m:
         return None
@@ -102,26 +105,22 @@ def parse_match_line(line: str) -> tuple[str, str] | None:
 
 
 def parse_month_page(content: str, page_year: int, now: datetime) -> list[dict]:
-    parser = VisibleText()
-    parser.feed(content)
-    lines = parser.text().splitlines()
-
-    # Restrict parsing to the UEFA Champions League section so movie titles or NBA
-    # fixtures cannot accidentally become football listings.
-    try:
-        start = next(i for i, line in enumerate(lines) if line.strip().lower() == "uefa champions league") + 1
-    except StopIteration:
+    lines = visible_text(content).splitlines()
+    # About Amazon pages can repeat section names in a contents/navigation block.
+    # The actual fixture section is the LAST exact "UEFA Champions League" heading.
+    headings = [i for i, line in enumerate(lines) if line.strip().lower() == "uefa champions league"]
+    if not headings:
         return []
+    start = headings[-1] + 1
 
     stop = len(lines)
+    end_markers = (
+        "nba on prime video", "nba", "upcoming with rent", "upcoming to rent",
+        "premier league", "formula 1", "wta", "nfl", "movies", "tv shows",
+    )
     for i in range(start, len(lines)):
         low = lines[i].lower()
-        if i > start and (
-            low.startswith("nba on prime video")
-            or low.startswith("upcoming with rent")
-            or low.startswith("premier league")
-            or low.startswith("formula 1")
-        ):
+        if i > start and any(low == marker or low.startswith(marker + " ") for marker in end_markers):
             stop = i
             break
 
@@ -145,18 +144,17 @@ def parse_month_page(content: str, page_year: int, now: datetime) -> list[dict]:
         except ValueError:
             continue
         kickoff = local.astimezone(timezone.utc)
-        if kickoff < now - timedelta(hours=6) or kickoff > horizon:
-            continue
-        rows.append({"match": match_name, "kickoff": kickoff})
+        if now - timedelta(hours=6) <= kickoff <= horizon:
+            rows.append({"match": match_name, "kickoff": kickoff})
     return rows
 
 
-def prime_vision_product_available(content: str) -> bool:
-    text = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", content)))
+def prime_vision_policy_available(content: str) -> bool:
+    text = re.sub(r"\s+", " ", visible_text(content))
     return bool(
-        re.search(r"What is Prime Vision", text, re.I)
-        and re.search(r"alternate broadcast", text, re.I)
-        and re.search(r"select [\"']?Prime Vision[\"']? in the broadcast options", text, re.I)
+        re.search(r"Prime Vision", text, re.I)
+        and re.search(r"top[- ]pick Tuesday match", text, re.I)
+        and re.search(r"this season", text, re.I)
     )
 
 
@@ -178,18 +176,19 @@ def main() -> int:
     health = [h for h in payload.get("sourceHealth", []) if h.get("source") != "amazon:prime-vision"]
 
     try:
-        help_content = get(PRIME_HELP)
-        if not prime_vision_product_available(help_content):
-            raise ValueError("Prime Vision product wording not found")
+        policy_content = get(PRIME_POLICY)
+        if not prime_vision_policy_available(policy_content):
+            raise ValueError("Prime Vision policy wording not found")
         product_ok = True
+        policy_error = None
     except Exception as exc:
         product_ok = False
-        help_error = type(exc).__name__
+        policy_error = type(exc).__name__
 
     found: list[dict] = []
     pages_checked = 0
     page_errors: list[str] = []
-    for offset in range(0, 3):
+    for offset in range(3):
         year, month = add_months(now.year, now.month, offset)
         url = month_url(year, month)
         try:
@@ -203,19 +202,17 @@ def main() -> int:
                     "match": row["match"],
                     "competition": "UEFA Champions League",
                     "kickoff": kickoff.isoformat().replace("+00:00", "Z"),
-                    # Prime Vision is a data-enhanced alternate feed rather than a
-                    # persistent full-pitch wide camera, so classify it honestly.
                     "type": "alternate",
                     "status": "confirmed" if product_ok else "candidate",
                     "platform": "Prime Video — Prime Vision",
                     "commentary": "English; Prime Vision adds live tactical/data overlays",
                     "usAvailability": False if product_ok else None,
                     "access": "subscription" if product_ok else "unknown",
-                    "territories": ["United Kingdom", "Republic of Ireland"] if product_ok else [],
+                    "territories": ["United Kingdom"] if product_ok else [],
                     "notes": (
-                        "Amazon's official monthly schedule confirms this as Prime Video's UCL fixture. "
-                        "Prime Video's official UCL help page says Prime Vision is selectable from the match broadcast options. "
-                        "Prime Vision shows live statistics, passing options and advanced tactical analytics; it is not a persistent full-pitch wide camera."
+                        "Amazon's official monthly schedule confirms this as Prime Video's UCL top-pick fixture. "
+                        "Amazon's official UCL policy confirms Prime Vision is part of its Champions League coverage this season. "
+                        "Prime Vision adds live statistics, passing options and tactical analytics; it is not a persistent full-pitch wide camera."
                     ),
                     "sourceUrl": url,
                     "watchUrl": PRIME_WATCH if product_ok else None,
@@ -224,17 +221,15 @@ def main() -> int:
                     "verifiedAt": now.isoformat().replace("+00:00", "Z") if product_ok else None,
                     "exactFixtureVerified": True,
                     "publicAccessConfirmed": product_ok,
-                    "secondarySourceUrl": PRIME_HELP,
+                    "secondarySourceUrl": PRIME_POLICY,
                 })
         except urllib.error.HTTPError as exc:
-            # Future monthly schedule articles often do not exist yet; a 404 is not
-            # a failure for already-published months.
+            # Future monthly schedule articles often are not published yet.
             if exc.code != 404:
                 page_errors.append(f"{calendar.month_name[month]}:{type(exc).__name__}")
         except Exception as exc:
             page_errors.append(f"{calendar.month_name[month]}:{type(exc).__name__}")
 
-    # Deduplicate exact fixture/kickoff combinations.
     seen = set()
     merged = []
     for item in feeds + found:
@@ -251,7 +246,7 @@ def main() -> int:
         "checkedAt": now.isoformat().replace("+00:00", "Z"),
         "count": len(found),
         "pagesChecked": pages_checked,
-        **({"error": help_error} if not product_ok else {}),
+        **({"error": policy_error} if policy_error else {}),
         **({"pageErrors": page_errors} if page_errors else {}),
     })
     payload["sourceHealth"] = health
