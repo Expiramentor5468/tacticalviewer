@@ -1,48 +1,49 @@
 # Tactical Feed Finder
 
-A zero-build, auto-updating watchlist for useful live soccer camera feeds around the world. UEFA Champions League, Premier League and MLS are prioritized, but any competition is eligible when an English-language public stream can be verified.
+A zero-build, auto-updating watchlist for useful live soccer camera feeds around the world. UEFA Champions League, Premier League and MLS are prioritized, but any competition is eligible when a public viewing route can be verified.
 
 ## What counts as confirmed
 
-**Public access verified** is intentionally strict. A listing needs all of the following:
+**Public access verified** is intentionally strict about access, not audio. A listing needs all of the following:
 
 - an exact fixture and kickoff time;
 - a public consumer viewing route;
 - the exact countries/territories where that route is available;
-- verified **English commentary/audio**;
 - a watch URL and supporting source URL;
 - evidence reviewed within the last seven days.
+
+Commentary language, audio language, and even the presence of audio are metadata only. English, German, Italian, French, Spanish, other languages, unknown audio, and video-only/raw camera feeds are all eligible if the public video route itself is verified.
 
 A feed can be public in Germany, the UK, Australia, Japan, the U.S., or anywhere else. U.S. availability is only a filter — it is not an assumption.
 
 **Production only** means a league or production supplier confirms the camera/feed exists for broadcasters, but no qualifying consumer route has been proven.
 
-**Unverified lead** means a source or branded product looks relevant but is still missing one or more of: exact fixture, English audio, public territory, watch route, or access terms.
+**Unverified lead** means a source or branded product looks relevant but is still missing one or more of: exact fixture, public territory, watch route, or current access terms.
 
 ## Feed types
 
 - **Tactical / wide** — the main target: a high/wide view that keeps most or all players visible.
 - **Coach cam** — manager/bench view.
 - **Ref cam** — referee POV.
-- **Alternate broadcast** — included when it provides useful angles, live tactical data, or analysis even when it is not a persistent full-pitch view.
+- **Alternate broadcast** — included when it provides useful angles, live tactical data, analysis, or other camera access even when it is not a persistent full-pitch view.
 
 ## Automated sources
 
 The GitHub Actions updater currently combines several layers:
 
-1. **Amazon Prime Vision** — reads Amazon's official monthly Champions League schedule and joins it to Prime Vision's official product/territory/language evidence.
+1. **Amazon Prime Vision** — reads Amazon's official monthly Champions League schedule and joins it to Prime Vision's official product/territory evidence. Language is recorded when known.
 2. **Bundesliga production** — parses DFL fixture/product data for Tactical Feed and extra-camera production metadata.
-3. **Sky/WOW Bundesliga monitor** — tracks the Saturday Topspiel Tactical Feed, but does not mark it English-confirmed unless consumer audio is independently verified.
+3. **Sky/WOW Bundesliga monitor** — tracks the Saturday Topspiel Tactical Feed and can confirm the public German viewing route even when consumer audio language is unknown.
 4. **Branded-product monitors** — watches for CBS Golazo Tactical Cam, MLS/Apple Ref Cam and altcasts, Premier League Game Mode/tactical variants, and Ligue 1+ Expert Mode.
 5. **Worldwide discovery net** — searches for tactical cams, tactical feeds, wide-angle cameras, coach cams, manager modes and referee cams outside the known services.
 
-Known branded products are preferred over generic keyword discovery. Generic discoveries remain leads until the full confirmation standard is met.
+Known branded products are preferred over generic keyword discovery. Generic discoveries remain leads until the public route and exact fixture can be verified.
 
-## Current territory handling
+## Territory and audio handling
 
 Every confirmed row carries a `territories` array. The site builds the Territory filter from the data automatically and displays the verified regions directly on each card.
 
-English is currently required for confirmed status. A public stream with only Italian, German, French, Spanish, etc. audio can still be discovered internally, but it will not enter the confirmed English watchlist until English audio is proven.
+Audio is deliberately separate from availability. `language` and `commentary` describe what is known, including `Unknown / not verified` or video-only/raw feeds. They do not control confirmed status.
 
 ## Open or deploy
 
@@ -53,6 +54,8 @@ Hosted pages fetch `https://raw.githubusercontent.com/Expiramentor5468/tacticalv
 ## Automatic updates
 
 The GitHub Actions workflow runs every three hours and can also be started manually. It runs tests, refreshes all discovery/enrichment stages, commits changed `data.js` / `data/feeds.json`, and lets GitHub Pages republish the result.
+
+This updater is entirely repository-side. It does **not** require or consume a ChatGPT automation slot.
 
 ```sh
 python scripts/update_feeds.py
@@ -79,8 +82,9 @@ A confirmed row requires:
 - HTTP(S) `sourceUrl` and `watchUrl`
 - named `platform`
 - non-empty `territories`
-- `language: "English"`
 - supported access terms (`free` or `subscription`) when known
+
+`language` and `commentary` should be populated when known, but they are not required for confirmation.
 
 Both the updater and browser client downgrade stale/incomplete confirmation claims rather than guessing.
 
@@ -88,4 +92,4 @@ Both the updater and browser client downgrade stale/incomplete confirmation clai
 
 The goal is not to maximize the number of cards. It is to maximize the number of cards you can actually use.
 
-A broadcaster producing a tactical feed is not the same thing as fans being able to watch it. A stream existing in one country is not evidence it exists elsewhere. A broadcaster offering English on its normal feed is not proof that an alternate feed has English. TacticalViewer keeps those distinctions explicit.
+A broadcaster producing a tactical feed is not the same thing as fans being able to watch it. A stream existing in one country is not evidence it exists elsewhere. Audio information is useful, but a silent or non-English tactical feed is still useful if you can actually watch it.
