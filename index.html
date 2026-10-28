@@ -5,163 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0b1220" />
   <title>Tactical Feed Finder</title>
-  <meta name="description" content="Track soccer tactical-camera feeds with clear evidence, public-access verification and broadcaster production leads." />
+  <meta name="description" content="Track English-language soccer tactical-camera feeds worldwide with clear public territories and evidence." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-inner">
-      <div>
-        <div class="eyebrow">LIVE SOCCER BROADCAST GUIDE</div>
-        <h1>Tactical Feed Finder</h1>
-        <p class="lede">Find the feeds that actually let you see the game: full-pitch tactical cams, wide views, coach cams, ref cams, and useful alternate broadcasts.</p>
-      </div>
-      <div class="update-box">
-        <span class="pulse"></span>
-        <div>
-          <strong id="updateLabel">Checking freshness</strong>
-          <div id="lastUpdated">Checking data…</div>
-        </div>
-      </div>
-    </div>
-  </header>
-
+  <header class="hero"><div class="hero-inner"><div><div class="eyebrow">LIVE SOCCER BROADCAST GUIDE</div><h1>Tactical Feed Finder</h1><p class="lede">Find English-language tactical cams, wide views, coach cams, ref cams, and useful alternate broadcasts anywhere they are publicly watchable.</p></div><div class="update-box"><span class="pulse"></span><div><strong id="updateLabel">Checking freshness</strong><div id="lastUpdated">Checking data…</div></div></div></div></header>
   <main>
-    <div class="summary-grid" aria-label="Evidence summary">
-      <button data-preset="reset" class="summary-card"><strong id="confirmedCount">0</strong><span>Upcoming public feeds verified</span></button>
-      <button data-preset="leads" class="summary-card"><strong id="productionCount">0</strong><span>Production listings · carriage unverified</span></button>
-      <button data-preset="leads" class="summary-card"><strong id="candidateCount">0</strong><span>News leads to investigate</span></button>
-    </div>
+    <div class="summary-grid" aria-label="Evidence summary"><button data-preset="reset" class="summary-card"><strong id="confirmedCount">0</strong><span>Upcoming public feeds verified</span></button><button data-preset="leads" class="summary-card"><strong id="productionCount">0</strong><span>Production listings · carriage unverified</span></button><button data-preset="leads" class="summary-card"><strong id="candidateCount">0</strong><span>Leads to investigate</span></button></div>
     <p id="dataNotice" class="data-notice" role="status"></p>
-    <section id="featuredSection" class="featured-wrap hidden">
-      <div class="section-kicker">NEXT TACTICAL FEED WITH VERIFIED PUBLIC ACCESS</div>
-      <div id="featured"></div>
-    </section>
-
+    <section id="featuredSection" class="featured-wrap hidden"><div class="section-kicker">NEXT TACTICAL FEED WITH VERIFIED PUBLIC ACCESS</div><div id="featured"></div></section>
     <section class="control-panel">
-      <div class="search-wrap">
-        <label for="search">Search</label>
-        <input id="search" type="search" placeholder="Team, league, broadcaster…" autocomplete="off" />
-      </div>
+      <div class="search-wrap"><label for="search">Search</label><input id="search" type="search" placeholder="Team, league, broadcaster, territory…" autocomplete="off" /></div>
       <div class="filters">
-        <label>Competition
-          <select id="competition"><option value="all">All competitions</option></select>
-        </label>
-        <label>Feed type
-          <select id="type">
-            <option value="all">All useful feeds</option>
-            <option value="tactical">True tactical / wide</option>
-            <option value="coach">Coach cam</option>
-            <option value="ref">Ref cam</option>
-            <option value="alternate">Alternate broadcast</option>
-          </select>
-        </label>
-        <label>Availability
-          <select id="availability">
-            <option value="all">Any availability</option>
-            <option value="us">Watchable in U.S.</option>
-            <option value="free">Free</option>
-            <option value="subscription">Subscription</option>
-          </select>
-        </label>
-        <label>Status
-          <select id="status">
-            <option value="confirmed">Public access verified</option>
-            <option value="all">All evidence levels</option>
-            <option value="production">Production only</option>
-            <option value="candidate">Unverified leads</option>
-          </select>
-        </label>
-        <label>Date
-          <select id="dateRange">
-            <option value="30">Next 30 days</option>
-            <option value="7">Next 7 days</option>
-            <option value="1">Next 24 hours</option>
-            <option value="all">All dates + undated leads</option>
-          </select>
-        </label>
-        <label>Sort
-          <select id="sort">
-            <option value="soonest">Soonest first</option>
-            <option value="league">Competition</option>
-            <option value="evidence">Evidence level</option>
-          </select>
-        </label>
+        <label>Competition<select id="competition"><option value="all">All competitions</option></select></label>
+        <label>Feed type<select id="type"><option value="all">All useful feeds</option><option value="tactical">True tactical / wide</option><option value="coach">Coach cam</option><option value="ref">Ref cam</option><option value="alternate">Alternate broadcast</option></select></label>
+        <label>Territory<select id="territory"><option value="all">All territories</option></select></label>
+        <label>Access<select id="availability"><option value="all">Any access</option><option value="us">Watchable in U.S.</option><option value="free">Free</option><option value="subscription">Subscription</option></select></label>
+        <label>Status<select id="status"><option value="confirmed">Public access verified</option><option value="all">All evidence levels</option><option value="production">Production only</option><option value="candidate">Unverified leads</option></select></label>
+        <label>Date<select id="dateRange"><option value="30">Next 30 days</option><option value="7">Next 7 days</option><option value="1">Next 24 hours</option><option value="60">Next 60 days</option><option value="all">All dates + undated leads</option></select></label>
+        <label>Sort<select id="sort"><option value="soonest">Soonest first</option><option value="league">Competition</option><option value="evidence">Evidence level</option></select></label>
       </div>
-      <div class="quick-row">
-        <button class="chip active" data-preset="primary">Primary leagues</button>
-        <button class="chip" data-preset="tactical">True tactical only</button>
-        <button class="chip" data-preset="us">U.S. watchable</button>
-        <button class="chip" data-preset="leads">Explore evidence &amp; leads</button>
-        <button class="chip" data-preset="reset">All verified feeds</button>
-        <span id="resultCount" class="result-count" role="status" aria-live="polite"></span>
-      </div>
+      <div class="quick-row"><button class="chip active" data-preset="primary">Primary leagues</button><button class="chip" data-preset="tactical">True tactical only</button><button class="chip" data-preset="us">U.S. watchable</button><button class="chip" data-preset="leads">Explore evidence &amp; leads</button><button class="chip" data-preset="reset">All verified worldwide</button><span id="resultCount" class="result-count" role="status" aria-live="polite"></span></div>
     </section>
-
-    <section>
-      <div class="section-head">
-        <div>
-          <div class="section-kicker">WATCHLIST</div>
-          <h2 id="listHeading">Verified public feeds</h2>
-        </div>
-        <p class="small-note">Times automatically display in your device timezone.</p>
-      </div>
-      <div id="feedGrid" class="feed-grid"></div>
-      <div id="emptyState" class="empty hidden">
-        <h3>No verified feeds match this view</h3>
-        <p>This guide has not verified a public viewing route for these filters. It is not proof that no feed exists. Explore production evidence and news leads, or adjust your filters.</p>
-        <button class="chip" data-preset="leads">Explore evidence &amp; leads</button>
-      </div>
-    </section>
-
-    <nav class="where-to-check" aria-label="Official sources to investigate">
-      <strong>Where to check</strong><span>Look for the exact fixture and camera feed on the service before subscribing.</span>
-      <div><a href="https://www.cbssports.com/soccer/" target="_blank" rel="noopener noreferrer">CBS Sports · UCL / Serie A ↗</a><a href="https://www.nbcsports.com/soccer" target="_blank" rel="noopener noreferrer">NBC Sports · Premier League ↗</a><a href="https://www.mlssoccer.com/" target="_blank" rel="noopener noreferrer">MLS ↗</a><a href="https://products.bundesliga.com/fixtures" target="_blank" rel="noopener noreferrer">Bundesliga production ↗</a></div>
-    </nav>
-    <section class="guide-grid">
-      <article class="guide-card">
-        <div class="icon">22</div>
-        <h3>True tactical / wide</h3>
-        <p>The target. A high, wide view that keeps most or all outfield players visible so you can read shape, pressing, buildup and off-ball movement.</p>
-      </article>
-      <article class="guide-card">
-        <div class="icon">HC</div>
-        <h3>Coach cam</h3>
-        <p>Useful secondary feed focused on managers and benches. Interesting for adjustments and reactions, but not a replacement for a tactical view.</p>
-      </article>
-      <article class="guide-card">
-        <div class="icon">RC</div>
-        <h3>Ref cam</h3>
-        <p>First-person or referee-focused coverage. Great novelty and perspective; poor for studying team structure.</p>
-      </article>
-      <article class="guide-card">
-        <div class="icon">ALT</div>
-        <h3>Alternate broadcast</h3>
-        <p>Only included when it adds useful angles or analysis. Celebrity commentary and other gimmicks are intentionally de-emphasized.</p>
-      </article>
-    </section>
-
-    <section class="methodology">
-      <div>
-        <div class="section-kicker">HOW IT DECIDES WHAT TO SHOW</div>
-        <h2>Conservative by design</h2>
-      </div>
-      <div class="method-grid">
-        <div><strong>Public access verified</strong><span>An exact fixture, camera type and consumer viewing route, with regions and evidence reviewed within seven days. A league producing a feed does not mean viewers can watch it.</span></div>
-        <div><strong>Production or lead</strong><span>Production listings describe feeds supplied to broadcasters. News leads may describe past coverage. Neither proves a current public stream; unknown kickoff times stay out of upcoming-date filters.</span></div>
-        <div><strong>Priority</strong><span>Champions League, Premier League and MLS first; Bundesliga and Serie A as fallback. Primary leagues uses the fallback only when no preferred-league result matches.</span></div>
-      </div>
-    </section>
-  <details class="source-health"><summary>Discovery source health</summary><p>Fetched means a source responded, not that a viewing route was verified.</p><ul id="sourceHealth"></ul></details>
+    <section><div class="section-head"><div><div class="section-kicker">WATCHLIST</div><h2 id="listHeading">Verified public feeds</h2></div><p class="small-note">English only for now. Times display in your device timezone.</p></div><div id="feedGrid" class="feed-grid"></div><div id="emptyState" class="empty hidden"><h3>No verified feeds match this view</h3><p>This is not proof that no feed exists. Explore production evidence and leads, or adjust your filters.</p><button class="chip" data-preset="leads">Explore evidence &amp; leads</button></div></section>
+    <nav class="where-to-check" aria-label="Official sources to investigate"><strong>Tracked services</strong><span>Exact public territory is verified separately from production.</span><div><a href="https://www.cbssports.com/watch/cbs-sports-golazo-network" target="_blank" rel="noopener noreferrer">CBS Golazo · Tactical Cam ↗</a><a href="https://www.primevideo.com/" target="_blank" rel="noopener noreferrer">Prime Video · Prime Vision ↗</a><a href="https://www.mlssoccer.com/" target="_blank" rel="noopener noreferrer">MLS / Apple TV ↗</a><a href="https://www.wowtv.de/" target="_blank" rel="noopener noreferrer">Sky/WOW · Bundesliga Tactical Feed ↗</a><a href="https://plus.ligue1.com/" target="_blank" rel="noopener noreferrer">Ligue 1+ · Expert Mode watch ↗</a><a href="https://products.bundesliga.com/fixtures" target="_blank" rel="noopener noreferrer">Bundesliga production ↗</a></div></nav>
+    <section class="guide-grid"><article class="guide-card"><div class="icon">22</div><h3>True tactical / wide</h3><p>The target: a high, wide view keeping most or all outfield players visible so you can read shape and off-ball movement.</p></article><article class="guide-card"><div class="icon">HC</div><h3>Coach cam</h3><p>Focused on managers and benches. Useful for adjustments and reactions, but not a replacement for a tactical view.</p></article><article class="guide-card"><div class="icon">RC</div><h3>Ref cam</h3><p>First-person referee coverage. Great perspective; poor for studying team structure.</p></article><article class="guide-card"><div class="icon">ALT</div><h3>Alternate broadcast</h3><p>Included when it adds useful angles, tactical data or analysis. Entertainment-only gimmicks are de-emphasized.</p></article></section>
+    <section class="methodology"><div><div class="section-kicker">HOW IT DECIDES WHAT TO SHOW</div><h2>Conservative by design</h2></div><div class="method-grid"><div><strong>Public access verified</strong><span>An exact fixture, consumer viewing route, English audio/commentary, public territories and fresh evidence. Production alone is not enough.</span></div><div><strong>Production or lead</strong><span>Production catalogues and branded-product announcements are tracked, but stay unverified until an exact public English stream is found.</span></div><div><strong>Worldwide scope</strong><span>Champions League, Premier League and MLS are prioritized, but confirmed English streams from any league or country are eligible. U.S. availability is only one filter.</span></div></div></section>
+    <details class="source-health"><summary>Discovery source health</summary><p>Fetched means a source responded, not that a viewing route was verified.</p><ul id="sourceHealth"></ul></details>
   </main>
-
-  <footer>
-    <span>Tactical Feed Finder</span>
-    <span>Built to find the camera angle normal broadcasts hide.</span>
-  </footer>
-
-  <!-- Optional mirror: set window.TACTICAL_FEED_DATA_URL to an HTTPS feeds.json URL before app.js. -->
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+  <footer><span>Tactical Feed Finder</span><span>Built to find the camera angle normal broadcasts hide.</span></footer>
+  <script src="data.js"></script><script src="app.js"></script>
 </body>
 </html>
