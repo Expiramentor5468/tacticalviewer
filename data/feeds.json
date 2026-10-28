@@ -1,51 +1,57 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-28T17:25:47.956100Z",
-  "lastAttemptAt": "2026-10-28T17:25:45.467371Z",
-  "lastSuccessfulScanAt": "2026-10-28T17:25:45.467371Z",
+  "updatedAt": "2026-10-28T18:13:35.367836Z",
+  "lastAttemptAt": "2026-10-28T18:13:31.775170Z",
+  "lastSuccessfulScanAt": "2026-10-28T18:13:31.775170Z",
   "scanStatus": "ok",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
       "ok": true,
-      "checkedAt": "2026-10-28T17:25:45.467371Z",
+      "checkedAt": "2026-10-28T18:13:31.775170Z",
       "count": 0
     },
     {
       "source": "news:Premier League",
       "ok": true,
-      "checkedAt": "2026-10-28T17:25:45.467371Z",
+      "checkedAt": "2026-10-28T18:13:31.775170Z",
       "count": 0
     },
     {
       "source": "news:MLS",
       "ok": true,
-      "checkedAt": "2026-10-28T17:25:45.467371Z",
+      "checkedAt": "2026-10-28T18:13:31.775170Z",
       "count": 0
     },
     {
       "source": "news:Bundesliga",
       "ok": true,
-      "checkedAt": "2026-10-28T17:25:45.467371Z",
+      "checkedAt": "2026-10-28T18:13:31.775170Z",
       "count": 0
     },
     {
       "source": "news:Serie A",
       "ok": true,
-      "checkedAt": "2026-10-28T17:25:45.467371Z",
+      "checkedAt": "2026-10-28T18:13:31.775170Z",
       "count": 0
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-10-28T17:25:45.467371Z"
+      "checkedAt": "2026-10-28T18:13:31.775170Z"
     },
     {
       "source": "amazon:prime-vision",
       "ok": true,
-      "checkedAt": "2026-10-28T17:25:47.956100Z",
+      "checkedAt": "2026-10-28T18:13:34.335399Z",
       "count": 2,
       "pagesChecked": 2
+    },
+    {
+      "source": "sky:bundesliga-tactical",
+      "ok": true,
+      "checkedAt": "2026-10-28T18:13:35.367836Z",
+      "count": 0
     }
   ],
   "feeds": [
@@ -85,8 +91,8 @@
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": "https://www.primevideo.com/",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-10-28T17:25:47.956100Z",
-      "verifiedAt": "2026-10-28T17:25:47.956100Z",
+      "checkedAt": "2026-10-28T18:13:34.335399Z",
+      "verifiedAt": "2026-10-28T18:13:34.335399Z",
       "exactFixtureVerified": true,
       "publicAccessConfirmed": true,
       "secondarySourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/champions-league-prime-video-uk-renewal"
@@ -109,8 +115,8 @@
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": "https://www.primevideo.com/",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-10-28T17:25:47.956100Z",
-      "verifiedAt": "2026-10-28T17:25:47.956100Z",
+      "checkedAt": "2026-10-28T18:13:34.335399Z",
+      "verifiedAt": "2026-10-28T18:13:34.335399Z",
       "exactFixtureVerified": true,
       "publicAccessConfirmed": true,
       "secondarySourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/champions-league-prime-video-uk-renewal"
