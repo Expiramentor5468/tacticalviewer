@@ -1,81 +1,81 @@
 window.TACTICAL_FEED_DATA = {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-28T18:18:56.315018Z",
-  "lastAttemptAt": "2026-10-28T18:18:43.339611Z",
-  "lastSuccessfulScanAt": "2026-10-28T18:18:43.339611Z",
+  "updatedAt": "2026-10-28T18:21:19.406722Z",
+  "lastAttemptAt": "2026-10-28T18:21:04.473035Z",
+  "lastSuccessfulScanAt": "2026-10-28T18:21:04.473035Z",
   "scanStatus": "ok",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
       "ok": true,
-      "checkedAt": "2026-10-28T18:18:43.339611Z",
+      "checkedAt": "2026-10-28T18:21:04.473035Z",
       "count": 0
     },
     {
       "source": "news:Premier League",
       "ok": true,
-      "checkedAt": "2026-10-28T18:18:43.339611Z",
+      "checkedAt": "2026-10-28T18:21:04.473035Z",
       "count": 0
     },
     {
       "source": "news:MLS",
       "ok": true,
-      "checkedAt": "2026-10-28T18:18:43.339611Z",
+      "checkedAt": "2026-10-28T18:21:04.473035Z",
       "count": 0
     },
     {
       "source": "news:Bundesliga",
       "ok": true,
-      "checkedAt": "2026-10-28T18:18:43.339611Z",
+      "checkedAt": "2026-10-28T18:21:04.473035Z",
       "count": 0
     },
     {
       "source": "news:Serie A",
       "ok": true,
-      "checkedAt": "2026-10-28T18:18:43.339611Z",
+      "checkedAt": "2026-10-28T18:21:04.473035Z",
       "count": 0
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-10-28T18:18:43.339611Z"
+      "checkedAt": "2026-10-28T18:21:04.473035Z"
     },
     {
       "source": "amazon:prime-vision",
       "ok": true,
-      "checkedAt": "2026-10-28T18:18:45.834133Z",
+      "checkedAt": "2026-10-28T18:21:07.389056Z",
       "count": 2,
       "pagesChecked": 2
     },
     {
       "source": "sky:bundesliga-tactical",
       "ok": true,
-      "checkedAt": "2026-10-28T18:18:46.498966Z",
+      "checkedAt": "2026-10-28T18:21:08.312408Z",
       "count": 0,
       "exportsChecked": 11
     },
     {
       "source": "cbs:golazo-tactical",
       "ok": true,
-      "checkedAt": "2026-10-28T18:18:56.315018Z",
+      "checkedAt": "2026-10-28T18:21:19.406722Z",
       "count": 0
     },
     {
       "source": "mls:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-10-28T18:18:56.315018Z",
+      "checkedAt": "2026-10-28T18:21:19.406722Z",
       "count": 1
     },
     {
       "source": "premierleague:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-10-28T18:18:56.315018Z",
+      "checkedAt": "2026-10-28T18:21:19.406722Z",
       "count": 0
     },
     {
       "source": "ligue1:expert-mode",
       "ok": true,
-      "checkedAt": "2026-10-28T18:18:56.315018Z",
+      "checkedAt": "2026-10-28T18:21:19.406722Z",
       "count": 1
     }
   ],
@@ -142,8 +142,8 @@ window.TACTICAL_FEED_DATA = {
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": "https://www.primevideo.com/",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-10-28T18:18:45.834133Z",
-      "verifiedAt": "2026-10-28T18:18:45.834133Z",
+      "checkedAt": "2026-10-28T18:21:07.389056Z",
+      "verifiedAt": "2026-10-28T18:21:07.389056Z",
       "exactFixtureVerified": true,
       "publicAccessConfirmed": true,
       "secondarySourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/champions-league-prime-video-uk-renewal"
@@ -166,8 +166,8 @@ window.TACTICAL_FEED_DATA = {
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": "https://www.primevideo.com/",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-10-28T18:18:45.834133Z",
-      "verifiedAt": "2026-10-28T18:18:45.834133Z",
+      "checkedAt": "2026-10-28T18:21:07.389056Z",
+      "verifiedAt": "2026-10-28T18:21:07.389056Z",
       "exactFixtureVerified": true,
       "publicAccessConfirmed": true,
       "secondarySourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/champions-league-prime-video-uk-renewal"
@@ -188,7 +188,7 @@ window.TACTICAL_FEED_DATA = {
       "notes": "Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNdVBEcVRKREY1cGhNRGRUSWVraEc2cjNmblAxSHJtZFBoSkxHOHZGRzN6Q2g4XzdkSzlyUm96T2VYVWxHS0trU1o3MWUyLUwzVF8zY0tQM3NDcEc3eUt6Y0loRU9YNmFCNlg3NzJGdWppNlhQYnZQQVhYbmh3eE5fVUZnLVVnRl9Pci0yV0VjM3dwX3RWRXZtZUNXV0tMYlU5U1l6Ykg4Rktic0VLekJYSUJmTlNvWkphMmJUM3Nn?oc=5",
       "sourcePublishedAt": "2026-09-02T07:00:00Z",
-      "checkedAt": "2026-10-28T18:18:56.315018Z",
+      "checkedAt": "2026-10-28T18:21:19.406722Z",
       "sourceKey": "mls:alternate-cameras",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
@@ -209,7 +209,7 @@ window.TACTICAL_FEED_DATA = {
       "notes": "Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOcFlad29wOHpMQzhNMFlUaGMzd0dsMkRPcXU5YTdNMVptY3UwVVh0Mk1POXY3TUZIcXBObXNfY3ZPVjdReHZ3cDFfVHlJQ2FFdEJOaXhnel9GY1F5c0tWSXRUWnRMcHJqdFh3SklER0lCcDBMRTJYMXpTcm9MZjlkMV9rTnRYU2xId0ZNQ0dvY3d4b292YWE4ZDlkaUVqb2M?oc=5",
       "sourcePublishedAt": "2026-09-08T07:00:00Z",
-      "checkedAt": "2026-10-28T18:18:56.315018Z",
+      "checkedAt": "2026-10-28T18:21:19.406722Z",
       "sourceKey": "ligue1:expert-mode",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
