@@ -1,49 +1,49 @@
 window.TACTICAL_FEED_DATA = {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-28T18:30:00.876332Z",
-  "lastAttemptAt": "2026-10-28T18:29:42.878999Z",
+  "updatedAt": "2026-10-28T18:32:20.013377Z",
+  "lastAttemptAt": "2026-10-28T18:30:54.751299Z",
   "lastSuccessfulScanAt": "2026-10-28T18:29:42.878999Z",
-  "scanStatus": "ok",
+  "scanStatus": "partial",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
-      "ok": true,
-      "checkedAt": "2026-10-28T18:29:42.878999Z",
-      "count": 0
+      "ok": false,
+      "attemptedAt": "2026-10-28T18:30:54.751299Z",
+      "error": "HTTPError"
     },
     {
       "source": "news:Premier League",
-      "ok": true,
-      "checkedAt": "2026-10-28T18:29:42.878999Z",
-      "count": 0
+      "ok": false,
+      "attemptedAt": "2026-10-28T18:30:54.751299Z",
+      "error": "HTTPError"
     },
     {
       "source": "news:MLS",
-      "ok": true,
-      "checkedAt": "2026-10-28T18:29:42.878999Z",
-      "count": 0
+      "ok": false,
+      "attemptedAt": "2026-10-28T18:30:54.751299Z",
+      "error": "HTTPError"
     },
     {
       "source": "news:Bundesliga",
-      "ok": true,
-      "checkedAt": "2026-10-28T18:29:42.878999Z",
-      "count": 0
+      "ok": false,
+      "attemptedAt": "2026-10-28T18:30:54.751299Z",
+      "error": "HTTPError"
     },
     {
       "source": "news:Serie A",
-      "ok": true,
-      "checkedAt": "2026-10-28T18:29:42.878999Z",
-      "count": 0
+      "ok": false,
+      "attemptedAt": "2026-10-28T18:30:54.751299Z",
+      "error": "HTTPError"
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-10-28T18:29:42.878999Z"
+      "checkedAt": "2026-10-28T18:30:54.751299Z"
     },
     {
       "source": "amazon:prime-vision",
       "ok": true,
-      "checkedAt": "2026-10-28T18:29:46.351780Z",
+      "checkedAt": "2026-10-28T18:31:38.875561Z",
       "count": 2,
       "pagesChecked": 2,
       "evidenceMode": "official-help-reviewed/client-rendered"
@@ -51,45 +51,46 @@ window.TACTICAL_FEED_DATA = {
     {
       "source": "sky:bundesliga-tactical",
       "ok": true,
-      "checkedAt": "2026-10-28T18:29:49.932750Z",
+      "checkedAt": "2026-10-28T18:31:40.173959Z",
       "count": 0,
       "exportsChecked": 11,
       "englishAudioVerified": false
     },
     {
       "source": "cbs:golazo-tactical",
-      "ok": true,
-      "checkedAt": "2026-10-28T18:29:59.811741Z",
-      "count": 0,
-      "duplicatesSuppressed": 0
+      "ok": false,
+      "checkedAt": "2026-10-28T18:31:50.158569Z",
+      "error": "HTTPError"
     },
     {
       "source": "mls:alternate-cameras",
-      "ok": true,
-      "checkedAt": "2026-10-28T18:29:59.811741Z",
-      "count": 1,
-      "duplicatesSuppressed": 0
+      "ok": false,
+      "checkedAt": "2026-10-28T18:31:50.158569Z",
+      "error": "HTTPError"
     },
     {
       "source": "premierleague:alternate-cameras",
-      "ok": true,
-      "checkedAt": "2026-10-28T18:29:59.811741Z",
-      "count": 0,
-      "duplicatesSuppressed": 0
+      "ok": false,
+      "checkedAt": "2026-10-28T18:31:50.158569Z",
+      "error": "HTTPError"
     },
     {
       "source": "ligue1:expert-mode",
-      "ok": true,
-      "checkedAt": "2026-10-28T18:29:59.811741Z",
-      "count": 1,
-      "duplicatesSuppressed": 0
+      "ok": false,
+      "checkedAt": "2026-10-28T18:31:50.158569Z",
+      "error": "HTTPError"
     },
     {
       "source": "global:camera-feed-discovery",
-      "ok": true,
-      "checkedAt": "2026-10-28T18:30:00.876332Z",
+      "ok": false,
+      "checkedAt": "2026-10-28T18:32:20.013377Z",
       "count": 0,
-      "queriesChecked": 3
+      "queriesChecked": 0,
+      "errors": [
+        "HTTPError",
+        "HTTPError",
+        "HTTPError"
+      ]
     }
   ],
   "feeds": [
@@ -159,8 +160,8 @@ window.TACTICAL_FEED_DATA = {
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": "https://www.primevideo.com/",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-10-28T18:29:46.351780Z",
-      "verifiedAt": "2026-10-28T18:29:46.351780Z",
+      "checkedAt": "2026-10-28T18:31:38.875561Z",
+      "verifiedAt": "2026-10-28T18:31:38.875561Z",
       "exactFixtureVerified": true,
       "publicAccessConfirmed": true,
       "secondarySourceUrl": "https://www.primevideo.com/salp/ucl-help/?content-id=amzn1.sym.dd781929-775e-45af-be91-40c39fedce52",
@@ -188,54 +189,12 @@ window.TACTICAL_FEED_DATA = {
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": "https://www.primevideo.com/",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-10-28T18:29:46.351780Z",
-      "verifiedAt": "2026-10-28T18:29:46.351780Z",
+      "checkedAt": "2026-10-28T18:31:38.875561Z",
+      "verifiedAt": "2026-10-28T18:31:38.875561Z",
       "exactFixtureVerified": true,
       "publicAccessConfirmed": true,
       "secondarySourceUrl": "https://www.primevideo.com/salp/ucl-help/?content-id=amzn1.sym.dd781929-775e-45af-be91-40c39fedce52",
       "policySourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/champions-league-prime-video-uk-renewal"
-    },
-    {
-      "id": "brand-monitor-764f126459acee0a",
-      "match": "Yahoo Sports and Apple TV Team Up to Bring “The Cooligans” to a Live MLS Alternate Broadcast - MLSsoccer.com",
-      "competition": "MLS",
-      "kickoff": null,
-      "type": "alternate",
-      "status": "candidate",
-      "platform": "MLS / Apple TV alternate cameras",
-      "language": "English",
-      "commentary": "English",
-      "usAvailability": null,
-      "access": "unknown",
-      "territories": [],
-      "notes": "Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation.",
-      "sourceUrl": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNdVBEcVRKREY1cGhNRGRUSWVraEc2cjNmblAxSHJtZFBoSkxHOHZGRzN6Q2g4XzdkSzlyUm96T2VYVWxHS0trU1o3MWUyLUwzVF8zY0tQM3NDcEc3eUt6Y0loRU9YNmFCNlg3NzJGdWppNlhQYnZQQVhYbmh3eE5fVUZnLVVnRl9Pci0yV0VjM3dwX3RWRXZtZUNXV0tMYlU5U1l6Ykg4Rktic0VLekJYSUJmTlNvWkphMmJUM3Nn?oc=5",
-      "sourcePublishedAt": "2026-09-02T07:00:00Z",
-      "checkedAt": "2026-10-28T18:29:59.811741Z",
-      "sourceKey": "mls:alternate-cameras",
-      "exactFixtureVerified": false,
-      "publicAccessConfirmed": false
-    },
-    {
-      "id": "brand-monitor-263fc464a21d3d4d",
-      "match": "LFP brings automated data ‘Moments’ to Ligue 1+ Expert Mode - SVG Europe",
-      "competition": "Ligue 1",
-      "kickoff": null,
-      "type": "alternate",
-      "status": "candidate",
-      "platform": "Ligue 1+ — Expert Mode",
-      "language": "Unknown",
-      "commentary": "English audio not yet verified",
-      "usAvailability": null,
-      "access": "unknown",
-      "territories": [],
-      "notes": "Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation.",
-      "sourceUrl": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOcFlad29wOHpMQzhNMFlUaGMzd0dsMkRPcXU5YTdNMVptY3UwVVh0Mk1POXY3TUZIcXBObXNfY3ZPVjdReHZ3cDFfVHlJQ2FFdEJOaXhnel9GY1F5c0tWSXRUWnRMcHJqdFh3SklER0lCcDBMRTJYMXpTcm9MZjlkMV9rTnRYU2xId0ZNQ0dvY3d4b292YWE4ZDlkaUVqb2M?oc=5",
-      "sourcePublishedAt": "2026-09-08T07:00:00Z",
-      "checkedAt": "2026-10-28T18:29:59.811741Z",
-      "sourceKey": "ligue1:expert-mode",
-      "exactFixtureVerified": false,
-      "publicAccessConfirmed": false
     }
   ]
 };
