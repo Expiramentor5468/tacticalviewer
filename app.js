@@ -13,7 +13,8 @@
     f.territories = Array.isArray(f.territories) ? f.territories.filter(x => typeof x === 'string' && x.trim()) : [];
     f.language = f.language || (/\bEnglish\b/i.test(f.commentary || '') ? 'English' : 'Unknown / not verified');
     const verified = dateValue(f.verifiedAt);
-    const confirmed = f.status === 'confirmed' && f.exactFixtureVerified === true && f.publicAccessConfirmed === true && dateValue(f.kickoff) !== null && verified !== null && verified <= now && verified >= now - 7 * 86400000 && safeUrl(f.sourceUrl) && safeUrl(f.watchUrl) && f.platform && f.territories.length;
+    const policyReviewed = f.policyReviewedAt == null ? verified : dateValue(f.policyReviewedAt);
+    const confirmed = f.status === 'confirmed' && f.exactFixtureVerified === true && f.publicAccessConfirmed === true && dateValue(f.kickoff) !== null && verified !== null && verified <= now && verified >= now - 7 * 86400000 && policyReviewed !== null && policyReviewed <= now && policyReviewed >= now - 7 * 86400000 && safeUrl(f.sourceUrl) && safeUrl(f.watchUrl) && f.platform && f.territories.length;
     if (f.status === 'confirmed' && !confirmed) f.status = 'candidate';
     if (!['confirmed', 'candidate', 'production'].includes(f.status)) f.status = 'candidate';
     if (f.status !== 'confirmed') { f.usAvailability = null; f.access = 'unknown'; f.watchUrl = null; }
@@ -36,7 +37,29 @@
     });
   }
 
-  if (typeof module !== 'undefined') module.exports = { dateValue, safeUrl, normalizeFeed, filterFeeds };
+  function validPayload(data) {
+    const object = value => value && typeof value === 'object' && !Array.isArray(value);
+    const text = value => typeof value === 'string' && value.trim().length > 0;
+    const optionalDate = value => value == null || dateValue(value) !== null;
+    const strings = ['id', 'match', 'competition', 'type', 'status', 'platform', 'language', 'commentary', 'notes', 'sourceUrl', 'watchUrl', 'secondarySourceUrl', 'policySourceUrl', 'fixtureSourceUrl', 'sourceKey', 'access'];
+    return Boolean(object(data) && data.schemaVersion === 2 && dateValue(data.updatedAt) !== null &&
+      ['ok', 'partial', 'failed'].includes(data.scanStatus) && optionalDate(data.lastSuccessfulScanAt) && optionalDate(data.lastAttemptAt) &&
+      Array.isArray(data.feeds) && data.feeds.every(f => object(f) && ['id', 'match', 'competition'].every(k => text(f[k])) &&
+        strings.every(k => f[k] == null || typeof f[k] === 'string') &&
+        ['kickoff', 'verifiedAt', 'checkedAt', 'sourcePublishedAt', 'policyReviewedAt'].every(k => optionalDate(f[k])) &&
+        (f.territories == null || (Array.isArray(f.territories) && f.territories.every(text)))) &&
+      Array.isArray(data.sourceHealth) && data.sourceHealth.every(h => object(h) && text(h.source) && typeof h.ok === 'boolean' &&
+        optionalDate(h.checkedAt) && optionalDate(h.attemptedAt)));
+  }
+
+  function evidenceLinks(feed) {
+    const seen = new Set();
+    return [['Source evidence', 'sourceUrl'], ['Fixture schedule', 'fixtureSourceUrl'], ['Access policy', 'policySourceUrl'], ['Product / access details', 'secondarySourceUrl']]
+      .map(([label, key]) => ({ label, url: safeUrl(feed[key]) }))
+      .filter(link => { if (!link.url || seen.has(link.url)) return false; seen.add(link.url); return true; });
+  }
+
+  if (typeof module !== 'undefined') module.exports = { dateValue, safeUrl, normalizeFeed, filterFeeds, validPayload, evidenceLinks };
   if (typeof document === 'undefined') return;
 
   const ids = ['search', 'competition', 'type', 'territory', 'availability', 'status', 'dateRange', 'sort', 'feedGrid', 'resultCount', 'emptyState', 'lastUpdated', 'updateLabel', 'dataNotice', 'featured', 'featuredSection', 'confirmedCount', 'productionCount', 'candidateCount', 'sourceHealth', 'listHeading'];
@@ -45,7 +68,7 @@
   const statusLabel = { confirmed: 'Public access verified', production: 'Production only', candidate: 'Unverified lead' };
 
   function card(f) {
-    const source = safeUrl(f.sourceUrl), watch = safeUrl(f.watchUrl);
+    const links = evidenceLinks(f), watch = safeUrl(f.watchUrl);
     const kickoff = dateValue(f.kickoff), old = kickoff !== null && kickoff < Date.now();
     const checked = dateValue(f.verifiedAt || f.checkedAt), stale = checked !== null && checked < Date.now() - 86400000;
     const regions = f.territories?.length ? f.territories.join(', ') : 'Not verified';
@@ -59,8 +82,8 @@
       <div class="detail"><span>Commentary / audio</span><strong>${esc(f.commentary || 'Not verified; may be video-only')}</strong></div></div>
       ${f.status === 'production' ? '<p class="access-warning">Produced for broadcasters. Public carriage is not verified.</p>' : ''}
       ${f.notes ? `<p class="notes">${esc(f.notes)}</p>` : ''}
-      <div class="evidence">${f.sourcePublishedAt ? `<span>Source published ${esc(formatDate(f.sourcePublishedAt))}</span>` : ''}<span>${f.verifiedAt ? 'Evidence reviewed' : 'Source fetched'}: ${checked === null ? 'not recorded' : esc(formatDate(f.verifiedAt || f.checkedAt))}${stale ? ' · recheck before watching' : ''}</span></div>
-      <div class="card-actions">${source ? `<a class="source-link" href="${esc(source)}" target="_blank" rel="noopener noreferrer">Check evidence ↗</a>` : '<span class="small-note">Source unavailable</span>'}${f.status === 'confirmed' && watch ? `<a class="watch-link" href="${esc(watch)}" target="_blank" rel="noopener noreferrer">Open viewing service ↗</a>` : '<span class="confidence">No verified watch link</span>'}</div></article>`;
+      <div class="evidence">${f.sourcePublishedAt ? `<span>Source published ${esc(formatDate(f.sourcePublishedAt))}</span>` : ''}<span>${f.verifiedAt ? 'Evidence reviewed' : 'Source fetched'}: ${checked === null ? 'not recorded' : esc(formatDate(f.verifiedAt || f.checkedAt))}${stale ? ' · recheck before watching' : ''}</span>${f.policyReviewedAt ? `<span>Access policy reviewed: ${esc(formatDate(f.policyReviewedAt))}</span>` : ''}</div>
+      <div class="card-actions">${links.length ? links.map(link => `<a class="source-link" href="${esc(link.url)}" target="_blank" rel="noopener noreferrer">${esc(link.label)} ↗</a>`).join('') : '<span class="small-note">Source unavailable</span>'}${f.status === 'confirmed' && watch ? `<a class="watch-link" href="${esc(watch)}" target="_blank" rel="noopener noreferrer">Open viewing service ↗</a>` : '<span class="confidence">No verified watch link</span>'}</div></article>`;
   }
 
   function applyFilters() {
@@ -90,7 +113,6 @@
   }
 
   function render(data, fetchFailed = false) {
-    payload = data;
     feeds = data.feeds.filter(f => f && typeof f === 'object').map(f => normalizeFeed(f));
     const selectedComp = el.competition.value, selectedTerritory = el.territory.value;
     el.competition.innerHTML = '<option value="all">All competitions</option>' + [...new Set([...PRIMARY, ...FALLBACK, ...feeds.map(f => f.competition).filter(Boolean)])].sort().map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
@@ -99,24 +121,24 @@
     el.territory.innerHTML = '<option value="all">All territories</option>' + territories.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join('');
     el.territory.value = [...el.territory.options].some(o => o.value === selectedTerritory) ? selectedTerritory : 'all';
     const checked = dateValue(data.lastSuccessfulScanAt), attempt = dateValue(data.lastAttemptAt), stale = checked === null || checked < Date.now() - 86400000;
-    const degraded = fetchFailed || stale || data.scanStatus !== 'ok';
+    const status = data.scanStatus === 'ok' && data.sourceHealth.some(h => !h.ok) ? 'partial' : data.scanStatus;
+    const degraded = fetchFailed || stale || status !== 'ok';
     el.updateLabel.textContent = degraded ? 'Check freshness' : 'Discovery scan current';
     document.querySelector('.update-box').classList.toggle('degraded', degraded);
     el.lastUpdated.textContent = checked === null ? 'No complete scan recorded' : `Complete scan: ${formatDate(data.lastSuccessfulScanAt)}`;
-    el.dataNotice.textContent = fetchFailed ? 'Could not refresh this page. Showing the bundled snapshot; check source dates before relying on a listing.' : data.scanStatus === 'partial' || data.scanStatus === 'failed' ? `Latest scan ${data.scanStatus === 'partial' ? 'could not reach every source' : 'failed'}. Retained evidence keeps its original date.${attempt ? ` Attempt: ${formatDate(data.lastAttemptAt)}.` : ''}` : stale ? 'This snapshot has no complete scan in the last 24 hours. Source links may help you verify availability.' : 'Worldwide discovery is enabled. Confirmed results require an exact public viewing route and territory; commentary language and audio are descriptive, not eligibility requirements.';
+    el.dataNotice.textContent = fetchFailed ? 'Could not refresh this page. Showing the last usable snapshot; check source dates before relying on a listing.' : status === 'partial' || status === 'failed' ? `Latest scan ${status === 'partial' ? 'could not reach every source' : 'failed'}. Retained evidence keeps its original date.${attempt ? ` Attempt: ${formatDate(data.lastAttemptAt)}.` : ''}` : stale ? 'This snapshot has no complete scan in the last 24 hours. Source links may help you verify availability.' : 'Worldwide discovery is enabled. Confirmed results require an exact public viewing route and territory; commentary language and audio are descriptive, not eligibility requirements.';
     el.dataNotice.classList.toggle('warning', degraded);
     const upcoming = feeds.filter(f => f.status === 'confirmed' && dateValue(f.kickoff) >= Date.now());
     el.confirmedCount.textContent = upcoming.length;
     el.productionCount.textContent = feeds.filter(f => f.status === 'production').length;
     el.candidateCount.textContent = feeds.filter(f => f.status === 'candidate').length;
-    el.sourceHealth.innerHTML = (data.sourceHealth || []).map(h => `<li><span>${esc(h.source)}</span><strong class="${h.ok ? '' : 'failed'}">${h.ok ? 'Fetched' : 'Unavailable'}${h.checkedAt ? ` · ${esc(formatDate(h.checkedAt))}` : ''}${Number.isFinite(h.count) ? ` · ${h.count} found` : ''}</strong></li>`).join('') || '<li>No automated source-check results in this snapshot.</li>';
+    el.sourceHealth.innerHTML = (data.sourceHealth || []).map(h => `<li><span>${esc(h.source)}</span><strong class="${h.ok ? '' : 'failed'}">${h.ok ? 'Fetched' : 'Unavailable'}${h.checkedAt ? ` · ${esc(formatDate(h.checkedAt))}` : ''}${Number.isFinite(h.count) ? ` · ${h.count} found` : ''}${h.policyReviewExpired ? ' · access policy review expired' : ''}</strong></li>`).join('') || '<li>No automated source-check results in this snapshot.</li>';
     const next = upcoming.filter(f => f.type === 'tactical').sort((a, b) => dateValue(a.kickoff) - dateValue(b.kickoff))[0];
     el.featuredSection.classList.toggle('hidden', !next);
     if (next) el.featured.innerHTML = `<div><div class="match">${esc(next.match)}</div><div class="meta">${esc(next.competition)} · ${esc(formatDate(next.kickoff))} · ${esc(next.territories.join(', '))}</div></div><a class="watch-link" href="${esc(safeUrl(next.watchUrl))}" target="_blank" rel="noopener noreferrer">Open viewing service ↗</a>`;
     applyFilters();
+    payload = data;
   }
-
-  function validPayload(data) { return data && typeof data === 'object' && Array.isArray(data.feeds); }
   async function refresh() {
     const url = window.TACTICAL_FEED_DATA_URL || (location.protocol === 'file:' ? null : 'https://raw.githubusercontent.com/Expiramentor5468/tacticalviewer/main/data/feeds.json');
     if (!url) return;
@@ -138,7 +160,7 @@
     applyFilters();
   }));
   document.querySelectorAll('[data-preset]').forEach(b => b.addEventListener('click', () => preset(b.dataset.preset)));
-  render(validPayload(window.TACTICAL_FEED_DATA) ? window.TACTICAL_FEED_DATA : { feeds: [] });
+  render(validPayload(window.TACTICAL_FEED_DATA) ? window.TACTICAL_FEED_DATA : { schemaVersion: 2, updatedAt: '1970-01-01T00:00:00Z', scanStatus: 'failed', sourceHealth: [], feeds: [] });
   preset('primary'); refresh();
-  setInterval(() => { if (!document.hidden) { applyFilters(); refresh(); } }, 5 * 60 * 1000);
+  setInterval(() => { if (!document.hidden) { render(payload); refresh(); } }, 5 * 60 * 1000);
 })();

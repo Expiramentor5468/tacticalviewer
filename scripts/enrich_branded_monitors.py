@@ -10,6 +10,7 @@ import hashlib, html, json, re, urllib.parse, urllib.request, xml.etree.ElementT
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
+from update_feeds import retain_evidence
 
 ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/"data"; UA="TacticalFeedFinder/3.5 (+https://github.com/Expiramentor5468/tacticalviewer)"
 MONITORS=[
@@ -33,7 +34,9 @@ def duplicate_of_confirmed(candidate,confirmed):
   if len(ct & ft)>=4:return True
  return False
 def parse(xml,monitor,now):
- root=ET.fromstring(xml);out=[];pattern=re.compile(monitor["pattern"],re.I|re.S)
+ root=ET.fromstring(xml)
+ if root.tag!="rss" or root.find("channel") is None:raise ValueError("Expected RSS channel")
+ out=[];pattern=re.compile(monitor["pattern"],re.I|re.S)
  for item in root.findall("./channel/item")[:40]:
   title=html.unescape(item.findtext("title",""));desc=re.sub("<[^>]+>"," ",html.unescape(item.findtext("description","")));body=title+" "+desc
   if not pattern.search(body):continue
@@ -54,10 +57,12 @@ def main():
  for monitor in MONITORS:
   try:
    raw=parse(get(rss_url(monitor["query"])),monitor,now);rows=[r for r in raw if not duplicate_of_confirmed(r,confirmed)];feeds.extend(rows);health.append({"source":monitor["key"],"ok":True,"checkedAt":stamp(now),"count":len(rows),"duplicatesSuppressed":len(raw)-len(rows)})
-  except Exception as exc:health.append({"source":monitor["key"],"ok":False,"checkedAt":stamp(now),"error":type(exc).__name__})
+  except Exception as exc:
+   feeds.extend(f for f in payload.get("feeds",[]) if f.get("sourceKey")==monitor["key"])
+   health.append({"source":monitor["key"],"ok":False,"checkedAt":stamp(now),"error":type(exc).__name__})
  seen=set();merged=[]
- for f in feeds:
+ for f in retain_evidence(feeds,now):
   if f.get("id") in seen:continue
   seen.add(f.get("id"));merged.append(f)
- payload["feeds"],payload["sourceHealth"],payload["updatedAt"]=merged,health,stamp(now);write(payload);return 0
+ payload["feeds"],payload["sourceHealth"],payload["updatedAt"]=merged,health,stamp(now);write(payload);return 0 if all(h["ok"] for h in health if h["source"] in keys) else 2
 if __name__=="__main__":raise SystemExit(main())

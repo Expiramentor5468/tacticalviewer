@@ -13,6 +13,7 @@ import calendar, hashlib, html, json, re, urllib.error, urllib.request
 from datetime import datetime, timedelta, timezone
 from html.parser import HTMLParser
 from pathlib import Path
+from update_feeds import retain_evidence
 from zoneinfo import ZoneInfo
 ROOT=Path(__file__).resolve().parents[1];DATA=ROOT/"data";UA="TacticalFeedFinder/3.4 (+https://github.com/Expiramentor5468/tacticalviewer)";LONDON=ZoneInfo("Europe/London")
 PRIME_POLICY="https://www.aboutamazon.co.uk/news/entertainment/champions-league-prime-video-uk-renewal"
@@ -21,6 +22,7 @@ PRIME_WATCH="https://www.primevideo.com/"
 # Reviewed against PRIME_HELP on 2026-10-28. Keep territory statements conservative.
 TERRITORIES=["United Kingdom","Republic of Ireland","Channel Islands","Isle of Man"]
 LANGUAGE="English"
+POLICY_REVIEWED_AT="2026-10-28T00:00:00Z"  # Date of actual review, never the fetch time.
 MONTHS={name.lower():i for i,name in enumerate(calendar.month_name) if name}
 END_MARKERS=("nba on prime video","nba","upcoming with rent","upcoming to rent","premier league","formula 1","wta","nfl","movies","tv shows","stories we think you’ll like","page overview","more from amazon")
 class VisibleText(HTMLParser):
@@ -75,12 +77,17 @@ def load():
 def write(p):
  encoded=json.dumps(p,indent=2,ensure_ascii=False);(DATA/"feeds.json").write_text(encoded+"\n",encoding="utf-8");(ROOT/"data.js").write_text("window.TACTICAL_FEED_DATA = "+encoded+";\n",encoding="utf-8")
 def main():
- now=datetime.now(timezone.utc);p=load();feeds=[f for f in p.get("feeds",[]) if f.get("sourceKey")!="amazon:prime-vision"];health=[h for h in p.get("sourceHealth",[]) if h.get("source")!="amazon:prime-vision"]
+ now=datetime.now(timezone.utc);p=load();previous=p.get("feeds",[]);feeds=[f for f in p.get("feeds",[]) if f.get("sourceKey")!="amazon:prime-vision"];health=[h for h in p.get("sourceHealth",[]) if h.get("source")!="amazon:prime-vision"]
  try:
   policy=get(PRIME_POLICY);help_shell=get(PRIME_HELP);product_ok=policy_ok(policy) and len(help_shell)>100
   if not product_ok:raise ValueError("Prime Vision evidence unavailable")
   err=None
  except Exception as exc:product_ok=False;err=type(exc).__name__
+ for old in previous:
+  if old.get("sourceKey")=="amazon:prime-vision":
+   old["policyReviewedAt"]=POLICY_REVIEWED_AT
+ reviewed=datetime.fromisoformat(POLICY_REVIEWED_AT.replace("Z","+00:00"));policy_fresh=now-timedelta(days=7)<=reviewed<=now
+ access_ok=product_ok and policy_fresh
  found=[];checked=0;page_errors=[]
  for offset in range(3):
   year,month=add_months(now.year,now.month,offset);url=month_url(year,month)
@@ -88,14 +95,18 @@ def main():
    content=get(url);checked+=1
    for row in parse_month_page(content,year,now):
     kickoff=row["kickoff"];ident=hashlib.sha256((row["match"]+kickoff.isoformat()).encode()).hexdigest()[:16]
-    found.append({"id":"prime-vision-"+ident,"match":row["match"],"competition":"UEFA Champions League","kickoff":kickoff.isoformat().replace("+00:00","Z"),"type":"alternate","status":"confirmed" if product_ok else "candidate","platform":"Prime Video — Prime Vision","language":LANGUAGE if product_ok else "Unknown","commentary":"English default commentary; Prime Vision adds live tactical/data overlays" if product_ok else "English audio not yet verified","usAvailability":False if product_ok else None,"access":"subscription" if product_ok else "unknown","territories":TERRITORIES if product_ok else [],"notes":"Amazon's monthly schedule confirms the exact UCL top-pick fixture. The official UCL help page confirms Prime Vision, English default commentary, and UK/Republic of Ireland access. Prime Vision is data-enhanced alternate coverage, not a persistent full-pitch wide camera.","sourceUrl":url,"watchUrl":PRIME_WATCH if product_ok else None,"sourceKey":"amazon:prime-vision","checkedAt":now.isoformat().replace("+00:00","Z"),"verifiedAt":now.isoformat().replace("+00:00","Z") if product_ok else None,"exactFixtureVerified":True,"publicAccessConfirmed":product_ok,"secondarySourceUrl":PRIME_HELP,"policySourceUrl":PRIME_POLICY})
+    found.append({"id":"prime-vision-"+ident,"match":row["match"],"competition":"UEFA Champions League","kickoff":kickoff.isoformat().replace("+00:00","Z"),"type":"alternate","status":"confirmed" if access_ok else "candidate","platform":"Prime Video — Prime Vision","language":LANGUAGE if access_ok else "Unknown","commentary":"English default commentary; Prime Vision adds live tactical/data overlays" if access_ok else "English audio not yet verified","usAvailability":False if access_ok else None,"access":"subscription" if access_ok else "unknown","territories":TERRITORIES if access_ok else [],"notes":"Amazon's monthly schedule confirms the exact UCL top-pick fixture. The official UCL help page confirms Prime Vision, English default commentary, and UK/Republic of Ireland access. Prime Vision is data-enhanced alternate coverage, not a persistent full-pitch wide camera. Access evidence expires seven days after the recorded policy review.","sourceUrl":url,"watchUrl":PRIME_WATCH if access_ok else None,"sourceKey":"amazon:prime-vision","checkedAt":now.isoformat().replace("+00:00","Z"),"verifiedAt":POLICY_REVIEWED_AT if access_ok else None,"policyReviewedAt":POLICY_REVIEWED_AT,"exactFixtureVerified":True,"publicAccessConfirmed":access_ok,"secondarySourceUrl":PRIME_HELP,"policySourceUrl":PRIME_POLICY})
   except urllib.error.HTTPError as exc:
    if exc.code!=404:page_errors.append(f"{calendar.month_name[month]}:{type(exc).__name__}")
   except Exception as exc:page_errors.append(f"{calendar.month_name[month]}:{type(exc).__name__}")
+ complete=product_ok and not page_errors and checked>0
+ if not complete:
+  retained=[f for f in previous if f.get("sourceKey")=="amazon:prime-vision"]
+  found=found+retained if product_ok else retained+found
  seen=set();merged=[]
- for item in feeds+found:
+ for item in retain_evidence(feeds+found,now):
   key=(item.get("competition"),item.get("match"),item.get("kickoff"),item.get("platform"))
   if key in seen:continue
   seen.add(key);merged.append(item)
- p["feeds"]=merged;health.append({"source":"amazon:prime-vision","ok":product_ok and not page_errors and checked>0,"checkedAt":now.isoformat().replace("+00:00","Z"),"count":len(found),"pagesChecked":checked,"evidenceMode":"official-help-reviewed/client-rendered",**({"error":err} if err else{}),**({"pageErrors":page_errors} if page_errors else{})});p["sourceHealth"]=health;p["updatedAt"]=now.isoformat().replace("+00:00","Z");write(p);print(f"Prime Vision enrichment: {len(found)} upcoming fixture(s), {checked} monthly page(s) checked");return 0
+ p["feeds"]=merged;health.append({"source":"amazon:prime-vision","ok":complete,"checkedAt":now.isoformat().replace("+00:00","Z"),"count":len(found),"pagesChecked":checked,"evidenceMode":"official-help-reviewed/client-rendered","policyReviewedAt":POLICY_REVIEWED_AT,"policyReviewExpired":not policy_fresh,**({"error":err} if err else{}),**({"pageErrors":page_errors} if page_errors else{})});p["sourceHealth"]=health;p["updatedAt"]=now.isoformat().replace("+00:00","Z");write(p);print(f"Prime Vision enrichment: {len(found)} upcoming fixture(s), {checked} monthly page(s) checked");return 0 if complete else 2
 if __name__=="__main__":raise SystemExit(main())
