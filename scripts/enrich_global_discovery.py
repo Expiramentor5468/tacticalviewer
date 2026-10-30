@@ -50,7 +50,7 @@ def main():
   try:found.extend(parse(get(rss_url(q)),now));ok+=1
   except Exception as exc:errors.append(type(exc).__name__)
  complete=ok==len(QUERIES)
- if not complete:found=[f for f in p.get("feeds",[]) if f.get("sourceKey")==SOURCE]+found
+ if not complete:found=found+[f for f in p.get("feeds",[]) if f.get("sourceKey")==SOURCE]
  seen=set();unique=[]
  for f in retain_evidence(found,now):
   if f['id'] in seen:continue

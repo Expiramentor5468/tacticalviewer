@@ -105,6 +105,15 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual((h['queriesChecked'], h['queriesExpected']), (1, 3))
         self.assertTrue(any(f['id'] == worldwide.SOURCE for f in p['feeds']))
 
+    def test_partial_search_refreshes_successful_rows_without_erasing_others(self):
+        refreshed = self.row(worldwide.SOURCE)
+        refreshed['checkedAt'] = base.stamp(NOW)
+        with patch.object(worldwide, 'get', side_effect=[RSS, TimeoutError(), TimeoutError()]), patch.object(worldwide, 'parse', return_value=[refreshed]):
+            self.assertEqual(worldwide.main(), 2)
+        rows = {f['id']: f for f in self.read()['feeds']}
+        self.assertEqual(rows[worldwide.SOURCE]['checkedAt'], base.stamp(NOW))
+        self.assertIn('amazon:prime-vision', rows)
+
     def test_partial_sky_exports_are_not_success_and_keep_old_rows(self):
         self.successful_sources()
         with patch.object(sky, 'get_bytes', side_effect=[b'export'] + [TimeoutError()] * 10):
