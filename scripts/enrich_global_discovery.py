@@ -9,6 +9,7 @@ import hashlib, html, json, re, urllib.parse, urllib.request, xml.etree.ElementT
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
+from update_feeds import retain_evidence
 ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/"data"; UA="TacticalFeedFinder/3.4 (+https://github.com/Expiramentor5468/tacticalviewer)"; SOURCE="global:camera-feed-discovery"
 QUERIES=[
  '("tactical cam" OR "tactical feed" OR "tactical view") (soccer OR football) (live OR stream OR broadcast)',
@@ -24,7 +25,9 @@ def get(url):
  with urllib.request.urlopen(req,timeout=20) as r:return r.read(2_000_000).decode('utf-8',errors='replace')
 def rss_url(q):return 'https://news.google.com/rss/search?q='+urllib.parse.quote(q+' when:45d')+'&hl=en&gl=US&ceid=US:en'
 def parse(xml,now):
- root=ET.fromstring(xml);out=[]
+ root=ET.fromstring(xml)
+ if root.tag!="rss" or root.find("channel") is None:raise ValueError("Expected RSS channel")
+ out=[]
  for item in root.findall('./channel/item')[:50]:
   title=html.unescape(item.findtext('title',''));desc=re.sub('<[^>]+>',' ',html.unescape(item.findtext('description','')));body=title+' '+desc
   if not PATTERN.search(body) or not BROADCAST.search(body) or REJECT.search(title):continue
@@ -46,9 +49,11 @@ def main():
  for q in QUERIES:
   try:found.extend(parse(get(rss_url(q)),now));ok+=1
   except Exception as exc:errors.append(type(exc).__name__)
+ complete=ok==len(QUERIES)
+ if not complete:found=found+[f for f in p.get("feeds",[]) if f.get("sourceKey")==SOURCE]
  seen=set();unique=[]
- for f in found:
+ for f in retain_evidence(found,now):
   if f['id'] in seen:continue
   seen.add(f['id']);unique.append(f)
- feeds.extend(unique);health.append({'source':SOURCE,'ok':ok>0,'checkedAt':stamp(now),'count':len(unique),'queriesChecked':ok,**({'errors':errors} if errors else {})});p['feeds'],p['sourceHealth'],p['updatedAt']=feeds,health,stamp(now);write(p);return 0
+ feeds.extend(unique);health.append({'source':SOURCE,'ok':complete,'checkedAt':stamp(now),'count':len(unique),'queriesChecked':ok,'queriesExpected':len(QUERIES),**({'errors':errors} if errors else {})});p['feeds'],p['sourceHealth'],p['updatedAt']=feeds,health,stamp(now);write(p);return 0 if complete else 2
 if __name__=='__main__':raise SystemExit(main())

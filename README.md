@@ -55,14 +55,14 @@ Hosted pages fetch `https://raw.githubusercontent.com/Expiramentor5468/tacticalv
 
 The GitHub Actions workflow runs every three hours and can also be started manually. It runs tests, refreshes all discovery/enrichment stages, commits changed `data.js` / `data/feeds.json`, and lets GitHub Pages republish the result.
 
+The runner finalizes status only after all sources finish. Failed or incomplete sources retain unexpired prior evidence without renewing its verification date. A complete successful fetch with no results replaces that source’s previous results.
+
+Prime’s client-rendered access policy has a separate recorded review date. Fetching its HTML shell does not renew that review; after seven days, affected listings become unverified leads until the policy is reviewed again. Cards expose the schedule, access policy and supporting evidence separately.
+
 This updater is entirely repository-side. It does **not** require or consume a ChatGPT automation slot.
 
 ```sh
-python scripts/update_feeds.py
-python scripts/enrich_prime_vision.py
-python scripts/enrich_sky_bundesliga.py
-python scripts/enrich_branded_monitors.py
-python scripts/enrich_global_discovery.py
+python scripts/run_update.py
 python -m unittest discover -s tests -v
 node --test tests/app.test.js
 ```

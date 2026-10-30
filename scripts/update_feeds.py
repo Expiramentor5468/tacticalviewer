@@ -51,6 +51,7 @@ def get(url):
 def normalize(item, now):
     """Validate dates and expire claims, including manually supplied claims."""
     f = dict(item)
+    f['territories'] = [t.strip() for t in f.get('territories', []) if isinstance(t, str) and t.strip()] if isinstance(f.get('territories'), list) else []
     if not f.get('id') or not f.get('match') or not f.get('competition'):
         return None
     kickoff = parse_date(f.get('kickoff'))
@@ -60,6 +61,9 @@ def normalize(item, now):
         return None
     verified = parse_date(f.get('verifiedAt'))
     recent = verified and now - timedelta(days=7) <= verified <= now
+    if f.get('policyReviewedAt'):
+        policy_reviewed = parse_date(f['policyReviewedAt'])
+        recent = recent and policy_reviewed and now - timedelta(days=7) <= policy_reviewed <= now
     confirmed = (f.get('exactFixtureVerified') is True and
                  f.get('publicAccessConfirmed') is True and kickoff and recent and
                  safe_url(f.get('sourceUrl')) and safe_url(f.get('watchUrl')) and
@@ -171,7 +175,7 @@ def dedupe(items):
     out, seen = [], set()
     for item in items:
         if item and item['id'] not in seen:
-            fixture_key = (item.get('competition'), item.get('match'), item.get('kickoff'), item.get('type')) if item.get('kickoff') else None
+            fixture_key = (item.get('competition'), item.get('match'), item.get('kickoff'), item.get('type'), item.get('platform')) if item.get('kickoff') else None
             if fixture_key and fixture_key in seen:
                 continue
             seen.add(item['id'])
@@ -179,6 +183,20 @@ def dedupe(items):
                 seen.add(fixture_key)
             out.append(item)
     return out
+
+def retain_evidence(items, now):
+    """Keep original evidence dates; outages never extend verification or lead lifetime."""
+    kept = []
+    for item in items:
+        key = item.get('sourceKey', '')
+        days = 21 if key.startswith('news:') else 45 if key == 'global:camera-feed-discovery' else 60 if key in ('cbs:golazo-tactical', 'mls:alternate-cameras', 'premierleague:alternate-cameras', 'ligue1:expert-mode') else None
+        published = parse_date(item.get('sourcePublishedAt'))
+        if days and (not published or published < now - timedelta(days=days)):
+            continue
+        row = normalize(item, now)
+        if row:
+            kept.append(row)
+    return dedupe(kept)
 
 def build_payload(manual, previous, fetch=get, now=None):
     now = now or datetime.now(timezone.utc)
@@ -218,13 +236,16 @@ def build_payload(manual, previous, fetch=get, now=None):
     # Failed-source retained news still expires; failure must not make old articles current.
     found = [f for f in found if not f.get('sourceKey', '').startswith('news:') or
              (parse_date(f.get('sourcePublishedAt')) and parse_date(f['sourcePublishedAt']) >= now - timedelta(days=21))]
-    feeds = dedupe(normalize(f, now) for f in manual + found)
+    owned = {'news:' + comp for comp, _ in SEARCHES} | {'bundesliga:production'}
+    manual_ids = {f.get('id') for f in manual}
+    retained = [f for f in previous.get('feeds', []) if f.get('sourceKey') and f.get('sourceKey') not in owned and f.get('id') not in manual_ids]
+    feeds = retain_evidence(manual + found + retained, now)
     all_ok = all(h['ok'] for h in health)
     return {
         'schemaVersion': 2, 'updatedAt': stamp(now), 'lastAttemptAt': stamp(now),
         'lastSuccessfulScanAt': stamp(now) if all_ok else previous.get('lastSuccessfulScanAt'),
         'scanStatus': 'ok' if all_ok else 'partial' if any(h['ok'] for h in health) else 'failed',
-        'sourceHealth': health, 'feeds': feeds,
+        'sourceHealth': health + [h for h in previous.get('sourceHealth', []) if h.get('source') not in owned], 'feeds': feeds,
     }
 
 def read_json(path, fallback):
@@ -238,9 +259,12 @@ def write_payload(payload):
         temp.write_text(content, encoding='utf-8')
         temp.replace(path)
 
-if __name__ == '__main__':
-    payload = build_payload(read_json(DATA / 'manual_overrides.json', {'feeds': []})['feeds'], read_json(DATA / 'feeds.json', {}))
+def main():
+    payload = build_payload(read_json(DATA / 'manual_overrides.json', {'feeds': []})['feeds'], read_json(DATA / 'feeds.json', {}), fetch=get)
     write_payload(payload)
     print(f"Scan {payload['scanStatus']}: {len(payload['feeds'])} listings; {sum(h['ok'] for h in payload['sourceHealth'])}/{len(payload['sourceHealth'])} sources checked")
     # The workflow should commit the honest failure metadata before surfacing this failure.
-    sys.exit(0 if payload['scanStatus'] == 'ok' else 2)
+    return 0 if payload['scanStatus'] == 'ok' else 2
+
+if __name__ == '__main__':
+    sys.exit(main())

@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib, html, io, json, re, urllib.parse, urllib.request, zipfile, xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from update_feeds import retain_evidence
 from zoneinfo import ZoneInfo
 ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/"data"; UA="TacticalFeedFinder/3.6 (+https://github.com/Expiramentor5468/tacticalviewer)"
 BERLIN=ZoneInfo("Europe/Berlin"); FIXTURES="https://products.bundesliga.com/fixtures"; DFL_PRODUCT="https://products.bundesliga.com/matchdays"; SKY_POLICY="https://videos.sport.sky.de/fussball/artikel/patrick-ittrich-neuer-schiedsrichter-experte-bei-sky-sport-ex-bundesliga-referee-verstaerkt-bundesliga-team/13574269/35311"; SKY_WATCH="https://www.wowtv.de/"; EXCEPTIONS={("FC Bayern München","Borussia Dortmund","2026-10-31")}
@@ -78,11 +79,11 @@ def excel_time(v):
 def top_spiele_from_export(blob,now):
     rows=xlsx_rows(blob)
     header_i=next((i for i,r in enumerate(rows) if any("home" in c.lower() for c in r) and any("away" in c.lower() for c in r)),None)
-    if header_i is None:return []
+    if header_i is None:raise ValueError("Fixture header not found")
     headers=[re.sub(r"\s+"," ",c).strip().lower() for c in rows[header_i]]
     def col(*needles):return next((i for i,h in enumerate(headers) if all(n in h for n in needles)),None)
     i_day,i_date,i_cet,i_home,i_away=col("day"),col("date"),col("kick","cet"),col("home"),col("away")
-    if None in(i_date,i_cet,i_home,i_away):return []
+    if None in(i_date,i_cet,i_home,i_away):raise ValueError("Required fixture columns missing")
     out=[];horizon=now+timedelta(days=60)
     for row in rows[header_i+1:]:
         at=lambda i:row[i].strip() if i is not None and i<len(row) else "";day=at(i_day).lower();date=excel_date(at(i_date));clock=excel_time(at(i_cet))
@@ -100,15 +101,19 @@ def main():
     try:
         sky,dfl,fixture_html=get_text(SKY_POLICY),get_text(DFL_PRODUCT),get_text(FIXTURES)
         if not policy_ok(sky,dfl):raise ValueError("policy")
-        league,season,current_md=export_context(fixture_html);found=[];checked=0
-        for md in range(current_md,min(34,current_md+10)+1):
+        league,season,current_md=export_context(fixture_html);found=[];checked=0;export_errors=[]
+        matchdays=list(range(current_md,min(34,current_md+10)+1))
+        for md in matchdays:
             try:found.extend(top_spiele_from_export(get_bytes(export_url(league,season,md)),now));checked+=1
-            except Exception:continue
+            except Exception as exc:export_errors.append(f"{md}:{type(exc).__name__}")
         unique=list({(r["home"],r["away"],r["kickoff"]):r for r in found}.values())
         for r in sorted(unique,key=lambda x:x["kickoff"]):
             match=f"{r['home']} vs {r['away']}";kick=r["kickoff"].isoformat().replace("+00:00","Z");ident=hashlib.sha256((match+kick).encode()).hexdigest()[:16]
             feeds.append({"id":"sky-bundesliga-tactical-"+ident,"match":match,"competition":"Bundesliga","kickoff":kick,"type":"tactical","status":"confirmed","platform":"Sky Sport Bundesliga 3 / WOW","language":"Unknown / not verified","commentary":"Consumer audio language not verified; feed remains listed because public video access is confirmed","usAvailability":False,"access":"subscription","territories":["Germany"],"notes":"Sky confirms public Tactical Feed carriage in Germany for the Saturday Topspiel. Audio language is not required for TacticalViewer confirmation; DFL separately documents the Tactical Feed production product.","sourceUrl":SKY_POLICY,"secondarySourceUrl":DFL_PRODUCT,"fixtureSourceUrl":FIXTURES,"watchUrl":SKY_WATCH,"sourceKey":"sky:bundesliga-tactical","checkedAt":now.isoformat().replace("+00:00","Z"),"verifiedAt":now.isoformat().replace("+00:00","Z"),"exactFixtureVerified":True,"publicAccessConfirmed":True})
-        health.append({"source":"sky:bundesliga-tactical","ok":checked>0,"checkedAt":now.isoformat().replace("+00:00","Z"),"count":len(unique),"exportsChecked":checked})
+        health.append({"source":"sky:bundesliga-tactical","ok":checked==len(matchdays) and checked>0,"checkedAt":now.isoformat().replace("+00:00","Z"),"count":len(unique),"exportsChecked":checked,"exportsExpected":len(matchdays),"exportErrors":export_errors})
     except Exception as exc:health.append({"source":"sky:bundesliga-tactical","ok":False,"checkedAt":now.isoformat().replace("+00:00","Z"),"error":type(exc).__name__})
-    p["feeds"],p["sourceHealth"],p["updatedAt"]=feeds,health,now.isoformat().replace("+00:00","Z");write(p);return 0
+    complete=health[-1]["ok"]
+    if not complete:feeds=feeds+[f for f in p.get("feeds",[]) if f.get("sourceKey")=="sky:bundesliga-tactical"]
+    feeds=retain_evidence(feeds,now)
+    p["feeds"],p["sourceHealth"],p["updatedAt"]=feeds,health,now.isoformat().replace("+00:00","Z");write(p);return 0 if complete else 2
 if __name__=="__main__":raise SystemExit(main())
