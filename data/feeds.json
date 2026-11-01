@@ -1,49 +1,49 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-11-01T14:59:10.319616Z",
-  "lastAttemptAt": "2026-11-01T14:58:50.568027Z",
-  "lastSuccessfulScanAt": "2026-11-01T14:59:10.319616Z",
+  "updatedAt": "2026-11-01T19:44:06.335345Z",
+  "lastAttemptAt": "2026-11-01T19:43:49.550094Z",
+  "lastSuccessfulScanAt": "2026-11-01T19:44:06.335345Z",
   "scanStatus": "ok",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
       "ok": true,
-      "checkedAt": "2026-11-01T14:58:50.568400Z",
+      "checkedAt": "2026-11-01T19:43:49.550472Z",
       "count": 0
     },
     {
       "source": "news:Premier League",
       "ok": true,
-      "checkedAt": "2026-11-01T14:58:50.568400Z",
+      "checkedAt": "2026-11-01T19:43:49.550472Z",
       "count": 0
     },
     {
       "source": "news:MLS",
       "ok": true,
-      "checkedAt": "2026-11-01T14:58:50.568400Z",
+      "checkedAt": "2026-11-01T19:43:49.550472Z",
       "count": 0
     },
     {
       "source": "news:Bundesliga",
       "ok": true,
-      "checkedAt": "2026-11-01T14:58:50.568400Z",
+      "checkedAt": "2026-11-01T19:43:49.550472Z",
       "count": 0
     },
     {
       "source": "news:Serie A",
       "ok": true,
-      "checkedAt": "2026-11-01T14:58:50.568400Z",
+      "checkedAt": "2026-11-01T19:43:49.550472Z",
       "count": 0
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-11-01T14:58:50.568400Z"
+      "checkedAt": "2026-11-01T19:43:49.550472Z"
     },
     {
       "source": "amazon:prime-vision",
       "ok": true,
-      "checkedAt": "2026-11-01T14:58:53.092326Z",
+      "checkedAt": "2026-11-01T19:43:52.057189Z",
       "count": 2,
       "pagesChecked": 1,
       "evidenceMode": "official-help-reviewed/client-rendered",
@@ -53,7 +53,7 @@
     {
       "source": "sky:bundesliga-tactical",
       "ok": true,
-      "checkedAt": "2026-11-01T14:58:56.689477Z",
+      "checkedAt": "2026-11-01T19:43:54.998613Z",
       "count": 0,
       "exportsChecked": 11,
       "exportsExpected": 11,
@@ -62,58 +62,41 @@
     {
       "source": "cbs:golazo-tactical",
       "ok": true,
-      "checkedAt": "2026-11-01T14:59:08.750349Z",
+      "checkedAt": "2026-11-01T19:44:04.758289Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "mls:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-11-01T14:59:08.750349Z",
+      "checkedAt": "2026-11-01T19:44:04.758289Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "premierleague:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-11-01T14:59:08.750349Z",
+      "checkedAt": "2026-11-01T19:44:04.758289Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "ligue1:expert-mode",
       "ok": true,
-      "checkedAt": "2026-11-01T14:59:08.750349Z",
+      "checkedAt": "2026-11-01T19:44:04.758289Z",
       "count": 1,
       "duplicatesSuppressed": 0
     },
     {
       "source": "global:camera-feed-discovery",
       "ok": true,
-      "checkedAt": "2026-11-01T14:59:09.530262Z",
-      "count": 1,
+      "checkedAt": "2026-11-01T19:44:05.497630Z",
+      "count": 2,
       "queriesChecked": 3,
       "queriesExpected": 3
     }
   ],
   "feeds": [
-    {
-      "id": "bundesliga-production-catalogue",
-      "match": "Bundesliga tactical-feed production catalogue",
-      "competition": "Bundesliga",
-      "kickoff": null,
-      "type": "tactical",
-      "status": "production",
-      "platform": "Bundesliga Global Product Portfolio",
-      "commentary": "Check source",
-      "usAvailability": null,
-      "access": "unknown",
-      "sourceUrl": "https://products.bundesliga.com/fixtures",
-      "sourceKey": "bundesliga:production",
-      "checkedAt": "2026-11-01T14:58:50.568400Z",
-      "notes": "A feed product is listed for broadcasters. No current match or consumer viewing service is verified here. A production listing is not a watch link.",
-      "territories": []
-    },
     {
       "id": "prime-vision-5d9fbd950af80a60",
       "match": "Manchester United vs Roma",
@@ -136,7 +119,7 @@
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": "https://www.primevideo.com/",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-11-01T14:58:53.092326Z",
+      "checkedAt": "2026-11-01T19:43:52.057189Z",
       "verifiedAt": "2026-10-28T00:00:00Z",
       "policyReviewedAt": "2026-10-28T00:00:00Z",
       "exactFixtureVerified": true,
@@ -166,7 +149,7 @@
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": "https://www.primevideo.com/",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-11-01T14:58:53.092326Z",
+      "checkedAt": "2026-11-01T19:43:52.057189Z",
       "verifiedAt": "2026-10-28T00:00:00Z",
       "policyReviewedAt": "2026-10-28T00:00:00Z",
       "exactFixtureVerified": true,
@@ -190,7 +173,7 @@
       "notes": "Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation. Audio language is recorded when known but does not determine eligibility.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOcFlad29wOHpMQzhNMFlUaGMzd0dsMkRPcXU5YTdNMVptY3UwVVh0Mk1POXY3TUZIcXBObXNfY3ZPVjdReHZ3cDFfVHlJQ2FFdEJOaXhnel9GY1F5c0tWSXRUWnRMcHJqdFh3SklER0lCcDBMRTJYMXpTcm9MZjlkMV9rTnRYU2xId0ZNQ0dvY3d4b292YWE4ZDlkaUVqb2M?oc=5",
       "sourcePublishedAt": "2026-09-08T07:00:00Z",
-      "checkedAt": "2026-11-01T14:59:08.750349Z",
+      "checkedAt": "2026-11-01T19:44:04.758289Z",
       "sourceKey": "ligue1:expert-mode",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
@@ -210,8 +193,29 @@
       "territories": [],
       "notes": "Worldwide discovery lead. Exact fixture, public territory and viewing route must be verified before confirmation. Any language or video-only feed is eligible.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPTElFMU1TelNkRkR0eXBuSlF6NkJ1bWtVaVd3MVBTOGNPdTJNeEwyNVIzbmJoSnZhMUQ1dkFZcVE4RjBCZmhCYkszeHZmb1NOMFJ1Q2lEdnctTG1rZnVKdFItOFIwSlhXNFBUTEFuYk51a3pUemxFbXk2WnRMaEFiU3hjSFdTN1NRUElMMGxvR3FGX0tSSVBzTjZyQXBodmstNHc2YkdNSQ?oc=5",
-      "sourcePublishedAt": "2026-10-05T19:46:40Z",
-      "checkedAt": "2026-11-01T14:59:09.530262Z",
+      "sourcePublishedAt": "2026-10-05T07:00:00Z",
+      "checkedAt": "2026-11-01T19:44:05.497630Z",
+      "sourceKey": "global:camera-feed-discovery",
+      "exactFixtureVerified": false,
+      "publicAccessConfirmed": false
+    },
+    {
+      "id": "global-lead-91544d108c68390a",
+      "match": "REF CAM: Rogers slices through United defence! 🎥 - GhanaSoccernet",
+      "competition": "Other / global",
+      "kickoff": null,
+      "type": "ref",
+      "status": "candidate",
+      "platform": "Global discovery — carrier unverified",
+      "language": "Unknown",
+      "commentary": "Audio/commentary not yet verified",
+      "usAvailability": null,
+      "access": "unknown",
+      "territories": [],
+      "notes": "Worldwide discovery lead. Exact fixture, public territory and viewing route must be verified before confirmation. Any language or video-only feed is eligible.",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMie0FVX3lxTFA5WHlGaFQtZmRBby1saXpnWENtZWRFZ0ZpUFZPR2dYVVo1cGptX3BPREdnd25yZGFiOTNnUjNhQXRMekdhaXJLNGFqT2MwYVBHSnNQVlNvQVBjY3lUS0NDRHlTUm1CVnJweUk3QVBMOTN2S3ZGdTFQdG8yQQ?oc=5",
+      "sourcePublishedAt": "2026-10-31T07:00:00Z",
+      "checkedAt": "2026-11-01T19:44:05.497630Z",
       "sourceKey": "global:camera-feed-discovery",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
