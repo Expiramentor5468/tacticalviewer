@@ -53,8 +53,8 @@ jobs:
             git pull --rebase origin main
             git push origin HEAD:main
           fi
-      - name: Surface incomplete scans
+      - name: Report incomplete scans
         if: steps.refresh.outcome == 'failure'
         run: |
-          echo 'One or more sources could not be checked. Failure details were published to the site; retained listings were not re-verified.'
-          exit 1
+          echo '::warning::One or more external sources could not be checked. Degraded source health was published to the site and retained listings were not re-verified.'
+          echo 'This is treated as a degraded scan, not a workflow failure. Tests, updater execution, and publishing failures still fail the job normally.'
