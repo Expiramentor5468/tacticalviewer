@@ -1,49 +1,49 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-11-01T00:10:13.420613Z",
-  "lastAttemptAt": "2026-11-01T00:09:54.824651Z",
-  "lastSuccessfulScanAt": "2026-11-01T00:10:13.420613Z",
+  "updatedAt": "2026-11-01T06:13:52.991476Z",
+  "lastAttemptAt": "2026-11-01T06:13:39.542612Z",
+  "lastSuccessfulScanAt": "2026-11-01T06:13:52.991476Z",
   "scanStatus": "ok",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
       "ok": true,
-      "checkedAt": "2026-11-01T00:09:54.824896Z",
+      "checkedAt": "2026-11-01T06:13:39.543011Z",
       "count": 0
     },
     {
       "source": "news:Premier League",
       "ok": true,
-      "checkedAt": "2026-11-01T00:09:54.824896Z",
+      "checkedAt": "2026-11-01T06:13:39.543011Z",
       "count": 0
     },
     {
       "source": "news:MLS",
       "ok": true,
-      "checkedAt": "2026-11-01T00:09:54.824896Z",
+      "checkedAt": "2026-11-01T06:13:39.543011Z",
       "count": 0
     },
     {
       "source": "news:Bundesliga",
       "ok": true,
-      "checkedAt": "2026-11-01T00:09:54.824896Z",
+      "checkedAt": "2026-11-01T06:13:39.543011Z",
       "count": 0
     },
     {
       "source": "news:Serie A",
       "ok": true,
-      "checkedAt": "2026-11-01T00:09:54.824896Z",
+      "checkedAt": "2026-11-01T06:13:39.543011Z",
       "count": 0
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-11-01T00:09:54.824896Z"
+      "checkedAt": "2026-11-01T06:13:39.543011Z"
     },
     {
       "source": "amazon:prime-vision",
       "ok": true,
-      "checkedAt": "2026-11-01T00:09:57.589768Z",
+      "checkedAt": "2026-11-01T06:13:41.669222Z",
       "count": 2,
       "pagesChecked": 1,
       "evidenceMode": "official-help-reviewed/client-rendered",
@@ -53,7 +53,7 @@
     {
       "source": "sky:bundesliga-tactical",
       "ok": true,
-      "checkedAt": "2026-11-01T00:10:01.252862Z",
+      "checkedAt": "2026-11-01T06:13:43.903673Z",
       "count": 0,
       "exportsChecked": 11,
       "exportsExpected": 11,
@@ -62,36 +62,36 @@
     {
       "source": "cbs:golazo-tactical",
       "ok": true,
-      "checkedAt": "2026-11-01T00:10:11.622753Z",
+      "checkedAt": "2026-11-01T06:13:51.001979Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "mls:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-11-01T00:10:11.622753Z",
+      "checkedAt": "2026-11-01T06:13:51.001979Z",
       "count": 1,
       "duplicatesSuppressed": 0
     },
     {
       "source": "premierleague:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-11-01T00:10:11.622753Z",
+      "checkedAt": "2026-11-01T06:13:51.001979Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "ligue1:expert-mode",
       "ok": true,
-      "checkedAt": "2026-11-01T00:10:11.622753Z",
+      "checkedAt": "2026-11-01T06:13:51.001979Z",
       "count": 1,
       "duplicatesSuppressed": 0
     },
     {
       "source": "global:camera-feed-discovery",
       "ok": true,
-      "checkedAt": "2026-11-01T00:10:12.446712Z",
-      "count": 0,
+      "checkedAt": "2026-11-01T06:13:51.984678Z",
+      "count": 1,
       "queriesChecked": 3,
       "queriesExpected": 3
     }
@@ -110,7 +110,7 @@
       "access": "unknown",
       "sourceUrl": "https://products.bundesliga.com/fixtures",
       "sourceKey": "bundesliga:production",
-      "checkedAt": "2026-11-01T00:09:54.824896Z",
+      "checkedAt": "2026-11-01T06:13:39.543011Z",
       "notes": "A feed product is listed for broadcasters. No current match or consumer viewing service is verified here. A production listing is not a watch link.",
       "territories": []
     },
@@ -136,7 +136,7 @@
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": "https://www.primevideo.com/",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-11-01T00:09:57.589768Z",
+      "checkedAt": "2026-11-01T06:13:41.669222Z",
       "verifiedAt": "2026-10-28T00:00:00Z",
       "policyReviewedAt": "2026-10-28T00:00:00Z",
       "exactFixtureVerified": true,
@@ -166,7 +166,7 @@
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": "https://www.primevideo.com/",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-11-01T00:09:57.589768Z",
+      "checkedAt": "2026-11-01T06:13:41.669222Z",
       "verifiedAt": "2026-10-28T00:00:00Z",
       "policyReviewedAt": "2026-10-28T00:00:00Z",
       "exactFixtureVerified": true,
@@ -190,7 +190,7 @@
       "notes": "Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation. Audio language is recorded when known but does not determine eligibility.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNdVBEcVRKREY1cGhNRGRUSWVraEc2cjNmblAxSHJtZFBoSkxHOHZGRzN6Q2g4XzdkSzlyUm96T2VYVWxHS0trU1o3MWUyLUwzVF8zY0tQM3NDcEc3eUt6Y0loRU9YNmFCNlg3NzJGdWppNlhQYnZQQVhYbmh3eE5fVUZnLVVnRl9Pci0yV0VjM3dwX3RWRXZtZUNXV0tMYlU5U1l6Ykg4Rktic0VLekJYSUJmTlNvWkphMmJUM3Nn?oc=5",
       "sourcePublishedAt": "2026-09-02T07:00:00Z",
-      "checkedAt": "2026-11-01T00:10:11.622753Z",
+      "checkedAt": "2026-11-01T06:13:51.001979Z",
       "sourceKey": "mls:alternate-cameras",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
@@ -211,8 +211,29 @@
       "notes": "Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation. Audio language is recorded when known but does not determine eligibility.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOcFlad29wOHpMQzhNMFlUaGMzd0dsMkRPcXU5YTdNMVptY3UwVVh0Mk1POXY3TUZIcXBObXNfY3ZPVjdReHZ3cDFfVHlJQ2FFdEJOaXhnel9GY1F5c0tWSXRUWnRMcHJqdFh3SklER0lCcDBMRTJYMXpTcm9MZjlkMV9rTnRYU2xId0ZNQ0dvY3d4b292YWE4ZDlkaUVqb2M?oc=5",
       "sourcePublishedAt": "2026-09-08T07:00:00Z",
-      "checkedAt": "2026-11-01T00:10:11.622753Z",
+      "checkedAt": "2026-11-01T06:13:51.001979Z",
       "sourceKey": "ligue1:expert-mode",
+      "exactFixtureVerified": false,
+      "publicAccessConfirmed": false
+    },
+    {
+      "id": "global-lead-93ef192a62de025e",
+      "match": "REF CAM: Messi vs. Müller in MLS Cup 2025 | Inter Miami CF vs. Vancouver Whitecaps - GhanaSoccernet",
+      "competition": "Other / global",
+      "kickoff": null,
+      "type": "ref",
+      "status": "candidate",
+      "platform": "Global discovery — carrier unverified",
+      "language": "Unknown",
+      "commentary": "Audio/commentary not yet verified",
+      "usAvailability": null,
+      "access": "unknown",
+      "territories": [],
+      "notes": "Worldwide discovery lead. Exact fixture, public territory and viewing route must be verified before confirmation. Any language or video-only feed is eligible.",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPTElFMU1TelNkRkR0eXBuSlF6NkJ1bWtVaVd3MVBTOGNPdTJNeEwyNVIzbmJoSnZhMUQ1dkFZcVE4RjBCZmhCYkszeHZmb1NOMFJ1Q2lEdnctTG1rZnVKdFItOFIwSlhXNFBUTEFuYk51a3pUemxFbXk2WnRMaEFiU3hjSFdTN1NRUElMMGxvR3FGX0tSSVBzTjZyQXBodmstNHc2YkdNSQ?oc=5",
+      "sourcePublishedAt": "2026-10-05T07:00:00Z",
+      "checkedAt": "2026-11-01T06:13:51.984678Z",
+      "sourceKey": "global:camera-feed-discovery",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
     }
