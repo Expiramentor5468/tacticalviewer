@@ -1,49 +1,49 @@
 window.TACTICAL_FEED_DATA = {
   "schemaVersion": 2,
-  "updatedAt": "2026-11-01T06:13:52.991476Z",
-  "lastAttemptAt": "2026-11-01T06:13:39.542612Z",
-  "lastSuccessfulScanAt": "2026-11-01T06:13:52.991476Z",
+  "updatedAt": "2026-11-01T13:34:53.981192Z",
+  "lastAttemptAt": "2026-11-01T13:34:37.726480Z",
+  "lastSuccessfulScanAt": "2026-11-01T13:34:53.981192Z",
   "scanStatus": "ok",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
       "ok": true,
-      "checkedAt": "2026-11-01T06:13:39.543011Z",
+      "checkedAt": "2026-11-01T13:34:37.726716Z",
       "count": 0
     },
     {
       "source": "news:Premier League",
       "ok": true,
-      "checkedAt": "2026-11-01T06:13:39.543011Z",
+      "checkedAt": "2026-11-01T13:34:37.726716Z",
       "count": 0
     },
     {
       "source": "news:MLS",
       "ok": true,
-      "checkedAt": "2026-11-01T06:13:39.543011Z",
+      "checkedAt": "2026-11-01T13:34:37.726716Z",
       "count": 0
     },
     {
       "source": "news:Bundesliga",
       "ok": true,
-      "checkedAt": "2026-11-01T06:13:39.543011Z",
+      "checkedAt": "2026-11-01T13:34:37.726716Z",
       "count": 0
     },
     {
       "source": "news:Serie A",
       "ok": true,
-      "checkedAt": "2026-11-01T06:13:39.543011Z",
+      "checkedAt": "2026-11-01T13:34:37.726716Z",
       "count": 0
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-11-01T06:13:39.543011Z"
+      "checkedAt": "2026-11-01T13:34:37.726716Z"
     },
     {
       "source": "amazon:prime-vision",
       "ok": true,
-      "checkedAt": "2026-11-01T06:13:41.669222Z",
+      "checkedAt": "2026-11-01T13:34:40.108597Z",
       "count": 2,
       "pagesChecked": 1,
       "evidenceMode": "official-help-reviewed/client-rendered",
@@ -53,7 +53,7 @@ window.TACTICAL_FEED_DATA = {
     {
       "source": "sky:bundesliga-tactical",
       "ok": true,
-      "checkedAt": "2026-11-01T06:13:43.903673Z",
+      "checkedAt": "2026-11-01T13:34:42.691880Z",
       "count": 0,
       "exportsChecked": 11,
       "exportsExpected": 11,
@@ -62,35 +62,35 @@ window.TACTICAL_FEED_DATA = {
     {
       "source": "cbs:golazo-tactical",
       "ok": true,
-      "checkedAt": "2026-11-01T06:13:51.001979Z",
+      "checkedAt": "2026-11-01T13:34:51.989125Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "mls:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-11-01T06:13:51.001979Z",
-      "count": 1,
+      "checkedAt": "2026-11-01T13:34:51.989125Z",
+      "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "premierleague:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-11-01T06:13:51.001979Z",
+      "checkedAt": "2026-11-01T13:34:51.989125Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "ligue1:expert-mode",
       "ok": true,
-      "checkedAt": "2026-11-01T06:13:51.001979Z",
+      "checkedAt": "2026-11-01T13:34:51.989125Z",
       "count": 1,
       "duplicatesSuppressed": 0
     },
     {
       "source": "global:camera-feed-discovery",
       "ok": true,
-      "checkedAt": "2026-11-01T06:13:51.984678Z",
+      "checkedAt": "2026-11-01T13:34:52.932235Z",
       "count": 1,
       "queriesChecked": 3,
       "queriesExpected": 3
@@ -110,7 +110,7 @@ window.TACTICAL_FEED_DATA = {
       "access": "unknown",
       "sourceUrl": "https://products.bundesliga.com/fixtures",
       "sourceKey": "bundesliga:production",
-      "checkedAt": "2026-11-01T06:13:39.543011Z",
+      "checkedAt": "2026-11-01T13:34:37.726716Z",
       "notes": "A feed product is listed for broadcasters. No current match or consumer viewing service is verified here. A production listing is not a watch link.",
       "territories": []
     },
@@ -136,7 +136,7 @@ window.TACTICAL_FEED_DATA = {
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": "https://www.primevideo.com/",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-11-01T06:13:41.669222Z",
+      "checkedAt": "2026-11-01T13:34:40.108597Z",
       "verifiedAt": "2026-10-28T00:00:00Z",
       "policyReviewedAt": "2026-10-28T00:00:00Z",
       "exactFixtureVerified": true,
@@ -166,34 +166,13 @@ window.TACTICAL_FEED_DATA = {
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "watchUrl": "https://www.primevideo.com/",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-11-01T06:13:41.669222Z",
+      "checkedAt": "2026-11-01T13:34:40.108597Z",
       "verifiedAt": "2026-10-28T00:00:00Z",
       "policyReviewedAt": "2026-10-28T00:00:00Z",
       "exactFixtureVerified": true,
       "publicAccessConfirmed": true,
       "secondarySourceUrl": "https://www.primevideo.com/salp/ucl-help/?content-id=amzn1.sym.dd781929-775e-45af-be91-40c39fedce52",
       "policySourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/champions-league-prime-video-uk-renewal"
-    },
-    {
-      "id": "brand-monitor-764f126459acee0a",
-      "match": "Yahoo Sports and Apple TV Team Up to Bring “The Cooligans” to a Live MLS Alternate Broadcast - MLSsoccer.com",
-      "competition": "MLS",
-      "kickoff": null,
-      "type": "alternate",
-      "status": "candidate",
-      "platform": "MLS / Apple TV alternate cameras",
-      "language": "English",
-      "commentary": "English",
-      "usAvailability": null,
-      "access": "unknown",
-      "territories": [],
-      "notes": "Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation. Audio language is recorded when known but does not determine eligibility.",
-      "sourceUrl": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNdVBEcVRKREY1cGhNRGRUSWVraEc2cjNmblAxSHJtZFBoSkxHOHZGRzN6Q2g4XzdkSzlyUm96T2VYVWxHS0trU1o3MWUyLUwzVF8zY0tQM3NDcEc3eUt6Y0loRU9YNmFCNlg3NzJGdWppNlhQYnZQQVhYbmh3eE5fVUZnLVVnRl9Pci0yV0VjM3dwX3RWRXZtZUNXV0tMYlU5U1l6Ykg4Rktic0VLekJYSUJmTlNvWkphMmJUM3Nn?oc=5",
-      "sourcePublishedAt": "2026-09-02T07:00:00Z",
-      "checkedAt": "2026-11-01T06:13:51.001979Z",
-      "sourceKey": "mls:alternate-cameras",
-      "exactFixtureVerified": false,
-      "publicAccessConfirmed": false
     },
     {
       "id": "brand-monitor-263fc464a21d3d4d",
@@ -211,7 +190,7 @@ window.TACTICAL_FEED_DATA = {
       "notes": "Branded-product lead. Exact fixture, public viewing route, territory and kickoff must be verified before confirmation. Audio language is recorded when known but does not determine eligibility.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOcFlad29wOHpMQzhNMFlUaGMzd0dsMkRPcXU5YTdNMVptY3UwVVh0Mk1POXY3TUZIcXBObXNfY3ZPVjdReHZ3cDFfVHlJQ2FFdEJOaXhnel9GY1F5c0tWSXRUWnRMcHJqdFh3SklER0lCcDBMRTJYMXpTcm9MZjlkMV9rTnRYU2xId0ZNQ0dvY3d4b292YWE4ZDlkaUVqb2M?oc=5",
       "sourcePublishedAt": "2026-09-08T07:00:00Z",
-      "checkedAt": "2026-11-01T06:13:51.001979Z",
+      "checkedAt": "2026-11-01T13:34:51.989125Z",
       "sourceKey": "ligue1:expert-mode",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
@@ -232,7 +211,7 @@ window.TACTICAL_FEED_DATA = {
       "notes": "Worldwide discovery lead. Exact fixture, public territory and viewing route must be verified before confirmation. Any language or video-only feed is eligible.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPTElFMU1TelNkRkR0eXBuSlF6NkJ1bWtVaVd3MVBTOGNPdTJNeEwyNVIzbmJoSnZhMUQ1dkFZcVE4RjBCZmhCYkszeHZmb1NOMFJ1Q2lEdnctTG1rZnVKdFItOFIwSlhXNFBUTEFuYk51a3pUemxFbXk2WnRMaEFiU3hjSFdTN1NRUElMMGxvR3FGX0tSSVBzTjZyQXBodmstNHc2YkdNSQ?oc=5",
       "sourcePublishedAt": "2026-10-05T07:00:00Z",
-      "checkedAt": "2026-11-01T06:13:51.984678Z",
+      "checkedAt": "2026-11-01T13:34:52.932235Z",
       "sourceKey": "global:camera-feed-discovery",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
