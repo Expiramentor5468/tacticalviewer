@@ -1,49 +1,49 @@
 window.TACTICAL_FEED_DATA = {
   "schemaVersion": 2,
-  "updatedAt": "2026-11-09T19:53:02.972158Z",
-  "lastAttemptAt": "2026-11-09T19:52:45.647107Z",
+  "updatedAt": "2026-11-10T03:38:32.709294Z",
+  "lastAttemptAt": "2026-11-10T03:36:42.140048Z",
   "lastSuccessfulScanAt": "2026-11-09T19:53:02.972158Z",
-  "scanStatus": "ok",
+  "scanStatus": "partial",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
-      "ok": true,
-      "checkedAt": "2026-11-09T19:52:45.647342Z",
-      "count": 0
+      "ok": false,
+      "attemptedAt": "2026-11-10T03:36:42.140434Z",
+      "error": "HTTPError"
     },
     {
       "source": "news:Premier League",
-      "ok": true,
-      "checkedAt": "2026-11-09T19:52:45.647342Z",
-      "count": 0
+      "ok": false,
+      "attemptedAt": "2026-11-10T03:36:42.140434Z",
+      "error": "HTTPError"
     },
     {
       "source": "news:MLS",
-      "ok": true,
-      "checkedAt": "2026-11-09T19:52:45.647342Z",
-      "count": 0
+      "ok": false,
+      "attemptedAt": "2026-11-10T03:36:42.140434Z",
+      "error": "HTTPError"
     },
     {
       "source": "news:Bundesliga",
-      "ok": true,
-      "checkedAt": "2026-11-09T19:52:45.647342Z",
-      "count": 0
+      "ok": false,
+      "attemptedAt": "2026-11-10T03:36:42.140434Z",
+      "error": "HTTPError"
     },
     {
       "source": "news:Serie A",
-      "ok": true,
-      "checkedAt": "2026-11-09T19:52:45.647342Z",
-      "count": 0
+      "ok": false,
+      "attemptedAt": "2026-11-10T03:36:42.140434Z",
+      "error": "HTTPError"
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-11-09T19:52:45.647342Z"
+      "checkedAt": "2026-11-10T03:36:42.140434Z"
     },
     {
       "source": "amazon:prime-vision",
       "ok": true,
-      "checkedAt": "2026-11-09T19:52:48.633806Z",
+      "checkedAt": "2026-11-10T03:37:22.383042Z",
       "count": 1,
       "pagesChecked": 1,
       "evidenceMode": "official-help-reviewed/client-rendered",
@@ -53,7 +53,7 @@ window.TACTICAL_FEED_DATA = {
     {
       "source": "sky:bundesliga-tactical",
       "ok": true,
-      "checkedAt": "2026-11-09T19:52:51.434512Z",
+      "checkedAt": "2026-11-10T03:37:25.632527Z",
       "count": 0,
       "exportsChecked": 11,
       "exportsExpected": 11,
@@ -61,39 +61,40 @@ window.TACTICAL_FEED_DATA = {
     },
     {
       "source": "cbs:golazo-tactical",
-      "ok": true,
-      "checkedAt": "2026-11-09T19:53:00.933489Z",
-      "count": 0,
-      "duplicatesSuppressed": 0
+      "ok": false,
+      "checkedAt": "2026-11-10T03:37:35.017224Z",
+      "error": "HTTPError"
     },
     {
       "source": "mls:alternate-cameras",
-      "ok": true,
-      "checkedAt": "2026-11-09T19:53:00.933489Z",
-      "count": 0,
-      "duplicatesSuppressed": 0
+      "ok": false,
+      "checkedAt": "2026-11-10T03:37:35.017224Z",
+      "error": "HTTPError"
     },
     {
       "source": "premierleague:alternate-cameras",
-      "ok": true,
-      "checkedAt": "2026-11-09T19:53:00.933489Z",
-      "count": 0,
-      "duplicatesSuppressed": 0
+      "ok": false,
+      "checkedAt": "2026-11-10T03:37:35.017224Z",
+      "error": "HTTPError"
     },
     {
       "source": "ligue1:expert-mode",
-      "ok": true,
-      "checkedAt": "2026-11-09T19:53:00.933489Z",
-      "count": 0,
-      "duplicatesSuppressed": 0
+      "ok": false,
+      "checkedAt": "2026-11-10T03:37:35.017224Z",
+      "error": "HTTPError"
     },
     {
       "source": "global:camera-feed-discovery",
-      "ok": true,
-      "checkedAt": "2026-11-09T19:53:01.928589Z",
+      "ok": false,
+      "checkedAt": "2026-11-10T03:38:07.980762Z",
       "count": 1,
-      "queriesChecked": 3,
-      "queriesExpected": 3
+      "queriesChecked": 0,
+      "queriesExpected": 3,
+      "errors": [
+        "HTTPError",
+        "HTTPError",
+        "HTTPError"
+      ]
     }
   ],
   "feeds": [
@@ -113,7 +114,7 @@ window.TACTICAL_FEED_DATA = {
       "notes": "Amazon's monthly schedule confirms the exact UCL top-pick fixture. The official UCL help page confirms Prime Vision, English default commentary, and UK/Republic of Ireland access. Prime Vision is data-enhanced alternate coverage, not a persistent full-pitch wide camera. Access evidence expires seven days after the recorded policy review.",
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-11-09T19:52:48.633806Z",
+      "checkedAt": "2026-11-10T03:37:22.383042Z",
       "verifiedAt": null,
       "policyReviewedAt": "2026-10-28T00:00:00Z",
       "exactFixtureVerified": true,
