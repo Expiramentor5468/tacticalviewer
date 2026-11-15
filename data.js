@@ -1,59 +1,60 @@
 window.TACTICAL_FEED_DATA = {
   "schemaVersion": 2,
-  "updatedAt": "2026-11-15T06:40:46.919263Z",
-  "lastAttemptAt": "2026-11-15T06:40:32.803163Z",
+  "updatedAt": "2026-11-15T16:25:06.522402Z",
+  "lastAttemptAt": "2026-11-15T16:24:48.901176Z",
   "lastSuccessfulScanAt": "2026-11-15T06:40:46.919263Z",
-  "scanStatus": "ok",
+  "scanStatus": "partial",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
       "ok": true,
-      "checkedAt": "2026-11-15T06:40:32.803451Z",
+      "checkedAt": "2026-11-15T16:24:48.901462Z",
       "count": 0
     },
     {
       "source": "news:Premier League",
       "ok": true,
-      "checkedAt": "2026-11-15T06:40:32.803451Z",
+      "checkedAt": "2026-11-15T16:24:48.901462Z",
       "count": 0
     },
     {
       "source": "news:MLS",
       "ok": true,
-      "checkedAt": "2026-11-15T06:40:32.803451Z",
+      "checkedAt": "2026-11-15T16:24:48.901462Z",
       "count": 0
     },
     {
       "source": "news:Bundesliga",
       "ok": true,
-      "checkedAt": "2026-11-15T06:40:32.803451Z",
+      "checkedAt": "2026-11-15T16:24:48.901462Z",
       "count": 0
     },
     {
       "source": "news:Serie A",
       "ok": true,
-      "checkedAt": "2026-11-15T06:40:32.803451Z",
+      "checkedAt": "2026-11-15T16:24:48.901462Z",
       "count": 0
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-11-15T06:40:32.803451Z"
+      "checkedAt": "2026-11-15T16:24:48.901462Z"
     },
     {
       "source": "amazon:prime-vision",
-      "ok": true,
-      "checkedAt": "2026-11-15T06:40:34.927778Z",
-      "count": 1,
+      "ok": false,
+      "checkedAt": "2026-11-15T16:24:51.202160Z",
+      "count": 2,
       "pagesChecked": 2,
       "evidenceMode": "official-help-reviewed/client-rendered",
       "policyReviewedAt": "2026-10-28T00:00:00Z",
-      "policyReviewExpired": true
+      "policyReviewExpired": true,
+      "error": "HTTPError"
     },
     {
       "source": "sky:bundesliga-tactical",
       "ok": true,
-      "checkedAt": "2026-11-15T06:40:37.645792Z",
+      "checkedAt": "2026-11-15T16:24:53.344703Z",
       "count": 0,
       "exportsChecked": 11,
       "exportsExpected": 11,
@@ -62,35 +63,35 @@ window.TACTICAL_FEED_DATA = {
     {
       "source": "cbs:golazo-tactical",
       "ok": true,
-      "checkedAt": "2026-11-15T06:40:45.256684Z",
+      "checkedAt": "2026-11-15T16:25:05.014367Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "mls:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-11-15T06:40:45.256684Z",
+      "checkedAt": "2026-11-15T16:25:05.014367Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "premierleague:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-11-15T06:40:45.256684Z",
+      "checkedAt": "2026-11-15T16:25:05.014367Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "ligue1:expert-mode",
       "ok": true,
-      "checkedAt": "2026-11-15T06:40:45.256684Z",
+      "checkedAt": "2026-11-15T16:25:05.014367Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "global:camera-feed-discovery",
       "ok": true,
-      "checkedAt": "2026-11-15T06:40:46.098563Z",
+      "checkedAt": "2026-11-15T16:25:05.749743Z",
       "count": 3,
       "queriesChecked": 3,
       "queriesExpected": 3
@@ -137,7 +138,7 @@ window.TACTICAL_FEED_DATA = {
       "notes": "Worldwide discovery lead. Exact fixture, public territory and viewing route must be verified before confirmation. Any language or video-only feed is eligible.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQSENIRzc2OXlQRkJ3YXdYVU91NkdCbm96UWQtRGQ4ZjVOQnNKVnZTWGI4RW5zcVpJNnRsYl9ZVlcxdldjWWg0MXJ5bDZqb3hlZjVodkhjSEZNeGlyZTBGRFg4RS12WjR4NEpxVDFGWWlEVWtlbUtVd1l3QTFvLWZJOEdxTmRZdmlENmZZWldBSDV0Y2RaYXQxa1pNalFvWWl4UzNsNXdZaEhiWjdWSnF5eG1IRXM?oc=5",
       "sourcePublishedAt": "2026-11-13T05:01:11Z",
-      "checkedAt": "2026-11-15T06:40:46.098563Z",
+      "checkedAt": "2026-11-15T16:25:05.749743Z",
       "sourceKey": "global:camera-feed-discovery",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
@@ -158,7 +159,7 @@ window.TACTICAL_FEED_DATA = {
       "notes": "Worldwide discovery lead. Exact fixture, public territory and viewing route must be verified before confirmation. Any language or video-only feed is eligible.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNaXRXTDlMOUZRSDhPeV9QZi1nVlB5Y3JSNnFMSm9MdzRESVZ3LVZUZi05RW93MEE0bDlXdDVGYjRMSWdzU1AydTFTOC1QMVVkVEdaQlgxZWozNEZ0ZEZtZGN6U2dTTmwtMGJhRTRHX3RGVmxhRnFseEtUMHlBZjJnSWpVTzA4OGtlcnlJUXRPb2NfOU9RcTdXTnBSU2VHWnY2NHpTSloxcndSTU8xUHpnUDJENnhsalpXejVIOQ?oc=5",
       "sourcePublishedAt": "2026-11-12T08:00:00Z",
-      "checkedAt": "2026-11-15T06:40:46.098563Z",
+      "checkedAt": "2026-11-15T16:25:05.749743Z",
       "sourceKey": "global:camera-feed-discovery",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
@@ -179,7 +180,7 @@ window.TACTICAL_FEED_DATA = {
       "notes": "Worldwide discovery lead. Exact fixture, public territory and viewing route must be verified before confirmation. Any language or video-only feed is eligible.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMie0FVX3lxTFA5WHlGaFQtZmRBby1saXpnWENtZWRFZ0ZpUFZPR2dYVVo1cGptX3BPREdnd25yZGFiOTNnUjNhQXRMekdhaXJLNGFqT2MwYVBHSnNQVlNvQVBjY3lUS0NDRHlTUm1CVnJweUk3QVBMOTN2S3ZGdTFQdG8yQQ?oc=5",
       "sourcePublishedAt": "2026-10-31T07:00:00Z",
-      "checkedAt": "2026-11-15T06:40:46.098563Z",
+      "checkedAt": "2026-11-15T16:25:05.749743Z",
       "sourceKey": "global:camera-feed-discovery",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
