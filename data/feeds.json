@@ -1,49 +1,49 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-11-21T02:22:21.660716Z",
-  "lastAttemptAt": "2026-11-21T02:22:05.303660Z",
+  "updatedAt": "2026-11-21T11:13:24.539476Z",
+  "lastAttemptAt": "2026-11-21T11:13:03.875247Z",
   "lastSuccessfulScanAt": "2026-11-20T20:26:49.798100Z",
   "scanStatus": "partial",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
       "ok": true,
-      "checkedAt": "2026-11-21T02:22:05.303866Z",
+      "checkedAt": "2026-11-21T11:13:03.875475Z",
       "count": 0
     },
     {
       "source": "news:Premier League",
       "ok": true,
-      "checkedAt": "2026-11-21T02:22:05.303866Z",
+      "checkedAt": "2026-11-21T11:13:03.875475Z",
       "count": 0
     },
     {
       "source": "news:MLS",
       "ok": true,
-      "checkedAt": "2026-11-21T02:22:05.303866Z",
+      "checkedAt": "2026-11-21T11:13:03.875475Z",
       "count": 0
     },
     {
       "source": "news:Bundesliga",
       "ok": true,
-      "checkedAt": "2026-11-21T02:22:05.303866Z",
+      "checkedAt": "2026-11-21T11:13:03.875475Z",
       "count": 0
     },
     {
       "source": "news:Serie A",
       "ok": true,
-      "checkedAt": "2026-11-21T02:22:05.303866Z",
+      "checkedAt": "2026-11-21T11:13:03.875475Z",
       "count": 0
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-11-21T02:22:05.303866Z"
+      "checkedAt": "2026-11-21T11:13:03.875475Z"
     },
     {
       "source": "amazon:prime-vision",
       "ok": false,
-      "checkedAt": "2026-11-21T02:22:07.555908Z",
+      "checkedAt": "2026-11-21T11:13:06.088971Z",
       "count": 2,
       "pagesChecked": 2,
       "evidenceMode": "official-help-reviewed/client-rendered",
@@ -54,7 +54,7 @@
     {
       "source": "sky:bundesliga-tactical",
       "ok": true,
-      "checkedAt": "2026-11-21T02:22:10.342770Z",
+      "checkedAt": "2026-11-21T11:13:08.615857Z",
       "count": 0,
       "exportsChecked": 11,
       "exportsExpected": 11,
@@ -63,36 +63,36 @@
     {
       "source": "cbs:golazo-tactical",
       "ok": true,
-      "checkedAt": "2026-11-21T02:22:20.083960Z",
+      "checkedAt": "2026-11-21T11:13:23.119853Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "mls:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-11-21T02:22:20.083960Z",
+      "checkedAt": "2026-11-21T11:13:23.119853Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "premierleague:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-11-21T02:22:20.083960Z",
+      "checkedAt": "2026-11-21T11:13:23.119853Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "ligue1:expert-mode",
       "ok": true,
-      "checkedAt": "2026-11-21T02:22:20.083960Z",
+      "checkedAt": "2026-11-21T11:13:23.119853Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "global:camera-feed-discovery",
       "ok": true,
-      "checkedAt": "2026-11-21T02:22:20.829112Z",
-      "count": 3,
+      "checkedAt": "2026-11-21T11:13:23.823144Z",
+      "count": 2,
       "queriesChecked": 3,
       "queriesExpected": 3
     }
@@ -123,27 +123,6 @@
       "policySourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/champions-league-prime-video-uk-renewal"
     },
     {
-      "id": "global-lead-bac73579fea700a7",
-      "match": "Brighton vs Arsenal Full Match | Tactical Cam - YouTube",
-      "competition": "Other / global",
-      "kickoff": null,
-      "type": "tactical",
-      "status": "candidate",
-      "platform": "Global discovery — carrier unverified",
-      "language": "Unknown",
-      "commentary": "Audio/commentary not yet verified",
-      "usAvailability": null,
-      "access": "unknown",
-      "territories": [],
-      "notes": "Worldwide discovery lead. Exact fixture, public territory and viewing route must be verified before confirmation. Any language or video-only feed is eligible.",
-      "sourceUrl": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5vYWJVMnY2Rm9iQUxOUFoyZUtkT0RkTHVTSDEyWnRxdVBJUFN0RFFEd21sT2gyTE9qbW9qOTRMTzBSTGhuY2RrYzNOWVU2VkZCbENLb0ozRlo3Y2RT?oc=5",
-      "sourcePublishedAt": "2026-10-24T07:00:00Z",
-      "checkedAt": "2026-11-21T02:22:20.829112Z",
-      "sourceKey": "global:camera-feed-discovery",
-      "exactFixtureVerified": false,
-      "publicAccessConfirmed": false
-    },
-    {
       "id": "global-lead-710973b386454c5b",
       "match": "Pulaski County parts ways with football coach Cam Akers after five seasons - WSLS",
       "competition": "Other / global",
@@ -159,7 +138,7 @@
       "notes": "Worldwide discovery lead. Exact fixture, public territory and viewing route must be verified before confirmation. Any language or video-only feed is eligible.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNaXRXTDlMOUZRSDhPeV9QZi1nVlB5Y3JSNnFMSm9MdzRESVZ3LVZUZi05RW93MEE0bDlXdDVGYjRMSWdzU1AydTFTOC1QMVVkVEdaQlgxZWozNEZ0ZEZtZGN6U2dTTmwtMGJhRTRHX3RGVmxhRnFseEtUMHlBZjJnSWpVTzA4OGtlcnlJUXRPb2NfOU9RcTdXTnBSU2VHWnY2NHpTSloxcndSTU8xUHpnUDJENnhsalpXejVIOQ?oc=5",
       "sourcePublishedAt": "2026-11-13T04:59:49Z",
-      "checkedAt": "2026-11-21T02:22:20.829112Z",
+      "checkedAt": "2026-11-21T11:13:23.823144Z",
       "sourceKey": "global:camera-feed-discovery",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
@@ -180,7 +159,7 @@
       "notes": "Worldwide discovery lead. Exact fixture, public territory and viewing route must be verified before confirmation. Any language or video-only feed is eligible.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQSENIRzc2OXlQRkJ3YXdYVU91NkdCbm96UWQtRGQ4ZjVOQnNKVnZTWGI4RW5zcVpJNnRsYl9ZVlcxdldjWWg0MXJ5bDZqb3hlZjVodkhjSEZNeGlyZTBGRFg4RS12WjR4NEpxVDFGWWlEVWtlbUtVd1l3QTFvLWZJOEdxTmRZdmlENmZZWldBSDV0Y2RaYXQxa1pNalFvWWl4UzNsNXdZaEhiWjdWSnF5eG1IRXM?oc=5",
       "sourcePublishedAt": "2026-11-13T05:01:11Z",
-      "checkedAt": "2026-11-21T02:22:20.829112Z",
+      "checkedAt": "2026-11-21T11:13:23.823144Z",
       "sourceKey": "global:camera-feed-discovery",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
