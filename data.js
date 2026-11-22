@@ -1,49 +1,49 @@
 window.TACTICAL_FEED_DATA = {
   "schemaVersion": 2,
-  "updatedAt": "2026-11-21T19:21:29.623081Z",
-  "lastAttemptAt": "2026-11-21T19:21:12.831688Z",
-  "lastSuccessfulScanAt": "2026-11-21T19:21:29.623081Z",
+  "updatedAt": "2026-11-22T01:22:53.351247Z",
+  "lastAttemptAt": "2026-11-22T01:22:36.790321Z",
+  "lastSuccessfulScanAt": "2026-11-22T01:22:53.351247Z",
   "scanStatus": "ok",
   "sourceHealth": [
     {
       "source": "news:UEFA Champions League",
       "ok": true,
-      "checkedAt": "2026-11-21T19:21:12.831876Z",
+      "checkedAt": "2026-11-22T01:22:36.790575Z",
       "count": 0
     },
     {
       "source": "news:Premier League",
       "ok": true,
-      "checkedAt": "2026-11-21T19:21:12.831876Z",
+      "checkedAt": "2026-11-22T01:22:36.790575Z",
       "count": 0
     },
     {
       "source": "news:MLS",
       "ok": true,
-      "checkedAt": "2026-11-21T19:21:12.831876Z",
+      "checkedAt": "2026-11-22T01:22:36.790575Z",
       "count": 0
     },
     {
       "source": "news:Bundesliga",
       "ok": true,
-      "checkedAt": "2026-11-21T19:21:12.831876Z",
+      "checkedAt": "2026-11-22T01:22:36.790575Z",
       "count": 0
     },
     {
       "source": "news:Serie A",
       "ok": true,
-      "checkedAt": "2026-11-21T19:21:12.831876Z",
+      "checkedAt": "2026-11-22T01:22:36.790575Z",
       "count": 0
     },
     {
       "source": "bundesliga:production",
       "ok": true,
-      "checkedAt": "2026-11-21T19:21:12.831876Z"
+      "checkedAt": "2026-11-22T01:22:36.790575Z"
     },
     {
       "source": "amazon:prime-vision",
       "ok": true,
-      "checkedAt": "2026-11-21T19:21:15.206444Z",
+      "checkedAt": "2026-11-22T01:22:38.886700Z",
       "count": 1,
       "pagesChecked": 2,
       "evidenceMode": "official-help-reviewed/client-rendered",
@@ -53,7 +53,7 @@ window.TACTICAL_FEED_DATA = {
     {
       "source": "sky:bundesliga-tactical",
       "ok": true,
-      "checkedAt": "2026-11-21T19:21:18.360719Z",
+      "checkedAt": "2026-11-22T01:22:41.889092Z",
       "count": 0,
       "exportsChecked": 11,
       "exportsExpected": 11,
@@ -62,35 +62,35 @@ window.TACTICAL_FEED_DATA = {
     {
       "source": "cbs:golazo-tactical",
       "ok": true,
-      "checkedAt": "2026-11-21T19:21:27.581810Z",
+      "checkedAt": "2026-11-22T01:22:51.915480Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "mls:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-11-21T19:21:27.581810Z",
+      "checkedAt": "2026-11-22T01:22:51.915480Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "premierleague:alternate-cameras",
       "ok": true,
-      "checkedAt": "2026-11-21T19:21:27.581810Z",
+      "checkedAt": "2026-11-22T01:22:51.915480Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "ligue1:expert-mode",
       "ok": true,
-      "checkedAt": "2026-11-21T19:21:27.581810Z",
+      "checkedAt": "2026-11-22T01:22:51.915480Z",
       "count": 0,
       "duplicatesSuppressed": 0
     },
     {
       "source": "global:camera-feed-discovery",
       "ok": true,
-      "checkedAt": "2026-11-21T19:21:28.476015Z",
+      "checkedAt": "2026-11-22T01:22:52.572996Z",
       "count": 2,
       "queriesChecked": 3,
       "queriesExpected": 3
@@ -113,34 +113,13 @@ window.TACTICAL_FEED_DATA = {
       "notes": "Amazon's monthly schedule confirms the exact UCL top-pick fixture. The official UCL help page confirms Prime Vision, English default commentary, and UK/Republic of Ireland access. Prime Vision is data-enhanced alternate coverage, not a persistent full-pitch wide camera. Access evidence expires seven days after the recorded policy review.",
       "sourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/whats-on-prime-video-uk-november-2026",
       "sourceKey": "amazon:prime-vision",
-      "checkedAt": "2026-11-21T19:21:15.206444Z",
+      "checkedAt": "2026-11-22T01:22:38.886700Z",
       "verifiedAt": null,
       "policyReviewedAt": "2026-10-28T00:00:00Z",
       "exactFixtureVerified": true,
       "publicAccessConfirmed": false,
       "secondarySourceUrl": "https://www.primevideo.com/salp/ucl-help/?content-id=amzn1.sym.dd781929-775e-45af-be91-40c39fedce52",
       "policySourceUrl": "https://www.aboutamazon.co.uk/news/entertainment/champions-league-prime-video-uk-renewal"
-    },
-    {
-      "id": "global-lead-59d7c67b614ef487",
-      "match": "Pulaski County parts ways with football coach Cam Akers after five seasons - WSLS",
-      "competition": "Other / global",
-      "kickoff": null,
-      "type": "coach",
-      "status": "candidate",
-      "platform": "Global discovery — carrier unverified",
-      "language": "Unknown",
-      "commentary": "Audio/commentary not yet verified",
-      "usAvailability": null,
-      "access": "unknown",
-      "territories": [],
-      "notes": "Worldwide discovery lead. Exact fixture, public territory and viewing route must be verified before confirmation. Any language or video-only feed is eligible.",
-      "sourceUrl": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQSENIRzc2OXlQRkJ3YXdYVU91NkdCbm96UWQtRGQ4ZjVOQnNKVnZTWGI4RW5zcVpJNnRsYl9ZVlcxdldjWWg0MXJ5bDZqb3hlZjVodkhjSEZNeGlyZTBGRFg4RS12WjR4NEpxVDFGWWlEVWtlbUtVd1l3QTFvLWZJOEdxTmRZdmlENmZZWldBSDV0Y2RaYXQxa1pNalFvWWl4UzNsNXdZaEhiWjdWSnF5eG1IRXM?oc=5",
-      "sourcePublishedAt": "2026-11-13T05:01:11Z",
-      "checkedAt": "2026-11-21T19:21:28.476015Z",
-      "sourceKey": "global:camera-feed-discovery",
-      "exactFixtureVerified": false,
-      "publicAccessConfirmed": false
     },
     {
       "id": "global-lead-710973b386454c5b",
@@ -158,7 +137,28 @@ window.TACTICAL_FEED_DATA = {
       "notes": "Worldwide discovery lead. Exact fixture, public territory and viewing route must be verified before confirmation. Any language or video-only feed is eligible.",
       "sourceUrl": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNaXRXTDlMOUZRSDhPeV9QZi1nVlB5Y3JSNnFMSm9MdzRESVZ3LVZUZi05RW93MEE0bDlXdDVGYjRMSWdzU1AydTFTOC1QMVVkVEdaQlgxZWozNEZ0ZEZtZGN6U2dTTmwtMGJhRTRHX3RGVmxhRnFseEtUMHlBZjJnSWpVTzA4OGtlcnlJUXRPb2NfOU9RcTdXTnBSU2VHWnY2NHpTSloxcndSTU8xUHpnUDJENnhsalpXejVIOQ?oc=5",
       "sourcePublishedAt": "2026-11-13T08:00:00Z",
-      "checkedAt": "2026-11-21T19:21:28.476015Z",
+      "checkedAt": "2026-11-22T01:22:52.572996Z",
+      "sourceKey": "global:camera-feed-discovery",
+      "exactFixtureVerified": false,
+      "publicAccessConfirmed": false
+    },
+    {
+      "id": "global-lead-59d7c67b614ef487",
+      "match": "Pulaski County parts ways with football coach Cam Akers after five seasons - WSLS",
+      "competition": "Other / global",
+      "kickoff": null,
+      "type": "coach",
+      "status": "candidate",
+      "platform": "Global discovery — carrier unverified",
+      "language": "Unknown",
+      "commentary": "Audio/commentary not yet verified",
+      "usAvailability": null,
+      "access": "unknown",
+      "territories": [],
+      "notes": "Worldwide discovery lead. Exact fixture, public territory and viewing route must be verified before confirmation. Any language or video-only feed is eligible.",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQSENIRzc2OXlQRkJ3YXdYVU91NkdCbm96UWQtRGQ4ZjVOQnNKVnZTWGI4RW5zcVpJNnRsYl9ZVlcxdldjWWg0MXJ5bDZqb3hlZjVodkhjSEZNeGlyZTBGRFg4RS12WjR4NEpxVDFGWWlEVWtlbUtVd1l3QTFvLWZJOEdxTmRZdmlENmZZWldBSDV0Y2RaYXQxa1pNalFvWWl4UzNsNXdZaEhiWjdWSnF5eG1IRXM?oc=5",
+      "sourcePublishedAt": "2026-11-13T05:01:11Z",
+      "checkedAt": "2026-11-22T01:22:52.572996Z",
       "sourceKey": "global:camera-feed-discovery",
       "exactFixtureVerified": false,
       "publicAccessConfirmed": false
